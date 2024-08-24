@@ -164,7 +164,6 @@ public class PlayerController : MonoBehaviour
 
     private void HandleGravity()
     {
-        Debug.Log(IsJumpCut);
         if (IsJumpCut)
         {
             // Higher gravity scale if player released jump button early
