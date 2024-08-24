@@ -7,38 +7,36 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _maxSpeed;
-    [SerializeField] private float _jumpForce;
-    [SerializeField] private float _acceleration;
-    [SerializeField] private float _deceleration;
-    [SerializeField] private float _jumpGravityScale;
+    [SerializeField] private PlayerMoveStats _stats;
 
     // Components
-    private PlayerInputActions _inputs;
     private Rigidbody2D _rb;
+    private PlayerInputActions _inputs;
+
+    // Trackers
+    public bool IsFacingRight { get; private set; }
 
     // Inputs
     private Vector2 _moveInput;
 
-    // Trackers
-    private bool _isFacingRight = true;
-    private bool _startJump;
-
-
     private void Awake()
     {
-        _inputs = new PlayerInputActions();
+        _inputs = new PlayerInputActions();   
     }
 
     private void Start()
     {
+        // Get components
         _rb = GetComponent<Rigidbody2D>();
+
+        // Initialize values
+        _rb.gravityScale = _stats.gravityScale;
+        IsFacingRight = true;
     }
 
     private void OnEnable()
     {
         _inputs.Enable();
-        _inputs.Player.Jump.performed += OnJump;
     }
 
     private void OnDisable()
@@ -48,67 +46,49 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // Get player input
         _moveInput = _inputs.Player.Movement.ReadValue<Vector2>();
 
-        // Check facing direction
-        if (_isFacingRight && _moveInput.x < 0)
+        // Check player facing direction
+        if (_moveInput.x != 0)
         {
-            ChangeFacingDirection();
-        }
-        else if (!_isFacingRight && _moveInput.x > 0)
-        {
-            ChangeFacingDirection();
+            CheckFacingDirection(_moveInput.x > 0);
         }
     }
 
     private void FixedUpdate()
     {
-        Vector2 movement = Vector2.zero;
+        // Target velocity is our move input times our max speed
+        float targetVelocity = _moveInput.x * _stats.runMaxSpeed;
 
-        // If player is pressing move
-        if (_moveInput != Vector2.zero)
-        {
-            // Set to max speed
-            movement = Vector2.right * _moveInput * _maxSpeed;
+        // Our acceleration rate will be our run acceleration if we have a target velocity (i.e. player is inputting a
+        //   horizontal movement command)
+        // Else (the player is not inputting movement) we will use our deceleration amount
+        // This ensures we have a different acceleration when the player is moving vs. when we are returning to idle
+        float accelRate = (Mathf.Abs(targetVelocity) > 0.01f) ?  _stats.runAccelAmount : _stats.runDeccelAmount;
 
-            // Lerp for acceleration
-            movement = Vector2.Lerp(_rb.velocity, movement, _acceleration * Time.fixedDeltaTime);
-        }
-        else
-        {
-            // Lerp to zero for deceleration
-            movement = Vector2.Lerp(_rb.velocity, Vector2.zero, _deceleration * Time.fixedDeltaTime);
-        }
+        // The difference between our current and target velocity
+        float velocityDiff = targetVelocity - _rb.velocity.x;
 
-        // If player pressed jump
-        if (_startJump)
-        {
-            // Apply jump velocity
-            movement.y = _jumpForce;
-            _startJump = false;
+        // The force will be the difference in velocity multiplied by the acceleration rate
+        float movement = velocityDiff * accelRate;
 
-            // Set gravity scale
-            _rb.gravityScale = _jumpGravityScale;
-        }
-        else
-        {
-            movement.y = _rb.velocity.y;
-        }
-
-
-        _rb.velocity = movement;
+        // Apply the force to rigid body
+        _rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }
 
-    private void ChangeFacingDirection()
+    private void CheckFacingDirection(bool movingRight)
     {
-        _isFacingRight = !_isFacingRight;
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
-    }
+        // If we are facing the wrong way
+        if (movingRight != IsFacingRight)
+        {
+            // Invert character scale
+            Vector2 localScale = transform.localScale;
+            localScale.x *= -1;
+            transform.localScale = localScale;
 
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        _startJump = true;
+            // Change facing right check
+            IsFacingRight = !IsFacingRight;
+        }
     }
 }

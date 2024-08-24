@@ -12,4 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20ecb4e0a46d7cb4fb8d33d306602b50, type: 3}
   m_Name: DefaultMoveStats
   m_EditorClassIdentifier: 
-  RunSpeed: 16
+  gravityStrength: NaN
+  gravityScale: NaN
+  fallGravityMult: 0
+  maxFallSpeed: 0
+  fastFallGravityMult: 0
+  maxFastFallSpeed: 0
+  runMaxSpeed: 0
+  runAcceleration: 0.01
+  runAccelAmount: NaN
+  runDecceleration: 0.01
+  runDeccelAmount: NaN
+  accelInAir: 0
+  deccelInAir: 0
+  doConserveMomentum: 1
+  jumpHeight: 0
+  jumpTimeToApex: 0
+  jumpForce: NaN
+  jumpCutGravityMult: 0
+  jumpHangGravityMult: 0
+  jumpHangTimeThreshold: 0
+  jumpHangAccelerationMult: 0
+  jumpHangMaxSpeedMult: 0
+  wallJumpForce: {x: 0, y: 0}
+  wallJumpRunLerp: 0
+  wallJumpTime: 0
+  doTurnOnWallJump: 0
+  slideSpeed: 0
+  slideAccel: 0
+  coyoteTime: 0.01
+  jumpInputBufferTime: 0.01
+  dashAmount: 0
+  dashSpeed: 0
+  dashSleepTime: 0
+  dashAttackTime: 0
+  dashEndTime: 0
+  dashEndSpeed: {x: 0, y: 0}
+  dashEndRunLerp: 0
+  dashRefillTime: 0
+  dashInputBufferTime: 0.01
