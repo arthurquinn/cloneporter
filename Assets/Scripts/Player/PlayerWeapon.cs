@@ -74,7 +74,7 @@ public class PlayerWeapon : MonoBehaviour
             {
                 // TODO: Is there something better than this?
                 Vector2 adjustedHitPoint = hit.point * _hitDetectionMultiplier;
-                portalTiles.HighlightTile(adjustedHitPoint);
+                portalTiles.PlacePortal(adjustedHitPoint);
             }
         }
     }
