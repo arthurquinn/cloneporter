@@ -49,13 +49,12 @@ public class PlayerWeapon : MonoBehaviour
 
         // Raycast to find nearest collider
         RaycastHit2D hit = Physics2D.Raycast(transform.position, _aimDirection, _raycastLength, _targetLayer);
-
         if (hit.collider != null)
         {
             // Draw line to nearest collider in mouse direction
             _lineRenderer.enabled = true;
-            _lineRenderer.SetPosition(0, transform.position);
-            _lineRenderer.SetPosition(1, hit.point);
+            _lineRenderer.SetPosition(0, Vector2.zero);
+            _lineRenderer.SetPosition(1, _aimDirection * hit.distance * transform.parent.localScale);
         }
         else
         {
@@ -75,7 +74,7 @@ public class PlayerWeapon : MonoBehaviour
                 Vector2 adjustedHitPoint = hit.point * _hitDetectionMultiplier;
                 if (portalTiles.HasTile(adjustedHitPoint))
                 {
-                    portalTiles.PlacePortal(adjustedHitPoint, Vector2.zero);
+                                    portalTiles.PlacePortal(adjustedHitPoint, Vector2.zero);
                 }
             }
         }
