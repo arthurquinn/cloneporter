@@ -1836,6 +1836,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b577b007f795cd846895eba4f09cdbce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _raycastLength: 50
+  _hitDetectionMultiplier: 1.01
   _targetLayer:
     serializedVersion: 2
     m_Bits: 192

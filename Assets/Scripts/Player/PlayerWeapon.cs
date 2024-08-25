@@ -7,6 +7,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerWeapon : MonoBehaviour
 {
+    [Header("Hit Detection")]
+    [SerializeField] private float _raycastLength;
+    [SerializeField] private float _hitDetectionMultiplier;
+
     [Header("Layer Mask")]
     [SerializeField] private LayerMask _targetLayer;
 
@@ -44,7 +48,7 @@ public class PlayerWeapon : MonoBehaviour
         _aimDirection = (mouseWorldPosition - (Vector2)transform.position).normalized;
 
         // Raycast to find nearest collider
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, _aimDirection, 50.0f, _targetLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, _aimDirection, _raycastLength, _targetLayer);
 
         if (hit.collider != null)
         {
@@ -61,16 +65,16 @@ public class PlayerWeapon : MonoBehaviour
 
     private void OnFireInput(InputAction.CallbackContext context)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, _aimDirection, 50.0f, _targetLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, _aimDirection, _raycastLength, _targetLayer);
         if (hit.collider != null)
         {
             // This collider is the entire tilemap collider (i.e. all portal tiles connected to that collider)
             IPortalTiles portalTiles = hit.collider.GetComponent<IPortalTiles>();
             if (portalTiles != null)
             {
-                // TODO: Muy bad...muy MUY bad
-                Vector2 hitPoint = new Vector2(hit.point.x, hit.point.y - .1f);
-                portalTiles.HighlightTile(hitPoint);
+                // TODO: Is there something better than this?
+                Vector2 adjustedHitPoint = hit.point * _hitDetectionMultiplier;
+                portalTiles.HighlightTile(adjustedHitPoint);
             }
         }
     }
