@@ -72,9 +72,11 @@ public class PlayerWeapon : MonoBehaviour
             IPortalTiles portalTiles = hit.collider.GetComponent<IPortalTiles>();
             if (portalTiles != null)
             {
-                // TODO: Is there something better than this?
                 Vector2 adjustedHitPoint = hit.point * _hitDetectionMultiplier;
-                portalTiles.PlacePortal(adjustedHitPoint);
+                if (portalTiles.HasTile(adjustedHitPoint))
+                {
+                    portalTiles.PlacePortal(adjustedHitPoint, Vector2.zero);
+                }
             }
         }
     }
