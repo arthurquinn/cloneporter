@@ -19,8 +19,9 @@ public class PortalGroupController : MonoBehaviour
         _purplePortal.SetRotation(rotation);
     }
 
-    public void SetTealPortal()
+    public void SetTealPortal(Vector2 position, Quaternion rotation)
     {
-
+        _tealPortal.SetPosition(position);
+        _tealPortal.SetRotation(rotation);
     }
 }

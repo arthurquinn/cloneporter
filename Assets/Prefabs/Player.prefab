@@ -247,6 +247,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 2902305f-5c40-49fa-994d-332a9470a425
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 047d79a3-d968-4e9b-ab56-9907421ae4bb
+    m_ActionName: Player/FireRight[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -450,10 +454,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b577b007f795cd846895eba4f09cdbce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _purplePortal: {fileID: 0}
-  _tealPortal: {fileID: 0}
+  _portalGroup: {fileID: 0}
   _raycastLength: 50
   _hitDetectionMultiplier: 0.01
   _targetLayer:
     serializedVersion: 2
     m_Bits: 192
+  _portalTiles: {fileID: 0}

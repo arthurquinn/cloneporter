@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 public class PlayerWeapon : MonoBehaviour
 {
@@ -15,6 +17,9 @@ public class PlayerWeapon : MonoBehaviour
 
     [Header("Layer Mask")]
     [SerializeField] private LayerMask _targetLayer;
+
+    [Header("Tilemap")]
+    [SerializeField] private PortalTiles _portalTiles;
 
     private PlayerInputActions _inputs;
 
@@ -35,7 +40,8 @@ public class PlayerWeapon : MonoBehaviour
     private void OnEnable()
     {
         _inputs.Enable();
-        _inputs.Player.Fire.performed += OnFireInput;
+        _inputs.Player.FireLeft.performed += OnFireLeftInput;
+        _inputs.Player.FireRight.performed += OnFireRightInput;
     }
 
     private void OnDisable()
@@ -64,29 +70,47 @@ public class PlayerWeapon : MonoBehaviour
         }
     }
 
-    private void OnFireInput(InputAction.CallbackContext context)
+    private void OnFireLeftInput(InputAction.CallbackContext context)
     {
-        // Check if we hit any tile along the ray
+        // Optimization note - got rid of lambda here since lambdas that capture variables
+        //   may cause heap allocation
+        TryShootPortal(ShootPurplePortal);
+    }
+
+    private void OnFireRightInput(InputAction.CallbackContext context)
+    {
+        // Optimization note - got rid of lambda here since lambdas that capture variables
+        //   may cause heap allocation
+        TryShootPortal(ShootTealPortal);
+    }
+
+    private void TryShootPortal(Action<Vector2, Quaternion> shootFunc)
+    {
+        // Check if we are aiming at a portal tile
         RaycastHit2D hit = Physics2D.Raycast(transform.position, _aimDirection, _raycastLength, _targetLayer);
-        if (hit.collider != null)
+        if (hit.collider != null && hit.collider.CompareTag("PortalTiles"))
         {
-            // This collider is the entire tilemap collider (i.e. all portal tiles connected to that collider)
-            IPortalTiles portalTiles = hit.collider.GetComponent<IPortalTiles>();
-            if (portalTiles != null)
+            // TODO: I really want something better than this
+            Vector2 adjustedHitPoint = hit.point + (hit.point - (Vector2)transform.position).normalized * _hitDetectionMultiplier;
+
+            // Check if we can place a portal at the adjusted hit point
+            if (_portalTiles.CanPlacePortal(adjustedHitPoint))
             {
-                // TODO: I really want something better than this
-                Vector2 adjustedHitPoint = hit.point +  (hit.point - (Vector2)transform.position).normalized * _hitDetectionMultiplier;
-
-                // If we can place the portal, then we retrieve a valid placement position
-                if (portalTiles.CanPlacePortal(adjustedHitPoint))
-                {
-                    (Vector2 position, Quaternion rotation) = portalTiles.GetPortalPlacement(adjustedHitPoint, transform.position);
-
-                    // Place the portal at the retrieved position
-                    _portalGroup.SetPurplePortal(position, rotation);
-                }
+                // Get the position and rotation that are valid according to the portal tiles tilemap
+                (Vector2 position, Quaternion rotation) = _portalTiles.GetPortalPlacement(adjustedHitPoint, transform.position);
+                shootFunc(position, rotation);
             }
         }
+    }
+
+    private void ShootPurplePortal(Vector2 position, Quaternion rotation)
+    {
+        _portalGroup.SetPurplePortal(position, rotation);
+    }
+
+    private void ShootTealPortal(Vector2 position, Quaternion rotation)
+    {
+        _portalGroup.SetTealPortal(position, rotation);
     }
 
     #region Gizmo Methods

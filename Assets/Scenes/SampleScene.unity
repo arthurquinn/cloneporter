@@ -1907,7 +1907,7 @@ GameObject:
   - component: {fileID: 1958379585}
   m_Layer: 7
   m_Name: Interactable
-  m_TagString: Untagged
+  m_TagString: PortalTiles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2704,17 +2704,13 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3909268500705764575, guid: 14888e95feaed75479f6f39338708155, type: 3}
-      propertyPath: _tealPortal
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3909268500705764575, guid: 14888e95feaed75479f6f39338708155, type: 3}
       propertyPath: _portalGroup
       value: 
       objectReference: {fileID: 1875018219}
     - target: {fileID: 3909268500705764575, guid: 14888e95feaed75479f6f39338708155, type: 3}
-      propertyPath: _purplePortal
+      propertyPath: _portalTiles
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1958379585}
     - target: {fileID: 4800644275948808045, guid: 14888e95feaed75479f6f39338708155, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.05
