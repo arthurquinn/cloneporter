@@ -67,14 +67,18 @@ public class PlayerWeapon : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, _aimDirection, _raycastLength, _targetLayer);
         if (hit.collider != null)
         {
+            Debug.Log("1");
             // This collider is the entire tilemap collider (i.e. all portal tiles connected to that collider)
             IPortalTiles portalTiles = hit.collider.GetComponent<IPortalTiles>();
             if (portalTiles != null)
             {
-                Vector2 adjustedHitPoint = hit.point * _hitDetectionMultiplier;
+                Debug.Log("2");
+                // TODO: I really want something better than this
+                Vector2 adjustedHitPoint = hit.point +  (hit.point - (Vector2)transform.position).normalized * _hitDetectionMultiplier;
                 if (portalTiles.HasTile(adjustedHitPoint))
                 {
-                                    portalTiles.PlacePortal(adjustedHitPoint, Vector2.zero);
+                    Debug.Log("3");
+                    portalTiles.PlacePortal(adjustedHitPoint, transform.position);
                 }
             }
         }

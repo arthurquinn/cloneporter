@@ -40,6 +40,7 @@ public class PortalTiles : MonoBehaviour, IPortalTiles
         Vector3Int cell = _tilemap.WorldToCell(atPosition);
         if (_tilemap.HasTile(cell))
         {
+            Debug.Log("HAS");
             // If there is a tile to the right or left we will place the portal horizontally
             if (_tilemap.HasTile(cell + Vector3Int.up) || _tilemap.HasTile(cell + Vector3Int.down))
             {
@@ -78,6 +79,16 @@ public class PortalTiles : MonoBehaviour, IPortalTiles
             portalPlacement = new Vector2(xAdjustment, cellCenter.y);
         }
 
+        // Are we shooting from the right? Then increment the placement, else decrement it
+        if (fromPosition.y > portalPlacement.y)
+        {
+            portalPlacement.y += cellSize.y / 2;
+        }
+        else
+        {
+            portalPlacement.y -= cellSize.y / 2;
+        }
+
         Instantiate(_portal, portalPlacement, _rotateRight);
     }
 
@@ -105,6 +116,16 @@ public class PortalTiles : MonoBehaviour, IPortalTiles
         {
             float yAdjustment = portalPlacement.y + (portalHeight / 2 - downHit.distance);
             portalPlacement = new Vector2(cellCenter.x, yAdjustment);
+        }
+
+        // Are we shooting from the right? Then increment the placement, else decrement it
+        if (fromPosition.x > portalPlacement.x)
+        {
+            portalPlacement.x += cellSize.x / 2;
+        }
+        else
+        {
+            portalPlacement.x -= cellSize.x / 2;
         }
 
         Instantiate(_portal, portalPlacement, Quaternion.identity);
