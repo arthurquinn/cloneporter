@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerWeapon : MonoBehaviour
 {
+    [Header("Prefabs")]
+    [SerializeField] private PortalGroupController _portalGroup;
+
     [Header("Hit Detection")]
     [SerializeField] private float _raycastLength;
     [SerializeField] private float _hitDetectionMultiplier;
@@ -64,21 +66,24 @@ public class PlayerWeapon : MonoBehaviour
 
     private void OnFireInput(InputAction.CallbackContext context)
     {
+        // Check if we hit any tile along the ray
         RaycastHit2D hit = Physics2D.Raycast(transform.position, _aimDirection, _raycastLength, _targetLayer);
         if (hit.collider != null)
         {
-            Debug.Log("1");
             // This collider is the entire tilemap collider (i.e. all portal tiles connected to that collider)
             IPortalTiles portalTiles = hit.collider.GetComponent<IPortalTiles>();
             if (portalTiles != null)
             {
-                Debug.Log("2");
                 // TODO: I really want something better than this
                 Vector2 adjustedHitPoint = hit.point +  (hit.point - (Vector2)transform.position).normalized * _hitDetectionMultiplier;
-                if (portalTiles.HasTile(adjustedHitPoint))
+
+                // If we can place the portal, then we retrieve a valid placement position
+                if (portalTiles.CanPlacePortal(adjustedHitPoint))
                 {
-                    Debug.Log("3");
-                    portalTiles.PlacePortal(adjustedHitPoint, transform.position);
+                    (Vector2 position, Quaternion rotation) = portalTiles.GetPortalPlacement(adjustedHitPoint, transform.position);
+
+                    // Place the portal at the retrieved position
+                    _portalGroup.SetPurplePortal(position, rotation);
                 }
             }
         }
