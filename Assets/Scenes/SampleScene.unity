@@ -2703,6 +2703,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3162981144949106672, guid: 14888e95feaed75479f6f39338708155, type: 3}
+      propertyPath: _groundLayer.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
     - target: {fileID: 3909268500705764575, guid: 14888e95feaed75479f6f39338708155, type: 3}
       propertyPath: _portalGroup
       value: 
