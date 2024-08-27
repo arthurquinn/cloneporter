@@ -15,13 +15,11 @@ public class PortalGroupController : MonoBehaviour
 
     public void SetPurplePortal(Vector2 position, Quaternion rotation)
     {
-        _purplePortal.SetPosition(position);
-        _purplePortal.SetRotation(rotation);
+        _purplePortal.SetPortal(position, rotation);
     }
 
     public void SetTealPortal(Vector2 position, Quaternion rotation)
     {
-        _tealPortal.SetPosition(position);
-        _tealPortal.SetRotation(rotation);
+        _tealPortal.SetPortal(position, rotation);
     }
 }
