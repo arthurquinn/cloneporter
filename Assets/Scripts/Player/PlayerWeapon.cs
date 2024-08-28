@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    [Header("Prefabs")]
-    [SerializeField] private PortalGroupController _portalGroup;
+    [Header("Events")]
+    [SerializeField] private UnityEvent<Vector2, Vector2> _onPurplePortalFire;
+    [SerializeField] private UnityEvent<Vector2, Vector2> _onTealPortalFire;
 
     [Header("Hit Detection")]
     [SerializeField] private float _raycastLength;
@@ -17,9 +18,6 @@ public class PlayerWeapon : MonoBehaviour
 
     [Header("Layer Mask")]
     [SerializeField] private LayerMask _targetLayer;
-
-    [Header("Tilemap")]
-    [SerializeField] private PortalTiles _portalTiles;
 
     private PlayerInputActions _inputs;
 
@@ -74,17 +72,17 @@ public class PlayerWeapon : MonoBehaviour
     {
         // Optimization note - got rid of lambda here since lambdas that capture variables
         //   may cause heap allocation
-        TryShootPortal(ShootPurplePortal);
+        TryShootPortal(_onPurplePortalFire);
     }
 
     private void OnFireRightInput(InputAction.CallbackContext context)
     {
         // Optimization note - got rid of lambda here since lambdas that capture variables
         //   may cause heap allocation
-        TryShootPortal(ShootTealPortal);
+        TryShootPortal(_onTealPortalFire);
     }
 
-    private void TryShootPortal(Action<Vector2, Quaternion> shootFunc)
+    private void TryShootPortal(UnityEvent<Vector2, Vector2> shootEvent)
     {
         // Check if we are aiming at a portal tile
         RaycastHit2D hit = Physics2D.Raycast(transform.position, _aimDirection, _raycastLength, _targetLayer);
@@ -93,24 +91,12 @@ public class PlayerWeapon : MonoBehaviour
             // TODO: I really want something better than this
             Vector2 adjustedHitPoint = hit.point + (hit.point - (Vector2)transform.position).normalized * _hitDetectionMultiplier;
 
-            // Check if we can place a portal at the adjusted hit point
-            if (_portalTiles.CanPlacePortal(adjustedHitPoint))
+            // Invoke the unity event
+            if (shootEvent != null)
             {
-                // Get the position and rotation that are valid according to the portal tiles tilemap
-                (Vector2 position, Quaternion rotation) = _portalTiles.GetPortalPlacement(adjustedHitPoint, transform.position);
-                shootFunc(position, rotation);
+                shootEvent.Invoke(adjustedHitPoint, transform.position);
             }
         }
-    }
-
-    private void ShootPurplePortal(Vector2 position, Quaternion rotation)
-    {
-        _portalGroup.SetPurplePortal(position, rotation);
-    }
-
-    private void ShootTealPortal(Vector2 position, Quaternion rotation)
-    {
-        _portalGroup.SetTealPortal(position, rotation);
     }
 
     #region Gizmo Methods

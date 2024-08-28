@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
+using UnityEngine.InputSystem.Utilities;
 
-public interface IPortalTiles
+public class PortalTiles : MonoBehaviour
 {
-    bool CanPlacePortal(Vector2 position);
-    (Vector2, Quaternion) GetPortalPlacement(Vector2 position, Vector2 from);
-}
+    [Header("Events")]
+    [SerializeField] private UnityEvent<Vector2, Quaternion> _onPurplePortalPlaced;
+    [SerializeField] private UnityEvent<Vector2, Quaternion> _onTealPortalPlaced;
 
-public class PortalTiles : MonoBehaviour, IPortalTiles
-{
     [Header("Layer Mask")]
-    [SerializeField] private LayerMask _interactLayer;
     [SerializeField] private LayerMask _groundLayer;
 
     // Components
@@ -26,7 +25,33 @@ public class PortalTiles : MonoBehaviour, IPortalTiles
         _tilemap = GetComponent<Tilemap>();
     }
 
-    public bool CanPlacePortal(Vector2 position)
+    public void OnPurplePortalFired(Vector2 position, Vector2 from)
+    {
+        TryPlacePortal(_onPurplePortalPlaced, position, from);
+    }
+
+    public void OnTealPortalFired(Vector2 position, Vector2 from)
+    {
+        TryPlacePortal(_onTealPortalPlaced, position, from);
+    }
+
+    private void TryPlacePortal(UnityEvent<Vector2, Quaternion> onPlacement, Vector2 position, Vector2 from)
+    {
+        // Check if we can place a portal at the adjusted hit point
+        if (CanPlacePortal(position))
+        {
+            // Get the position and rotation that are valid according to the portal tiles tilemap
+            (Vector2 target, Quaternion targetRotation) = GetPortalPlacement(position, from);
+
+            // Call the event
+            if (onPlacement != null)
+            {
+                onPlacement.Invoke(target, targetRotation);
+            }
+        }
+    }
+
+    private bool CanPlacePortal(Vector2 position)
     {
         Vector3Int cell = _tilemap.WorldToCell(position);
         return _tilemap.HasTile(cell);

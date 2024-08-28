@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerMoveStats _stats;
 
@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 _groundCheckSize;
 
     [Header("Layers")]
-    [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private LayerMask _standableTerrainLayers;
 
     // Components
     private Rigidbody2D _rb;
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
         if (!IsJumping)
         {
             // Check for ground
-            if (Physics2D.OverlapBox(_groundCheck.position, _groundCheckSize, 0, _groundLayer))
+            if (Physics2D.OverlapBox(_groundCheck.position, _groundCheckSize, 0, _standableTerrainLayers))
             {
                 LastOnGroundTime = _stats.coyoteTime;
             }

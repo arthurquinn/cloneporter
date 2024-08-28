@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4757396375210657295}
   - component: {fileID: 3162981144949106672}
   - component: {fileID: 7325313511717121685}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ MonoBehaviour:
   _stats: {fileID: 11400000, guid: 45b90d55688145d4890b6983beaab464, type: 2}
   _groundCheck: {fileID: 6809843353006574836}
   _groundCheckSize: {x: 0.42, y: 0.12}
-  _groundLayer:
+  _standableTerrainLayers:
     serializedVersion: 2
     m_Bits: 192
 --- !u!114 &7325313511717121685
@@ -277,6 +277,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b117fbf3f47e253429c56c7195fb1f30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ignoreCollisionOnPortalEnter:
+    serializedVersion: 2
+    m_Bits: 128
+  _onPlayerStayPortal:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PortalGroupController, Assembly-CSharp
+        m_MethodName: OnPlayerStayPortal
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4093670944272438496
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +304,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6809843353006574836}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +337,7 @@ GameObject:
   - component: {fileID: 5676043926334179936}
   - component: {fileID: 6572254237281929489}
   - component: {fileID: 3909268500705764575}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,10 +475,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b577b007f795cd846895eba4f09cdbce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _portalGroup: {fileID: 0}
+  _onPurplePortalFire:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PortalTiles, Assembly-CSharp
+        m_MethodName: OnPurplePortalFired
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onTealPortalFire:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PortalTiles, Assembly-CSharp
+        m_MethodName: OnTealPortalFired
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _raycastLength: 50
   _hitDetectionMultiplier: 0.01
   _targetLayer:
     serializedVersion: 2
     m_Bits: 192
-  _portalTiles: {fileID: 0}

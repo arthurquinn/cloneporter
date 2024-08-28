@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerPortalInteractions : MonoBehaviour
 {
-    private CapsuleCollider2D _collider;
-
+    [Header("Layers")]
     [SerializeField] private LayerMask _ignoreCollisionOnPortalEnter;
 
+    // Components
+    private CapsuleCollider2D _collider;
+    
     private void Start()
     {
         _collider = GetComponent<CapsuleCollider2D>();
