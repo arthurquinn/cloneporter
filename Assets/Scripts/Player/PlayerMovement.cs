@@ -179,6 +179,13 @@ public class PlayerMovement : MonoBehaviour
             // Regular gravity scale
             _rb.gravityScale = _stats.gravityScale;
         }
+
+        // Cap maximum fall speed
+        _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -_stats.maxFallSpeed));
+        if (_rb.velocity.y <= -_stats.maxFallSpeed)
+        {
+            _rb.gravityScale = 0;
+        }
     }
 
     private void CheckFacingDirection(bool movingRight)

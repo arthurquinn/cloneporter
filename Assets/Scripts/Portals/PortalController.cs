@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-
-public class PortalController : MonoBehaviour
+public interface IPortal
 {
-    [SerializeField] private DupeController _dupe;
-    [SerializeField] private UnityEvent<Vector2, Quaternion> _onPlayerStay;
+    void Port(Rigidbody2D rigidbody);
+}
+
+public class PortalController : MonoBehaviour, IPortal
+{
+    [SerializeField] private PortalController _linkedPortal;
 
     private SpriteRenderer _spriteRenderer;
     private BoxCollider2D _boxCollider;
+
+    // Hard code this for now
+    private readonly Vector2 _normal = new Vector2(0, -1); 
 
     private void Start()
     {
@@ -18,22 +24,18 @@ public class PortalController : MonoBehaviour
         _boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void FixedUpdate()
     {
-        if (collision.CompareTag("Player"))
-        {
-            Vector2 offset = collision.transform.position - transform.position;
-            if (_onPlayerStay != null)
-            {
-                _onPlayerStay.Invoke(offset, Quaternion.identity);
-            }
-        }
+
     }
 
-    public void SetDupe(Vector2 offset, Quaternion rotation)
+    public void Port(Rigidbody2D rigidbody)
     {
-        Vector2 position = (Vector2)transform.position + offset;
-        _dupe.SetDupe(position, rotation);
+        Vector2 offset = (Vector2)transform.position - rigidbody.position;
+        Vector2 portPosition = (Vector2)_linkedPortal.transform.position + offset;
+        Vector2 velocity = Vector2.Reflect(rigidbody.velocity, _normal);
+        rigidbody.gameObject.transform.position = portPosition;
+        rigidbody.velocity = velocity;
     }
 
     public void SetPortal(Vector2 position, Quaternion rotation)
