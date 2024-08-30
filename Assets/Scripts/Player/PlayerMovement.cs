@@ -164,28 +164,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleGravity()
     {
-        if (IsJumpCut)
-        {
-            // Higher gravity scale if player released jump button early
-            _rb.gravityScale = _stats.gravityScale * _stats.jumpCutGravityMult;
-        }
-        else if (_rb.velocity.y < -0.01f)
-        {
-            // Higher gravity scale if we are falling
-            _rb.gravityScale = _stats.gravityScale * _stats.fallGravityMult;
-        }
-        else
-        {
-            // Regular gravity scale
-            _rb.gravityScale = _stats.gravityScale;
-        }
+        //if (IsJumpCut)
+        //{
+        //    // Higher gravity scale if player released jump button early
+        //    _rb.gravityScale = _stats.gravityScale * _stats.jumpCutGravityMult;
+        //}
+        //else if (_rb.velocity.y < -0.01f)
+        //{
+        //    // Higher gravity scale if we are falling
+        //    _rb.gravityScale = _stats.gravityScale * _stats.fallGravityMult;
+        //}
+        //else
+        //{
+        //    // Regular gravity scale
+        //    _rb.gravityScale = _stats.gravityScale;
+        //}
 
         // Cap maximum fall speed
-        _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -_stats.maxFallSpeed));
-        if (_rb.velocity.y <= -_stats.maxFallSpeed)
-        {
-            _rb.gravityScale = 0;
-        }
+        //_rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -_stats.maxFallSpeed));
+        _rb.gravityScale = _stats.gravityScale;
     }
 
     private void CheckFacingDirection(bool movingRight)

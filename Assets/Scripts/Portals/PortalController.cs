@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public interface IPortal
 {
-    void Port(Rigidbody2D rigidbody);
+    void Port(Rigidbody2D rigidbody, Vector2 fromPosition);
 }
 
 public class PortalController : MonoBehaviour, IPortal
@@ -29,13 +29,16 @@ public class PortalController : MonoBehaviour, IPortal
 
     }
 
-    public void Port(Rigidbody2D rigidbody)
+    public void Port(Rigidbody2D rigidbody, Vector2 fromPosition)
     {
-        Vector2 offset = (Vector2)transform.position - rigidbody.position;
+        // Port to new position
+        Vector2 offset = fromPosition - (Vector2)transform.position;
         Vector2 portPosition = (Vector2)_linkedPortal.transform.position + offset;
-        Vector2 velocity = Vector2.Reflect(rigidbody.velocity, _normal);
-        rigidbody.gameObject.transform.position = portPosition;
-        rigidbody.velocity = velocity;
+        rigidbody.position = portPosition;
+
+        // Reflect to new velocity
+        Vector2 portVelocity = Vector2.Reflect(rigidbody.velocity, _normal);
+        rigidbody.AddForce(portVelocity - rigidbody.velocity, ForceMode2D.Impulse);
     }
 
     public void SetPortal(Vector2 position, Quaternion rotation)

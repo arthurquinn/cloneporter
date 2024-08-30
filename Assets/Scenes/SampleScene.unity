@@ -1190,7 +1190,7 @@ CompositeCollider2D:
   m_GameObject: {fileID: 340186013}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5fb939ed6558daa4bb34fd5b650c63e1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1794,7 +1794,7 @@ CompositeCollider2D:
   m_GameObject: {fileID: 1958379583}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5fb939ed6558daa4bb34fd5b650c63e1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2494,11 +2494,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1979673709 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 932845999984534128, guid: 1388e5e02f4a6914eb7a14a15d153d75, type: 3}
-  m_PrefabInstance: {fileID: 7620207965112533451}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7345394461364836876
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2511,6 +2506,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2877817341280455491, guid: 14888e95feaed75479f6f39338708155, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877817341280455491, guid: 14888e95feaed75479f6f39338708155, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 5fb939ed6558daa4bb34fd5b650c63e1, type: 2}
     - target: {fileID: 3909268500705764575, guid: 14888e95feaed75479f6f39338708155, type: 3}
       propertyPath: _onTealPortalFire.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2521,11 +2524,11 @@ PrefabInstance:
       objectReference: {fileID: 1958379585}
     - target: {fileID: 4800644275948808045, guid: 14888e95feaed75479f6f39338708155, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.55
+      value: -1.65
       objectReference: {fileID: 0}
     - target: {fileID: 4800644275948808045, guid: 14888e95feaed75479f6f39338708155, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.58
+      value: -1.48
       objectReference: {fileID: 0}
     - target: {fileID: 4800644275948808045, guid: 14888e95feaed75479f6f39338708155, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2559,45 +2562,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7325313511717121685, guid: 14888e95feaed75479f6f39338708155, type: 3}
-      propertyPath: _onPortalEnter.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325313511717121685, guid: 14888e95feaed75479f6f39338708155, type: 3}
-      propertyPath: _onEnteredPortal.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325313511717121685, guid: 14888e95feaed75479f6f39338708155, type: 3}
-      propertyPath: _onPortalEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1979673709}
-    - target: {fileID: 7325313511717121685, guid: 14888e95feaed75479f6f39338708155, type: 3}
-      propertyPath: _onEnteredPortal.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325313511717121685, guid: 14888e95feaed75479f6f39338708155, type: 3}
-      propertyPath: _onPortalEnter.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325313511717121685, guid: 14888e95feaed75479f6f39338708155, type: 3}
-      propertyPath: _onEnteredPortal.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325313511717121685, guid: 14888e95feaed75479f6f39338708155, type: 3}
-      propertyPath: _onEnteredPortal.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnPortalEnter
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325313511717121685, guid: 14888e95feaed75479f6f39338708155, type: 3}
-      propertyPath: _onEnteredPortal.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PortalGroupController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325313511717121685, guid: 14888e95feaed75479f6f39338708155, type: 3}
-      propertyPath: _onEnteredPortal.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+    - target: {fileID: 7114630212389255785, guid: 14888e95feaed75479f6f39338708155, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 1641815759231623165, guid: 14888e95feaed75479f6f39338708155, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14888e95feaed75479f6f39338708155, type: 3}
@@ -2609,10 +2579,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 676711716303464512, guid: 1388e5e02f4a6914eb7a14a15d153d75, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 5fb939ed6558daa4bb34fd5b650c63e1, type: 2}
     - target: {fileID: 932845999984534128, guid: 1388e5e02f4a6914eb7a14a15d153d75, type: 3}
       propertyPath: m_Name
       value: Portals
       objectReference: {fileID: 0}
+    - target: {fileID: 6555342402464971748, guid: 1388e5e02f4a6914eb7a14a15d153d75, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 5fb939ed6558daa4bb34fd5b650c63e1, type: 2}
     - target: {fileID: 8197718525057945274, guid: 1388e5e02f4a6914eb7a14a15d153d75, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
