@@ -33,6 +33,10 @@ public class PortalController : MonoBehaviour, IPortal
     {
         // Port to new position
         Vector2 offset = fromPosition - (Vector2)transform.position;
+        if (_orientation != _linkedPortal.Orientation)
+        {
+            offset = Vector2.Reflect(offset, -_orientation);
+        }
         Vector2 portPosition = (Vector2)_linkedPortal.transform.position + offset;
         rigidbody.position = portPosition;
 
