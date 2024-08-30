@@ -32,34 +32,6 @@ public class PortalController : MonoBehaviour, IPortal
 
     public void Port(Rigidbody2D rigidbody, Vector2 fromPosition)
     {
-        //// Port to new position
-        //Vector2 offset = fromPosition - (Vector2)transform.position;
-        //if (_orientation != _linkedPortal.Orientation)
-        //{
-        //    offset = Vector2.Reflect(offset, _orientation);
-        //}
-        //Vector2 portPosition = (Vector2)_linkedPortal.transform.position + offset;
-        //rigidbody.position = portPosition;
-
-        //// Port to new position
-        //Vector2 offset = fromPosition - (Vector2)transform.position;
-        //Debug.Log("OFFSET: " + offset);
-        //if (_orientation == Vector2.up)
-        //{
-        //    offset = GetOrientationUpOffset(offset);
-        //}
-        //Vector2 portPosition = (Vector2)_linkedPortal.transform.position + offset;
-        //Debug.Log("NEW OFFSET: " + (portPosition - (Vector2)_linkedPortal.transform.position));
-        //rigidbody.position = portPosition;
-
-        //// Determine new velocity
-        //Vector2 portVelocity = rigidbody.velocity;
-        //if (_orientation == Vector2.up)
-        //{
-        //    portVelocity = Vector2.Reflect(rigidbody.velocity, -_orientation);
-        //}
-        //rigidbody.AddForce(portVelocity - rigidbody.velocity, ForceMode2D.Impulse);
-
         Vector2 offset = fromPosition - (Vector2)transform.position;
         Vector2 velocity = rigidbody.velocity;
         if (_orientation == Vector2.up)
@@ -71,6 +43,16 @@ public class PortalController : MonoBehaviour, IPortal
         {
             offset = GetOrientationDownOffset(offset);
             velocity = GetOrientationDownVelocity(velocity);
+        }
+        else if (_orientation == Vector2.left)
+        {
+            offset = GetOrientationLeftOffset(offset);
+            velocity = GetOrientationLeftVelocity(velocity);
+        }
+        else if (_orientation == Vector2.right)
+        {
+            offset = GetOrientationRightOffset(offset);
+            velocity = GetOrientationRightVelocity(velocity);
         }
         rigidbody.position = (Vector2)_linkedPortal.transform.position + offset;
         rigidbody.AddForce(velocity - rigidbody.velocity, ForceMode2D.Impulse);
@@ -122,12 +104,57 @@ public class PortalController : MonoBehaviour, IPortal
         return offset;
     }
 
-    // Test more (likely correct since it mirrors down)
+    // Verified working
+    public Vector2 GetOrientationLeftOffset(Vector2 offset)
+    {
+        if (_linkedPortal.Orientation == Vector2.up)
+        {
+            return new Vector2(-offset.y, -offset.x);
+        }
+        else if (_linkedPortal.Orientation == Vector2.down)
+        {
+            return new Vector2(offset.y, offset.x);
+        }
+        else if (_linkedPortal.Orientation == Vector2.left)
+        {
+            return new Vector2(offset.x, -offset.y);
+        }
+        else if (_linkedPortal.Orientation== Vector2.right)
+        {
+            return new Vector2(-offset.x, offset.y);
+        }
+
+        return offset;
+    }
+
+    public Vector2 GetOrientationRightOffset(Vector2 offset)
+    {
+        if (_linkedPortal.Orientation == Vector2.up)
+        {
+            return new Vector2(offset.y, offset.x);
+        }
+        else if (_linkedPortal.Orientation == Vector2.down)
+        {
+            return new Vector2(-offset.y, -offset.x);
+        }
+        else if (_linkedPortal.Orientation == Vector2.left)
+        {
+            return new Vector2(-offset.x, offset.y);
+        }
+        else if (_linkedPortal.Orientation == Vector2.right)
+        {
+            return new Vector2(offset.x, -offset.y);
+        }
+
+        return offset;
+    }
+
+    // Verified working
     public Vector2 GetOrientationUpVelocity(Vector2 velocity)
     {
         if (_linkedPortal.Orientation == Vector2.up)
         {
-            return Vector2.Reflect(velocity, -_orientation);
+            return Vector2.Reflect(velocity, Vector2.down);
         }
         else if (_linkedPortal.Orientation == Vector2.down)
         {
@@ -145,7 +172,7 @@ public class PortalController : MonoBehaviour, IPortal
         return velocity;
     }
 
-    // Verified correct
+    // Verified working
     public Vector2 GetOrientationDownVelocity(Vector2 velocity)
     {
         if (_linkedPortal.Orientation == Vector2.up)
@@ -154,7 +181,7 @@ public class PortalController : MonoBehaviour, IPortal
         }
         else if (_linkedPortal.Orientation == Vector2.down)
         {
-            return Vector2.Reflect(velocity, -_orientation);
+            return Vector2.Reflect(velocity, Vector2.up);
         }
         else if (_linkedPortal.Orientation == Vector2.left)
         {
@@ -163,6 +190,51 @@ public class PortalController : MonoBehaviour, IPortal
         else if (_linkedPortal.Orientation == Vector2.right)
         {
             return new Vector2(velocity.y, velocity.x);
+        }
+
+        return velocity;
+    }
+
+    // Verified working
+    public Vector2 GetOrientationLeftVelocity(Vector2 velocity)
+    {
+        if (_linkedPortal.Orientation == Vector2.up)
+        {
+            return new Vector2(velocity.y, velocity.x);
+        }
+        else if (_linkedPortal.Orientation == Vector2.down)
+        {
+            return new Vector2(-velocity.y, -velocity.x);
+        }
+        else if (_linkedPortal.Orientation == Vector2.left)
+        {
+            return new Vector2(-velocity.x, velocity.y);
+        }
+        else if (_linkedPortal.Orientation == Vector2.right)
+        {
+            return velocity;
+        }
+
+        return velocity;
+    }
+
+    public Vector2 GetOrientationRightVelocity(Vector2 velocity)
+    {
+        if (_linkedPortal.Orientation == Vector2.up)
+        {
+            return new Vector2(-velocity.y, -velocity.x);
+        }
+        else if (_linkedPortal.Orientation == Vector2.down)
+        {
+            return new Vector2(velocity.y, velocity.x);
+        }
+        else if (_linkedPortal.Orientation == Vector2.left)
+        {
+            return velocity;
+        }
+        else if (_linkedPortal.Orientation == Vector2.right)
+        {
+            return new Vector2(-velocity.x, velocity.y);
         }
 
         return velocity;
