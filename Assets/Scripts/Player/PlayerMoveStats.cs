@@ -79,6 +79,10 @@ public class PlayerMoveStats : ScriptableObject
     [Space(5)]
     [Range(0.01f, 0.5f)] public float dashInputBufferTime;
 
+    [Space(20)]
+    [Header("Portal")]
+    [Range(0.01f, 1.0f)] public float portalInputTimeout;
+
 
     //Unity Callback, called when the inspector updates
     private void OnValidate()

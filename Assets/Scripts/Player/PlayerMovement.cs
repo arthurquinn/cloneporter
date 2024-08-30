@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,9 +11,12 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Layers")]
     [SerializeField] private LayerMask _standableTerrainLayers;
+    [SerializeField] private LayerMask _portalLayer;
+    [SerializeField] private LayerMask _ignoreCollisionsInPortal;
 
     // Components
     private Rigidbody2D _rb;
+    private SpriteRenderer _spriteRenderer;
     private PlayerInputActions _inputs;
 
     // Trackers
@@ -27,13 +25,23 @@ public class PlayerMovement : MonoBehaviour
     public bool IsJumping { get; private set; }
     public bool IsJumpFalling { get; private set; }
     public bool IsJumpCut { get; private set; }
+    public bool WasPorted { get; private set; }
 
     // Timers
     public float LastPressedJumpTime { get; private set; }
     public float LastOnGroundTime { get; private set; }
+    public float LastInPortalTime { get; private set; }
+
+    // Cached Values
+    public Vector2 LastFixedPosition { get; private set; }
 
     // Inputs
     private Vector2 _moveInput;
+
+    // Collision detections
+    private float _rayPortalCheckVert;
+    private float _rayPortalCheckHoriz;
+    private Vector2 _portalEnterCheck;
 
     private void Awake()
     {
@@ -44,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Get components
         _rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
 
         // Initialize values
         _rb.gravityScale = _stats.gravityScale;
@@ -67,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
         // Update timers
         LastPressedJumpTime -= Time.deltaTime;
         LastOnGroundTime -= Time.deltaTime;
+        LastInPortalTime -= Time.deltaTime;
 
         // Get player input
         _moveInput = _inputs.Player.Movement.ReadValue<Vector2>();
@@ -112,9 +122,78 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandleMovement();
-        HandleJump();
+        HandlePortalInteractions();
+        if (LastInPortalTime < 0)
+        {
+            HandleMovement();
+            HandleJump();
+        }
         HandleGravity();
+    }
+
+    private void HandlePortalInteractions()
+    {
+        // Calculate raycast lengths
+        _rayPortalCheckVert = _spriteRenderer.bounds.extents.y + Mathf.Abs(_rb.velocity.y) * Time.fixedDeltaTime;
+        _rayPortalCheckHoriz = _spriteRenderer.bounds.extents.x + Mathf.Abs(_rb.velocity.x) * Time.fixedDeltaTime;
+
+        // Check raycast hits
+        // TODO: Not getting collision if both inside?? check this
+        bool didHitPortal = CheckPortalRaycast(Vector2.up, _rayPortalCheckVert) ||
+            CheckPortalRaycast(Vector2.down, _rayPortalCheckVert) ||
+            CheckPortalRaycast(Vector2.left, _rayPortalCheckHoriz) ||
+            CheckPortalRaycast(Vector2.right, _rayPortalCheckHoriz);
+
+        // Set collision state
+        if (didHitPortal)
+        {
+            DisableCollisions(_ignoreCollisionsInPortal);
+        }
+        else
+        {
+            EnableCollisions(_ignoreCollisionsInPortal);
+        }
+
+        // Check portal entry
+        _portalEnterCheck.x = Mathf.Max(0.01f, Mathf.Abs(_rb.velocity.x) * Time.fixedDeltaTime);
+        _portalEnterCheck.y = Mathf.Max(0.01f, Mathf.Abs(_rb.velocity.y) * Time.fixedDeltaTime);
+        Collider2D collision = Physics2D.OverlapBox(transform.position, _portalEnterCheck, 0.0f, _portalLayer);
+        if (collision != null && !WasPorted)
+        {
+            IPortal portal = collision.GetComponent<IPortal>();
+            if (portal != null)
+            {
+                portal.Port(_rb, LastFixedPosition);
+                WasPorted = true;
+                LastInPortalTime = _stats.portalInputTimeout;
+            }
+        }
+        else if (collision == null)
+        {
+            WasPorted = false;
+        }
+        LastFixedPosition= _rb.position;
+    }
+
+    private bool CheckPortalRaycast(Vector2 direction, float distance)
+    {
+        return Physics2D.Raycast(transform.position, direction, distance, _portalLayer).collider != null;
+    }
+
+    private void EnableCollisions(LayerMask collisionMask)
+    {
+        // Turn on collision for specified ignore layers (i.e. stop ignoring them)
+        LayerMask current = Physics2D.GetLayerCollisionMask(gameObject.layer);
+        LayerMask newMask = collisionMask | current;
+        Physics2D.SetLayerCollisionMask(gameObject.layer, newMask);
+    }
+
+    private void DisableCollisions(LayerMask collisionMask)
+    {
+        // Turn off collision for specified ignore layers
+        LayerMask current = Physics2D.GetLayerCollisionMask(gameObject.layer);
+        LayerMask newMask = ~collisionMask & current;
+        Physics2D.SetLayerCollisionMask(gameObject.layer, newMask);
     }
 
     private void HandleMovement()
@@ -224,6 +303,15 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(_groundCheck.position, _groundCheckSize);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, (Vector2)transform.position + (Vector2.up * _rayPortalCheckVert));
+        Gizmos.DrawLine(transform.position, (Vector2)transform.position + (Vector2.down * _rayPortalCheckVert));
+        Gizmos.DrawLine(transform.position, (Vector2)transform.position + (Vector2.left * _rayPortalCheckHoriz));
+        Gizmos.DrawLine(transform.position, (Vector2)transform.position + (Vector2.right * _rayPortalCheckHoriz));
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position, _portalEnterCheck);
     }
 
     #endregion
