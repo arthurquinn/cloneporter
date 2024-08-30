@@ -6,11 +6,18 @@ using UnityEngine.Events;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem.Utilities;
 
+public struct PortalPlacement
+{
+    public Vector2 Position { get; set; }
+    public Quaternion Rotation { get; set; }
+    public Vector2 Orientation { get; set; }
+}
+
 public class PortalTiles : MonoBehaviour
 {
     [Header("Events")]
-    [SerializeField] private UnityEvent<Vector2, Quaternion> _onPurplePortalPlaced;
-    [SerializeField] private UnityEvent<Vector2, Quaternion> _onTealPortalPlaced;
+    [SerializeField] private UnityEvent<PortalPlacement> _onPurplePortalPlaced;
+    [SerializeField] private UnityEvent<PortalPlacement> _onTealPortalPlaced;
 
     [Header("Layer Mask")]
     [SerializeField] private LayerMask _groundLayer;
@@ -35,18 +42,18 @@ public class PortalTiles : MonoBehaviour
         TryPlacePortal(_onTealPortalPlaced, position, from);
     }
 
-    private void TryPlacePortal(UnityEvent<Vector2, Quaternion> onPlacement, Vector2 position, Vector2 from)
+    private void TryPlacePortal(UnityEvent<PortalPlacement> onPlacement, Vector2 position, Vector2 from)
     {
         // Check if we can place a portal at the adjusted hit point
         if (CanPlacePortal(position))
         {
             // Get the position and rotation that are valid according to the portal tiles tilemap
-            (Vector2 target, Quaternion targetRotation) = GetPortalPlacement(position, from);
+            PortalPlacement placement = GetPortalPlacement(position, from);
 
             // Call the event
             if (onPlacement != null)
             {
-                onPlacement.Invoke(target, targetRotation);
+                onPlacement.Invoke(placement);
             }
         }
     }
@@ -57,7 +64,7 @@ public class PortalTiles : MonoBehaviour
         return _tilemap.HasTile(cell);
     }
 
-    public (Vector2, Quaternion) GetPortalPlacement(Vector2 position, Vector2 from)
+    public PortalPlacement GetPortalPlacement(Vector2 position, Vector2 from)
     {
         // Get the cell at position
         Vector3Int cell = _tilemap.WorldToCell(position);
@@ -65,29 +72,30 @@ public class PortalTiles : MonoBehaviour
         // If there is a tile above or below we will place the portal vertically
         if (_tilemap.HasTile(cell + Vector3Int.up) || _tilemap.HasTile(cell + Vector3Int.down))
         {
-            return (GetVerticalPlacement(cell, position, from), Quaternion.identity);
+            return GetVerticalPlacement(cell, position, from);
         }
 
         // Else if there is a tile to the right or left we will place it horizontally
         else if (_tilemap.HasTile(cell + Vector3Int.right) || _tilemap.HasTile(cell + Vector3Int.left))
         {
-            return (GetHorizontalPlacement(cell, position, from), _rotateRight);
+            return GetHorizontalPlacement(cell, position, from);
         }
 
         // This should never happen if we first called CanPlacePortal
         else
         {
-            return (Vector2.zero, Quaternion.identity);
+            return new PortalPlacement();
         }
     }
 
-    private Vector2 GetHorizontalPlacement(Vector3Int cell, Vector2 position, Vector2 from)
+    private PortalPlacement GetHorizontalPlacement(Vector3Int cell, Vector2 position, Vector2 from)
     {
         // Get center of cell we hit
         Vector2 cellSize = _tilemap.cellSize;
         Vector2 cellCenter = _tilemap.GetCellCenterWorld(cell);
 
         // Calculate portal placement
+        Vector2 portalOrientation;
         Vector2 portalPosition = new Vector2(position.x, cellCenter.y);
         float portalWidth = cellSize.x * 3;
 
@@ -107,26 +115,34 @@ public class PortalTiles : MonoBehaviour
             portalPosition = new Vector2(xAdjustment, cellCenter.y);
         }
 
-        // Are we shooting from the right? Then increment the placement, else decrement it
+        // Are we shooting from the top? Then increment the placement, else decrement it
         if (from.y > portalPosition.y)
         {
             portalPosition.y += cellSize.y / 2;
+            portalOrientation = Vector2.up;
         }
         else
         {
             portalPosition.y -= cellSize.y / 2;
+            portalOrientation = Vector2.down;
         }
 
-        return portalPosition;
+        return new PortalPlacement()
+        {
+            Position = portalPosition,
+            Rotation = _rotateRight,
+            Orientation = portalOrientation,
+        };
     }
 
-    private Vector2 GetVerticalPlacement(Vector3Int cell, Vector2 position, Vector2 from)
+    private PortalPlacement GetVerticalPlacement(Vector3Int cell, Vector2 position, Vector2 from)
     {
         // Get center of cell we hit
         Vector2 cellSize = _tilemap.cellSize;
         Vector2 cellCenter = _tilemap.GetCellCenterWorld(cell);
 
         // Calculate portal placement
+        Vector2 portalOrientation;
         Vector2 portalPosition = new Vector2(cellCenter.x, position.y);
         float portalHeight = cellSize.y * 3;
 
@@ -150,12 +166,19 @@ public class PortalTiles : MonoBehaviour
         if (from.x > portalPosition.x)
         {
             portalPosition.x += cellSize.x / 2;
+            portalOrientation = Vector2.right;
         }
         else
         {
             portalPosition.x -= cellSize.x / 2;
+            portalOrientation = Vector2.left;
         }
 
-        return portalPosition;
+        return new PortalPlacement()
+        {
+            Position = portalPosition,
+            Rotation = Quaternion.identity,
+            Orientation = portalOrientation,
+        };
     }
 }

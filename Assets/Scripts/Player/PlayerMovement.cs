@@ -181,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
         //}
 
         // Cap maximum fall speed
-        //_rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -_stats.maxFallSpeed));
+        _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -_stats.maxFallSpeed));
         _rb.gravityScale = _stats.gravityScale;
     }
 

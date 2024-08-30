@@ -48,11 +48,11 @@ public class PlayerPortalInteractions : MonoBehaviour
         // Set collision state
         if (didHitPortal)
         {
-            //DisableCollisions(_ignoreCollisionsInPortal);
+            DisableCollisions(_ignoreCollisionsInPortal);
         }
         else
         {
-            //EnableCollisions(_ignoreCollisionsInPortal);
+            EnableCollisions(_ignoreCollisionsInPortal);
         }
 
         // Check portal entry
@@ -80,21 +80,21 @@ public class PlayerPortalInteractions : MonoBehaviour
         return Physics2D.Raycast(transform.position, direction, distance, _portalLayer).collider != null;
     }
 
-    //private void EnableCollisions(LayerMask collisionMask)
-    //{
-    //    // Turn on collision for specified ignore layers (i.e. stop ignoring them)
-    //    LayerMask current = Physics2D.GetLayerCollisionMask(gameObject.layer);
-    //    LayerMask newMask = collisionMask | current;
-    //    Physics2D.SetLayerCollisionMask(gameObject.layer, newMask);
-    //}
+    private void EnableCollisions(LayerMask collisionMask)
+    {
+        // Turn on collision for specified ignore layers (i.e. stop ignoring them)
+        LayerMask current = Physics2D.GetLayerCollisionMask(gameObject.layer);
+        LayerMask newMask = collisionMask | current;
+        Physics2D.SetLayerCollisionMask(gameObject.layer, newMask);
+    }
 
-    //private void DisableCollisions(LayerMask collisionMask)
-    //{
-    //    // Turn off collision for specified ignore layers
-    //    LayerMask current = Physics2D.GetLayerCollisionMask(gameObject.layer);
-    //    LayerMask newMask = ~collisionMask & current;
-    //    Physics2D.SetLayerCollisionMask(gameObject.layer, newMask);
-    //}
+    private void DisableCollisions(LayerMask collisionMask)
+    {
+        // Turn off collision for specified ignore layers
+        LayerMask current = Physics2D.GetLayerCollisionMask(gameObject.layer);
+        LayerMask newMask = ~collisionMask & current;
+        Physics2D.SetLayerCollisionMask(gameObject.layer, newMask);
+    }
 
 
     #region Editor Methods
