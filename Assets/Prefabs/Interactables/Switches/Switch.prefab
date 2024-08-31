@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9171585320070465513}
   - component: {fileID: 5289162231012866782}
   - component: {fileID: 2106075828008388367}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Switch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8375296220141659262}
   - component: {fileID: 1130423557363437552}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SwitchActivationArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
