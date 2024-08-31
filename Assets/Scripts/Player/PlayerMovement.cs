@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
     private PlayerInputActions _inputs;
+    private BoxCollider2D _boxCollider;
 
     // Trackers
     public bool IsFacingRight { get; private set; }
@@ -43,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
     private float _rayPortalCheckHoriz;
     private Vector2 _portalEnterCheck;
 
+    // Constant values
+    private float SNAP_X_OFFSET = 0.05f;
+
     private void Awake()
     {
         _inputs = new PlayerInputActions();   
@@ -53,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         // Get components
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _boxCollider = GetComponent<BoxCollider2D>();
 
         // Initialize values
         _rb.gravityScale = _stats.gravityScale;
@@ -278,6 +283,27 @@ public class PlayerMovement : MonoBehaviour
             IsFacingRight = !IsFacingRight;
         }
     }
+
+    #region Player Event Handlers
+
+    public void SnapAboveCollider(Collider2D collider)
+    {
+        Vector2 highestColliderPoint = collider.bounds.max;
+        Vector2 lowestPlayerPoint = _boxCollider.bounds.min;
+
+        // Snap the player above the collider if we are below it
+        // This is useful for the player walking directly into switches without
+        //   having to jump on top of them
+        if (lowestPlayerPoint.y < highestColliderPoint.y)
+        {
+            Vector2 offset = Vector2.zero;
+            offset.y = highestColliderPoint.y - lowestPlayerPoint.y;
+            offset.x = highestColliderPoint.x > lowestPlayerPoint.x ? SNAP_X_OFFSET : -SNAP_X_OFFSET;
+            _rb.MovePosition(_rb.position += offset);
+        }
+    }
+
+    #endregion
 
     #region Input Callbacks
 

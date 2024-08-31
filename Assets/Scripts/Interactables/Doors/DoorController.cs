@@ -25,4 +25,14 @@ public class DoorController : MonoBehaviour
             _spriteRenderer.enabled = false;
         }
     }
+
+    public void CloseDoor()
+    {
+        if (_isOpen)
+        {
+            _isOpen = false;
+            _collider.enabled = true;
+            _spriteRenderer.enabled = true;
+        }
+    }
 }
