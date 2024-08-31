@@ -13,7 +13,7 @@ public struct PortalPlacement
     public Vector2 Orientation { get; set; }
 }
 
-public class PortalTiles : MonoBehaviour
+public class PortalGround : MonoBehaviour
 {
     [Header("Events")]
     [SerializeField] private UnityEvent<PortalPlacement> _onPurplePortalPlaced;
@@ -69,16 +69,16 @@ public class PortalTiles : MonoBehaviour
         // Get the cell at position
         Vector3Int cell = _tilemap.WorldToCell(position);
 
-        // If there is a tile above or below we will place the portal vertically
-        if (_tilemap.HasTile(cell + Vector3Int.up) || _tilemap.HasTile(cell + Vector3Int.down))
-        {
-            return GetVerticalPlacement(cell, position, from);
-        }
-
-        // Else if there is a tile to the right or left we will place it horizontally
-        else if (_tilemap.HasTile(cell + Vector3Int.right) || _tilemap.HasTile(cell + Vector3Int.left))
+        // If there is a tile to the right or left we will place it horizontally
+        if (_tilemap.HasTile(cell + Vector3Int.right) && _tilemap.HasTile(cell + Vector3Int.left))
         {
             return GetHorizontalPlacement(cell, position, from);
+        }
+
+        // Else if there is a tile above or below we will place the portal vertically
+        else if (_tilemap.HasTile(cell + Vector3Int.up) && _tilemap.HasTile(cell + Vector3Int.down))
+        {
+            return GetVerticalPlacement(cell, position, from);
         }
 
         // This should never happen if we first called CanPlacePortal
