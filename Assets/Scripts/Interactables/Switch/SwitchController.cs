@@ -2,18 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum SwitchID
-{
-    DoorSwitch0
-}
+using UnityEngine.Events;
 
 public class SwitchController : MonoBehaviour
 {
-    [field: SerializeField] public SwitchID ID { get; private set; }
-
     [SerializeField] private Sprite _pressedSprite;
     [SerializeField] private Sprite _notPressedSprite;
+
+    [SerializeField] private UnityEvent _onSwitchActivated;
 
     private SpriteRenderer _spriteRenderer;
 
@@ -32,9 +28,10 @@ public class SwitchController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !_isPressed)
         {
             _isPressed = true;
+            _onSwitchActivated.Invoke();
         }
     }
 }
