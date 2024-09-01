@@ -274,10 +274,12 @@ public class PlayerMovement : MonoBehaviour
         // If we are facing the wrong way
         if (movingRight != IsFacingRight)
         {
-            // Invert character scale
-            Vector2 localScale = transform.localScale;
-            localScale.x *= -1;
-            transform.localScale = localScale;
+            //// Invert character scale
+            //Vector2 localScale = transform.localScale;
+            //localScale.x *= -1;
+            //transform.localScale = localScale;
+
+            transform.rotation *= Quaternion.Euler(0, 180, 0);
 
             // Change facing right check
             IsFacingRight = !IsFacingRight;

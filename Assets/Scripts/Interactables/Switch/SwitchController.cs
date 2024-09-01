@@ -19,6 +19,8 @@ public class SwitchController : MonoBehaviour
 
     private bool _isPressed;
 
+    private int _triggerCount;
+
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -40,13 +42,21 @@ public class SwitchController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _isPressed = true;
-        _onSwitchActivated?.Invoke();
+        _triggerCount++;
+        if (_triggerCount == 1)
+        {
+            _isPressed = true;
+            _onSwitchActivated?.Invoke();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _isPressed = false;
-        _onSwitchDeactivated?.Invoke();
+        _triggerCount--;
+        if (_triggerCount < 1)
+        {
+            _isPressed = false;
+            _onSwitchDeactivated?.Invoke();
+        }
     }
 }

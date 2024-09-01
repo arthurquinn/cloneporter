@@ -59,8 +59,8 @@ public class PlayerWeapon : MonoBehaviour
         {
             // Draw line to nearest collider in mouse direction
             _lineRenderer.enabled = true;
-            _lineRenderer.SetPosition(0, Vector2.zero);
-            _lineRenderer.SetPosition(1, _aimDirection * hit.distance * transform.parent.localScale);
+            _lineRenderer.SetPosition(0, transform.position);
+            _lineRenderer.SetPosition(1, (Vector2)transform.position + (_aimDirection * hit.distance));
         }
         else
         {
