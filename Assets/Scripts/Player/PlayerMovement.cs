@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
 
     // Components
     private Rigidbody2D _rb;
-    private SpriteRenderer _spriteRenderer;
     private PlayerInputActions _inputs;
     private BoxCollider2D _boxCollider;
 
@@ -56,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
     {
         // Get components
         _rb = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
         _boxCollider = GetComponent<BoxCollider2D>();
 
         // Initialize values
@@ -139,8 +137,8 @@ public class PlayerMovement : MonoBehaviour
     private void HandlePortalInteractions()
     {
         // Calculate raycast lengths
-        _rayPortalCheckVert = _spriteRenderer.bounds.extents.y + Mathf.Abs(_rb.velocity.y) * Time.fixedDeltaTime;
-        _rayPortalCheckHoriz = _spriteRenderer.bounds.extents.x + Mathf.Abs(_rb.velocity.x) * Time.fixedDeltaTime;
+        _rayPortalCheckVert = _boxCollider.bounds.extents.y + Mathf.Abs(_rb.velocity.y) * Time.fixedDeltaTime;
+        _rayPortalCheckHoriz = _boxCollider.bounds.extents.x + Mathf.Abs(_rb.velocity.x) * Time.fixedDeltaTime;
 
         // Check raycast hits
         // TODO: Not getting collision if both inside?? check this
