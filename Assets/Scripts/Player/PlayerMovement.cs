@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _standableTerrainLayers;
     [SerializeField] private LayerMask _portalLayer;
     [SerializeField] private LayerMask _ignoreCollisionsInPortal;
+
+    [Header("Events")]
+    [SerializeField] private UnityEvent _onJumpStart;
 
     // Components
     private Rigidbody2D _rb;
@@ -120,6 +124,10 @@ public class PlayerMovement : MonoBehaviour
         if (LastPressedJumpTime > 0 && LastOnGroundTime > 0 && !IsJumping)
         {
             StartJump = true;
+            if (_onJumpStart != null)
+            {
+                _onJumpStart.Invoke();
+            }
         }
     }
 
