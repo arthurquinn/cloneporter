@@ -40,6 +40,7 @@ public class LaserController : MonoBehaviour
     private void DrawLaser()
     {
         int i = 0;
+        _lineRenderer.positionCount = _laserPositions.Count;
         foreach (Vector2 position in _laserPositions)
         {
             _lineRenderer.SetPosition(i++, position);
@@ -60,5 +61,8 @@ public class LaserController : MonoBehaviour
         {
             _laserPositions.Add(hit.point);
         }
+
+        _laserPositions.Add(new Vector2(15, 8));
+        _laserPositions.Add(new Vector2(-15, 8));
     }
 }
