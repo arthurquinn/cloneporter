@@ -35700,6 +35700,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1885528342}
     m_Modifications:
+    - target: {fileID: 1560327312530456883, guid: 8fc2e2795cfdb4c49b2f7a8af1b194e5, type: 3}
+      propertyPath: m_Positions.Array.data[0].x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1560327312530456883, guid: 8fc2e2795cfdb4c49b2f7a8af1b194e5, type: 3}
+      propertyPath: m_Positions.Array.data[0].y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1560327312530456883, guid: 8fc2e2795cfdb4c49b2f7a8af1b194e5, type: 3}
+      propertyPath: m_Positions.Array.data[1].x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1560327312530456883, guid: 8fc2e2795cfdb4c49b2f7a8af1b194e5, type: 3}
+      propertyPath: m_Positions.Array.data[1].y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3843868589250247943, guid: 8fc2e2795cfdb4c49b2f7a8af1b194e5, type: 3}
       propertyPath: m_Name
       value: Burnout0
