@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public interface IPortal
 {
     void Port(Rigidbody2D rigidbody, Vector2 fromPosition);
+    Ray2D SimulatePort(Ray2D entry);
 }
 
 public class PortalController : MonoBehaviour, IPortal
@@ -25,9 +26,17 @@ public class PortalController : MonoBehaviour, IPortal
         _boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    private void FixedUpdate()
+    public Ray2D SimulatePort(Ray2D entry)
     {
+        // Calculate out direction
+        Vector2 outDirection = Vector2.Reflect(entry.direction, Orientation);
 
+        // Calculate out position
+        Vector2 offset = entry.origin - (Vector2)transform.position;
+        Vector2 outPosition = (Vector2)_linkedPortal.transform.position + offset;
+
+        // Return ray defining simulated port
+        return new Ray2D(outPosition, outDirection);
     }
 
     public void Port(Rigidbody2D rigidbody, Vector2 fromPosition)

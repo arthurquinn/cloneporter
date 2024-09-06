@@ -50,7 +50,6 @@ public class PortalActivation : MonoBehaviour
         IPortal portal = collision.GetComponent<IPortal>();
         if (portal != null)
         {
-            Debug.Log("Collision");
             _onPortalEntered.Invoke(portal);
         }
     }
