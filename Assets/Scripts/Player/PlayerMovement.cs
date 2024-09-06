@@ -168,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
         // Check portal entry
         _portalEnterCheck.x = Mathf.Max(0.01f, Mathf.Abs(_rb.velocity.x) * Time.fixedDeltaTime);
         _portalEnterCheck.y = Mathf.Max(0.01f, Mathf.Abs(_rb.velocity.y) * Time.fixedDeltaTime);
-        Collider2D collision = Physics2D.OverlapBox(transform.position, _portalEnterCheck, 0.0f, _portalLayer);
+        Collider2D collision = Physics2D.OverlapBox(_boxCollider.bounds.center, _portalEnterCheck, 0.0f, _portalLayer);
         if (collision != null && !WasPorted)
         {
             IPortal portal = collision.GetComponent<IPortal>();
@@ -188,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CheckPortalRaycast(Vector2 direction, float distance)
     {
-        return Physics2D.Raycast(transform.position, direction, distance, _portalLayer).collider != null;
+        return Physics2D.Raycast(_boxCollider.bounds.center, direction, distance, _portalLayer).collider != null;
     }
 
     private void EnableCollisions(LayerMask collisionMask)
@@ -339,13 +339,13 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireCube(_groundCheck.position, _groundCheckSize);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, (Vector2)transform.position + (Vector2.up * _rayPortalCheckVert));
-        Gizmos.DrawLine(transform.position, (Vector2)transform.position + (Vector2.down * _rayPortalCheckVert));
-        Gizmos.DrawLine(transform.position, (Vector2)transform.position + (Vector2.left * _rayPortalCheckHoriz));
-        Gizmos.DrawLine(transform.position, (Vector2)transform.position + (Vector2.right * _rayPortalCheckHoriz));
+        Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.up * _rayPortalCheckVert));
+        Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.down * _rayPortalCheckVert));
+        Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.left * _rayPortalCheckHoriz));
+        Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.right * _rayPortalCheckHoriz));
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position, _portalEnterCheck);
+        Gizmos.DrawWireCube(_boxCollider.bounds.center, _portalEnterCheck);
     }
 
     #endregion

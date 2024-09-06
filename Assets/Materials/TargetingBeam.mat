@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6160705831948716181
+--- !u!114 &-4141357092558135774
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LaserBeam
+  m_Name: TargetingBeam
   m_Shader: {fileID: -6465566751694194690, guid: af421c8937c97d348abd4a16cc36ecc1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -51,10 +51,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Distortion: 0.1
-    - _LaserSmoothness: 12
-    - _LaserThickness: 80
-    - _Speed: 2
+    - _Speed: 0.1
     m_Colors:
-    - _Color: {r: 4.237095, g: 0.6666511, b: 0.37973952, a: 0}
-    - _LaserSpeed: {r: -1, g: 0, b: 0, a: 0}
+    - _Color: {r: 0.43055677, g: 0.76844144, b: 0.33709928, a: 0}
   m_BuildTextureStacks: []
