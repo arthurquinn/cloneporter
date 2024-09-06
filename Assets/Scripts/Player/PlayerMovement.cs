@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using System.Runtime.CompilerServices;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -29,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
     public bool IsJumping { get; private set; }
     public bool IsJumpFalling { get; private set; }
     public bool IsJumpCut { get; private set; }
-    public bool WasPorted { get; private set; }
 
     // Timers
     public float LastPressedJumpTime { get; private set; }
@@ -133,9 +134,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandlePortalInteractions();
         if (LastInPortalTime < 0)
         {
+            HandlePortalInteractions();
             HandleMovement();
             HandleJump();
         }
@@ -165,25 +166,7 @@ public class PlayerMovement : MonoBehaviour
             EnableCollisions(_ignoreCollisionsInPortal);
         }
 
-        // Check portal entry
-        _portalEnterCheck.x = Mathf.Max(0.01f, Mathf.Abs(_rb.velocity.x) * Time.fixedDeltaTime);
-        _portalEnterCheck.y = Mathf.Max(0.01f, Mathf.Abs(_rb.velocity.y) * Time.fixedDeltaTime);
-        Collider2D collision = Physics2D.OverlapBox(_boxCollider.bounds.center, _portalEnterCheck, 0.0f, _portalLayer);
-        if (collision != null && !WasPorted)
-        {
-            IPortal portal = collision.GetComponent<IPortal>();
-            if (portal != null)
-            {
-                portal.Port(_rb, LastFixedPosition);
-                WasPorted = true;
-                LastInPortalTime = _stats.portalInputTimeout;
-            }
-        }
-        else if (collision == null)
-        {
-            WasPorted = false;
-        }
-        LastFixedPosition= _rb.position;
+        LastFixedPosition = _rb.position;
     }
 
     private bool CheckPortalRaycast(Vector2 direction, float distance)
@@ -254,6 +237,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleGravity()
     {
+
         //if (IsJumpCut)
         //{
         //    // Higher gravity scale if player released jump button early
@@ -280,11 +264,7 @@ public class PlayerMovement : MonoBehaviour
         // If we are facing the wrong way
         if (movingRight != IsFacingRight)
         {
-            //// Invert character scale
-            //Vector2 localScale = transform.localScale;
-            //localScale.x *= -1;
-            //transform.localScale = localScale;
-
+            // Rotate character 180 degrees on the y axis to "flip"
             transform.rotation *= Quaternion.Euler(0, 180, 0);
 
             // Change facing right check
@@ -311,6 +291,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void OnPortalEntered(IPortal portal)
+    {
+        if (LastInPortalTime < 0)
+        {
+            portal.Port(_rb, LastFixedPosition);
+            LastInPortalTime = _stats.portalInputTimeout;
+        }
+    }
+
+    //private IEnumerator TakePortal(IPortal portal)
+    //{
+    //    yield return null;
+
+    //}
+
     #endregion
 
     #region Input Callbacks
@@ -335,17 +330,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(_groundCheck.position, _groundCheckSize);
+        //Gizmos.color = Color.green;
+        //Gizmos.DrawWireCube(_groundCheck.position, _groundCheckSize);
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.up * _rayPortalCheckVert));
-        Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.down * _rayPortalCheckVert));
-        Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.left * _rayPortalCheckHoriz));
-        Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.right * _rayPortalCheckHoriz));
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.up * _rayPortalCheckVert));
+        //Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.down * _rayPortalCheckVert));
+        //Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.left * _rayPortalCheckHoriz));
+        //Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.right * _rayPortalCheckHoriz));
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(_boxCollider.bounds.center, _portalEnterCheck);
+        //Gizmos.color = Color.blue;
+        //Gizmos.DrawWireCube(_boxCollider.bounds.center, _portalEnterCheck);
     }
 
     #endregion
