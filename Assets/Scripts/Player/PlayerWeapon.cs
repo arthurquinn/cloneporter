@@ -9,6 +9,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(LineRenderer))]
 public class PlayerWeapon : MonoBehaviour
 {
+    [Header("Player")]
+    [SerializeField] private Transform _playerTransform;
+
     [Header("Events")]
     [SerializeField] private UnityEvent<Vector2, Vector2> _onPurplePortalFire;
     [SerializeField] private UnityEvent<Vector2, Vector2> _onTealPortalFire;
@@ -69,6 +72,8 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Update()
     {
+        transform.position = _playerTransform.position;
+
         if (_isAiming)
         {
             DrawAimLine();
