@@ -318,5 +318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 423862778bc569d4eae049174f7db0a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _laserSegment0: {fileID: 2552147196503333289}
-  _laserSegment1: {fileID: 6986813144160671750}
+  _laserLines:
+  - {fileID: 2552147196503333289}
+  - {fileID: 6986813144160671750}

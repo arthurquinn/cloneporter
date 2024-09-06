@@ -122,11 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!120 &7678710 stripped
-LineRenderer:
-  m_CorrespondingSourceObject: {fileID: 6986813144160671750, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
-  m_PrefabInstance: {fileID: 2790850116409916752}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &67800789 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
@@ -30270,11 +30265,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!120 &667031599 stripped
-LineRenderer:
-  m_CorrespondingSourceObject: {fileID: 2552147196503333289, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
-  m_PrefabInstance: {fileID: 2790850116409916752}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &717450862
 GameObject:
   m_ObjectHideFlags: 0
@@ -36219,18 +36209,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1885528342}
     m_Modifications:
-    - target: {fileID: 3417239646366824604, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
-      propertyPath: _laserSegments.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3417239646366824604, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
-      propertyPath: _laserSegments.Array.data[0]
-      value: 
-      objectReference: {fileID: 667031599}
-    - target: {fileID: 3417239646366824604, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
-      propertyPath: _laserSegments.Array.data[1]
-      value: 
-      objectReference: {fileID: 7678710}
     - target: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -36423,33 +36401,13 @@ PrefabInstance:
       value: Burnout0
       objectReference: {fileID: 0}
     - target: {fileID: 6892292148806604768, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
-      propertyPath: _onLaserPositionsChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      propertyPath: _portalMask.m_Bits
+      value: 256
       objectReference: {fileID: 0}
-    - target: {fileID: 6892292148806604768, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
-      propertyPath: _onLaserSegmentsChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 67800791}
     - target: {fileID: 6892292148806604768, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
       propertyPath: _onLaserPositionsChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 67800791}
-    - target: {fileID: 6892292148806604768, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
-      propertyPath: _onLaserPositionsChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6892292148806604768, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
-      propertyPath: _onLaserPositionsChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetLaserPositions
-      objectReference: {fileID: 0}
-    - target: {fileID: 6892292148806604768, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
-      propertyPath: _onLaserPositionsChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: LaserController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6892292148806604768, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
-      propertyPath: _onLaserPositionsChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 7206752567396560587, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
       propertyPath: m_LocalPosition.x
       value: -35.311592

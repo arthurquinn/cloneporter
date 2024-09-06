@@ -1,47 +1,53 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LaserController : MonoBehaviour
 {
     [SerializeField] private LineRenderer[] _laserLines;
 
-    private Vector2[] _positions;
-    private int[] _segments;
+    private Vector3[][] _positions;
 
     private void Update()
     {
-        // Variable to track scan ahead for segment counting 
-        int segScan = 1;
+        DrawLines();
+    }
 
-        // Which line renderer should we use
-        int currentLine = 0;
-
-        // Iterate over every possible position in our laser
-        for (int positionIndex = 0; positionIndex < _positions.Length;)
+    private void DrawLines()
+    {
+        for (int currentLine = 0; currentLine < _laserLines.Length; currentLine++)
         {
-            // First, count out how many segments will make up this section of laser
-            // We need to do this to set the positions in our line renderer
-            int segCount = 1;
-            while (_segments[segScan] == _segments[segScan + 1])
+            // If there exists a line to be drawn
+            if (_positions[currentLine][0] != Vector3.zero)
             {
-                segScan += 2;
-                segCount++;
+                DrawLine(currentLine);
             }
-
-            // Set the count before setting up line (unfortunately this seems to be required)
-            // The number of positions always equal to the number of segments + 1
-            _laserLines[currentLine].positionCount = segCount + 1;
-            for (; positionIndex < segCount + 1; positionIndex++)
+            else
             {
-                _laserLines[currentLine].SetPosition(positionIndex, _positions[positionIndex]);
+                _laserLines[currentLine].enabled = false;
             }
         }
     }
 
-    public void SetLaserPositions(Vector2[] positions, int[] segments)
+    private void DrawLine(int currentLine)
     {
-        // TODO: This is a really good spot to check to see if the values are equal and not redraw them
+        // Get line renderer and positions
+        LineRenderer lineRenderer = _laserLines[currentLine];
+        Vector3[] positions = _positions[currentLine];
+
+        // Count the number of positions
+        int positionCount = 0;
+        for (; positionCount < _positions.Length && positions[positionCount] != Vector3.zero; positionCount++) { }
+
+        // Draw the line
+        lineRenderer.enabled = true;
+        lineRenderer.positionCount = positionCount;
+        lineRenderer.SetPositions(positions);
+    }
+
+    public void SetLaserPositions(Vector3[][] positions)
+    {
+        // Set the positions to be drawn next update
         _positions = positions;
-        _segments = segments;
     }
 }

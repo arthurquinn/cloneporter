@@ -240,12 +240,12 @@ MonoBehaviour:
   _laserCollisionMask:
     serializedVersion: 2
     m_Bits: 3016
-  _onLaserSegmentsChanged:
+  _onLaserPositionsChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LaserController, Assembly-CSharp
-        m_MethodName: SetLaser
+        m_MethodName: SetLaserPositions
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
