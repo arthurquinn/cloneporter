@@ -31,8 +31,14 @@ public class PortalController : MonoBehaviour, IPortal
         // Calculate out direction
         Vector2 outDirection = Vector2.Reflect(entry.direction, Orientation);
 
+        // Calculate and adjust for different rotations between portals
+        float angleDiff = Vector2.SignedAngle(Orientation, _linkedPortal.Orientation);
+        Quaternion rotationDiff = Quaternion.Euler(0, 0, angleDiff);
+        outDirection = rotationDiff * outDirection;
+
         // Calculate out position
         Vector2 offset = entry.origin - (Vector2)transform.position;
+        offset = rotationDiff * offset;
         Vector2 outPosition = (Vector2)_linkedPortal.transform.position + offset;
 
         // Return ray defining simulated port
