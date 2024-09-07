@@ -295,16 +295,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (LastInPortalTime < 0)
         {
-            portal.Port(_rb, LastFixedPosition);
+            // Get our entry ray
+            Vector2 entryDirection = _rb.velocity.normalized;
+            Vector2 entryPoint = LastFixedPosition;
+            Ray2D entryRay = new Ray2D(entryPoint, entryDirection);
+
+            // Use portal interface to apply port to our rigidbody
+            portal.ApplyPort(entryRay, _rb);
+
+            // Set our last in portal time
             LastInPortalTime = _stats.portalInputTimeout;
         }
     }
-
-    //private IEnumerator TakePortal(IPortal portal)
-    //{
-    //    yield return null;
-
-    //}
 
     #endregion
 

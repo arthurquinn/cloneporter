@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 
 public interface IPortal
 {
-    void Port(Rigidbody2D rigidbody, Vector2 fromPosition);
     Ray2D SimulatePort(Ray2D entry);
+    void ApplyPort(Ray2D entry, Rigidbody2D rigidbody);
 }
 
 public class PortalController : MonoBehaviour, IPortal
@@ -45,214 +46,18 @@ public class PortalController : MonoBehaviour, IPortal
         return new Ray2D(outPosition, outDirection);
     }
 
-    public void Port(Rigidbody2D rigidbody, Vector2 fromPosition)
+    public void ApplyPort(Ray2D entry, Rigidbody2D rigidbody)
     {
-        Vector2 offset = fromPosition - (Vector2)transform.position;
-        Vector2 velocity = rigidbody.velocity;
-        if (_orientation == Vector2.up)
-        {
-            offset = GetOrientationUpOffset(offset);
-            velocity = GetOrientationUpVelocity(velocity);
-        }
-        else if (_orientation == Vector2.down)
-        {
-            offset = GetOrientationDownOffset(offset);
-            velocity = GetOrientationDownVelocity(velocity);
-        }
-        else if (_orientation == Vector2.left)
-        {
-            offset = GetOrientationLeftOffset(offset);
-            velocity = GetOrientationLeftVelocity(velocity);
-        }
-        else if (_orientation == Vector2.right)
-        {
-            offset = GetOrientationRightOffset(offset);
-            velocity = GetOrientationRightVelocity(velocity);
-        }
-        rigidbody.position = (Vector2)_linkedPortal.transform.position + offset;
-        rigidbody.AddForce(velocity - rigidbody.velocity, ForceMode2D.Impulse);
-    }
+        // Get the exit ray
+        Ray2D exitRay = SimulatePort(entry);
 
-    // Verified working
-    public Vector2 GetOrientationUpOffset(Vector2 offset)
-    {
-        if (_linkedPortal.Orientation == Vector2.up)
-        {
-            return new Vector2(offset.x, offset.y);
-        }
-        else if (_linkedPortal.Orientation == Vector2.down)
-        {
-            return new Vector2(-offset.x, -offset.y);
-        }
-        else if (_linkedPortal.Orientation == Vector2.left)
-        {
-            return new Vector2(-offset.y, offset.x);
-        }
-        else if (_linkedPortal.Orientation == Vector2.right)
-        {
-            return new Vector2(offset.y, -offset.x);
-        }
+        // Apply the port position to our rigibody
+        rigidbody.position = exitRay.origin;
 
-        return offset;
-    }
-
-    // Verified working
-    public Vector2 GetOrientationDownOffset(Vector2 offset)
-    {
-        if (_linkedPortal.Orientation == Vector2.up)
-        {
-            return new Vector2(-offset.x, -offset.y);
-        }
-        else if (_linkedPortal.Orientation == Vector2.down)
-        {
-            return new Vector2(offset.x, offset.y);
-        }
-        else if ( _linkedPortal.Orientation == Vector2.left)
-        {
-            return new Vector2(offset.y, -offset.x);
-        }
-        else if (_linkedPortal.Orientation == Vector2.right)
-        {
-            return new Vector2(-offset.y, offset.x);
-        }
-
-        return offset;
-    }
-
-    // Verified working
-    public Vector2 GetOrientationLeftOffset(Vector2 offset)
-    {
-        if (_linkedPortal.Orientation == Vector2.up)
-        {
-            return new Vector2(-offset.y, -offset.x);
-        }
-        else if (_linkedPortal.Orientation == Vector2.down)
-        {
-            return new Vector2(offset.y, offset.x);
-        }
-        else if (_linkedPortal.Orientation == Vector2.left)
-        {
-            return new Vector2(offset.x, -offset.y);
-        }
-        else if (_linkedPortal.Orientation== Vector2.right)
-        {
-            return new Vector2(-offset.x, offset.y);
-        }
-
-        return offset;
-    }
-
-    public Vector2 GetOrientationRightOffset(Vector2 offset)
-    {
-        if (_linkedPortal.Orientation == Vector2.up)
-        {
-            return new Vector2(offset.y, offset.x);
-        }
-        else if (_linkedPortal.Orientation == Vector2.down)
-        {
-            return new Vector2(-offset.y, -offset.x);
-        }
-        else if (_linkedPortal.Orientation == Vector2.left)
-        {
-            return new Vector2(-offset.x, offset.y);
-        }
-        else if (_linkedPortal.Orientation == Vector2.right)
-        {
-            return new Vector2(offset.x, -offset.y);
-        }
-
-        return offset;
-    }
-
-    // Verified working
-    public Vector2 GetOrientationUpVelocity(Vector2 velocity)
-    {
-        if (_linkedPortal.Orientation == Vector2.up)
-        {
-            return Vector2.Reflect(velocity, Vector2.down);
-        }
-        else if (_linkedPortal.Orientation == Vector2.down)
-        {
-            return velocity;
-        }
-        else if (_linkedPortal.Orientation == Vector2.left)
-        {
-            return new Vector2(velocity.y, velocity.x);
-        }
-        else if (_linkedPortal.Orientation == Vector2.right)
-        {
-            return new Vector2(-velocity.y, -velocity.x);
-        }
-
-        return velocity;
-    }
-
-    // Verified working
-    public Vector2 GetOrientationDownVelocity(Vector2 velocity)
-    {
-        if (_linkedPortal.Orientation == Vector2.up)
-        {
-            return velocity;
-        }
-        else if (_linkedPortal.Orientation == Vector2.down)
-        {
-            return Vector2.Reflect(velocity, Vector2.up);
-        }
-        else if (_linkedPortal.Orientation == Vector2.left)
-        {
-            return new Vector2(-velocity.y, -velocity.x);
-        }
-        else if (_linkedPortal.Orientation == Vector2.right)
-        {
-            return new Vector2(velocity.y, velocity.x);
-        }
-
-        return velocity;
-    }
-
-    // Verified working
-    public Vector2 GetOrientationLeftVelocity(Vector2 velocity)
-    {
-        if (_linkedPortal.Orientation == Vector2.up)
-        {
-            return new Vector2(velocity.y, velocity.x);
-        }
-        else if (_linkedPortal.Orientation == Vector2.down)
-        {
-            return new Vector2(-velocity.y, -velocity.x);
-        }
-        else if (_linkedPortal.Orientation == Vector2.left)
-        {
-            return new Vector2(-velocity.x, velocity.y);
-        }
-        else if (_linkedPortal.Orientation == Vector2.right)
-        {
-            return velocity;
-        }
-
-        return velocity;
-    }
-
-    public Vector2 GetOrientationRightVelocity(Vector2 velocity)
-    {
-        if (_linkedPortal.Orientation == Vector2.up)
-        {
-            return new Vector2(-velocity.y, -velocity.x);
-        }
-        else if (_linkedPortal.Orientation == Vector2.down)
-        {
-            return new Vector2(velocity.y, velocity.x);
-        }
-        else if (_linkedPortal.Orientation == Vector2.left)
-        {
-            return velocity;
-        }
-        else if (_linkedPortal.Orientation == Vector2.right)
-        {
-            return new Vector2(-velocity.x, velocity.y);
-        }
-
-        return velocity;
+        // Calculate the exit velocity and apply it to our rigidbody
+        Vector2 exitVelocity = rigidbody.velocity.magnitude * exitRay.direction;
+        Vector2 appliedForce = exitVelocity - rigidbody.velocity;
+        rigidbody.AddForce(appliedForce, ForceMode2D.Impulse);
     }
 
     public void SetPortal(PortalPlacement placement)
