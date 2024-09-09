@@ -122,11 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &34592512 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5440834275309745643, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
-  m_PrefabInstance: {fileID: 1906442352}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &131472833 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4390288593108204665, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
@@ -30509,6 +30504,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &675829110 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6522516968979355891, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
+  m_PrefabInstance: {fileID: 1906442352}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &717450862
 GameObject:
   m_ObjectHideFlags: 0
@@ -30660,6 +30660,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1048898016}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &828445003 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
+  m_PrefabInstance: {fileID: 5879958382943358092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b577b007f795cd846895eba4f09cdbce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &843947386 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5290804371779345468, guid: 1388e5e02f4a6914eb7a14a15d153d75, type: 3}
@@ -31085,6 +31096,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2570637233379550456, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
+      propertyPath: _onGunPositionChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 828445003}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31095,6 +31110,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1386280361689124618, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
   m_PrefabInstance: {fileID: 1906442352}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1906442358 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2570637233379550456, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
+  m_PrefabInstance: {fileID: 1906442352}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e809901bc63f86240a4dd273b2010900, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1958379583
 GameObject:
   m_ObjectHideFlags: 0
@@ -33253,13 +33279,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 185214416}
     m_Modifications:
     - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
-      propertyPath: _playerTransform
+      propertyPath: _initialAimOrigin
       value: 
-      objectReference: {fileID: 34592512}
+      objectReference: {fileID: 675829110}
     - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
       propertyPath: _rightArmEffector
       value: 
       objectReference: {fileID: 131472833}
+    - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
+      propertyPath: _onPlayerStopAim.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1906442358}
     - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
       propertyPath: _onTealPortalFire.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -33268,6 +33298,10 @@ PrefabInstance:
       propertyPath: _onPurplePortalFire.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1958379585}
+    - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
+      propertyPath: _onPlayerAimPosition.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1906442358}
     - target: {fileID: 2853524243377194045, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
       propertyPath: m_Name
       value: PlayerWeapon
