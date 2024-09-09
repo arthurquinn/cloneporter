@@ -33,6 +33,8 @@ public class PortalController : MonoBehaviour, IPortal
         _boxCollider = GetComponent<BoxCollider2D>();
     }
 
+    #region Public Methods
+
     public Ray2D SimulatePort(Ray2D entry)
     {
         // Calculate out direction
@@ -71,8 +73,10 @@ public class PortalController : MonoBehaviour, IPortal
         _spriteRenderer.enabled = true;
         _boxCollider.enabled = true;
         transform.position = placement.Position;
-        transform.rotation = placement.Rotation;
-        //_orientation = placement.Orientation;
+        SetRotation(placement.Orientation);
+        _orientation = placement.Orientation;
+
+        Debug.Log("Orientation: " + _orientation);
     }
 
     public void ClearPortal()
@@ -84,5 +88,19 @@ public class PortalController : MonoBehaviour, IPortal
     public Bounds GetBounds()
     {
         return _spriteRenderer.bounds;
+    }
+
+    #endregion
+
+    private void SetRotation(Vector2 orientation)
+    {
+        if (orientation == Vector2.up || orientation == Vector2.down)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
+        else
+        {
+            transform.rotation = Quaternion.identity;
+        }
     }
 }

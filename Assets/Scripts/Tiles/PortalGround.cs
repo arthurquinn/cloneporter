@@ -7,12 +7,12 @@ using UnityEngine.Events;
 public struct PortalPlacement
 {
     public Vector2 Position { get; private set; }
-    public Quaternion Rotation { get; private set; }
+    public Vector2 Orientation { get; private set; }
 
-    public PortalPlacement(Vector2 position, Quaternion rotation)
+    public PortalPlacement(Vector2 position, Vector2 orientation)
     {
         Position = position;
-        Rotation = rotation;
+        Orientation = orientation;
     }
 }
 
@@ -43,29 +43,127 @@ public class PortalGround : MonoBehaviour
                 Vector2 cellCenterWorld = _tilemap.GetCellCenterWorld(cellPosition);
                 Vector2 targetCentered = new Vector2(cellCenterWorld.x, entry.origin.y);
 
-                OpenPortalForColor(color, targetCentered, Quaternion.identity);
+                OpenPortalForColor(color, targetCentered, GetVerticalOrientation(entry.direction));
             }
-            else
+            else if (CanOpenHorizontally(cellPosition, entry))
             {
-                Debug.Log("NO");
+                // Get the cell centered target location for the portal
+                Vector2 cellCenterWorld = _tilemap.GetCellCenterWorld(cellPosition);
+                Vector2 targetCentered = new Vector2(entry.origin.x, cellCenterWorld.y);
+
+                OpenPortalForColor(color, targetCentered, GetHorizontalOrientation(entry.direction));
             }
         }
     }
 
-    private void OpenPortalForColor(PortalColor color, Vector2 position, Quaternion rotation)
+    private Vector2 GetVerticalOrientation(Vector2 entryDirection)
+    {
+        if (entryDirection.x > 0)
+        {
+            return Vector2.left;
+        }
+        else
+        {
+            return Vector2.right;
+        }
+    }
+
+    private Vector2 GetHorizontalOrientation(Vector2 entryDirection)
+    {
+        if (entryDirection.y > 0)
+        {
+            return Vector2.down;
+        }
+        else
+        {
+            return Vector2.up;
+        }
+    }
+
+    private void OpenPortalForColor(PortalColor color, Vector2 position, Vector2 orientation)
     {
         if (color == PortalColor.Purple)
         {
-            _onPurplePortalOpened.Invoke(new PortalPlacement(position, rotation));
+            _onPurplePortalOpened.Invoke(new PortalPlacement(position, orientation));
         }
         else if (color == PortalColor.Teal)
         {
-            _onTealPortalOpened.Invoke(new PortalPlacement(position, rotation));
+            _onTealPortalOpened.Invoke(new PortalPlacement(position, orientation));
         }
         else
         {
             Debug.LogWarning("Unreachable code: Should have a portal color of teal or purple");
         }
+    }
+
+    private bool CanOpenHorizontally(Vector3Int cellPosition, Ray2D entry)
+    {
+        // Get the cell centered target location for the portal
+        Vector2 cellCenterWorld = _tilemap.GetCellCenterWorld(cellPosition);
+        Vector2 targetCentered = new Vector2(entry.origin.x, cellCenterWorld.y);
+
+        DebugRayAtPosition(targetCentered, Color.red, Vector2.up);
+
+        // Since we are placing the portal horizontally, multiply the y extent by the
+        //   vector (1, 0) to get the horizontal length
+        Bounds portalBounds = _portal.GetBounds();
+        Vector2 checkPosition = targetCentered - portalBounds.extents.y * Vector2.right;
+        Vector2 rightPosition = targetCentered + portalBounds.extents.y * Vector2.right;
+
+        // If we shot down, the above tiles must be empty
+        // If we shot up, the below tiles must be empty
+        Vector3Int emptyDirection = GetHorizontalEmptyDirection(entry.direction);
+
+        DebugRayAtPosition(checkPosition, Color.red, Vector2.up);
+        DebugRayAtPosition(rightPosition, Color.red, Vector2.up);
+
+        return CheckAllHorizontalPositions(checkPosition, rightPosition, emptyDirection);
+    }
+
+    private bool CheckAllHorizontalPositions(Vector2 checkPosition, Vector2 rightPosition, Vector3Int emptyDirection)
+    {
+        // Keep checking until we are past the right position by more than one cell size width
+        bool canOpen = true;
+        bool rightCheck = false;
+        while (checkPosition.x < rightPosition.x || !rightCheck)
+        {
+            // If we are past the right position, snap the check to the right position
+            if (checkPosition.x > rightPosition.x)
+            {
+                checkPosition.x = rightPosition.x;
+                rightCheck = true;
+            }
+
+            // Get the cell position of our check position
+            Vector3Int checkCellPosition = _tilemap.WorldToCell(checkPosition);
+
+            // Is this a valid position to open a vertical portal?
+            if (IsValidPosition(checkCellPosition, emptyDirection))
+            {
+                DebugRayAtPosition(checkPosition, Color.green, Vector2.up);
+                checkPosition.x += _tilemap.cellSize.x;
+            }
+            else
+            {
+                canOpen = false;
+                break;
+            }
+        }
+        return canOpen;
+    }
+
+    private Vector3Int GetHorizontalEmptyDirection(Vector2 entryDirection)
+    {
+        Vector3Int emptyDirection;
+        if (entryDirection.y > 0)
+        {
+            emptyDirection = Vector3Int.down;
+        }
+        else
+        {
+            emptyDirection = Vector3Int.up;
+        }
+        return emptyDirection;
     }
 
     private bool CanOpenVertically(Vector3Int cellPosition, Ray2D entry)
@@ -74,7 +172,7 @@ public class PortalGround : MonoBehaviour
         Vector2 cellCenterWorld = _tilemap.GetCellCenterWorld(cellPosition);
         Vector2 targetCentered = new Vector2(cellCenterWorld.x, entry.origin.y);
 
-        DebugRayAtPosition(targetCentered, Color.red);
+        DebugRayAtPosition(targetCentered, Color.red, Vector2.right);
 
         // Get the upper and lower bounds of the portal position
         Bounds portalBounds = _portal.GetBounds();
@@ -85,8 +183,8 @@ public class PortalGround : MonoBehaviour
         // If we shot from the left, the right tiles must be empty
         Vector3Int emptyDirection = GetVerticalEmptyDirection(entry.direction);
 
-        DebugRayAtPosition(checkPosition, Color.red);
-        DebugRayAtPosition(topPosition, Color.red);
+        DebugRayAtPosition(checkPosition, Color.red, Vector2.right);
+        DebugRayAtPosition(topPosition, Color.red, Vector2.right);
 
         return CheckAllVerticalPositions(checkPosition, topPosition, emptyDirection);
     }
@@ -109,9 +207,9 @@ public class PortalGround : MonoBehaviour
             Vector3Int checkCellPosition = _tilemap.WorldToCell(checkPosition);
 
             // Is this a valid position to open a vertical portal?
-            if (IsValidVerticalPosition(checkCellPosition, emptyDirection))
+            if (IsValidPosition(checkCellPosition, emptyDirection))
             {
-                DebugRayAtPosition(checkPosition, Color.green);
+                DebugRayAtPosition(checkPosition, Color.green, Vector2.right);
                 checkPosition.y += _tilemap.cellSize.y;
             }
             else
@@ -137,7 +235,7 @@ public class PortalGround : MonoBehaviour
         return emptyDirection;
     }
 
-    private bool IsValidVerticalPosition(Vector3Int cellPosition, Vector3Int emptyDirection)
+    private bool IsValidPosition(Vector3Int cellPosition, Vector3Int emptyDirection)
     {
         bool hasTile = _tilemap.HasTile(cellPosition);
         bool hasNeighbor = HasNeighbor(cellPosition, emptyDirection);
@@ -151,8 +249,8 @@ public class PortalGround : MonoBehaviour
         return _tilemap.HasTile(cellPosition + neighbor) || _groundTilemap.HasTile(cellPosition + neighbor);
     }
 
-    private void DebugRayAtPosition(Vector2 position, Color color)
+    private void DebugRayAtPosition(Vector2 position, Color color, Vector2 direction)
     {
-        Debug.DrawRay(position, Vector2.right, color, 5.0f);
+        Debug.DrawRay(position, direction, color, 5.0f);
     }
 }
