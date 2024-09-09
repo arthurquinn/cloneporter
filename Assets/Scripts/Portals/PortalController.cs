@@ -5,6 +5,12 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum PortalColor
+{
+    Purple,
+    Teal,
+}
+
 public interface IPortal
 {
     Ray2D SimulatePort(Ray2D entry);
@@ -60,18 +66,23 @@ public class PortalController : MonoBehaviour, IPortal
         rigidbody.AddForce(appliedForce, ForceMode2D.Impulse);
     }
 
-    public void SetPortal(PortalPlacement placement)
-    {
-        _spriteRenderer.enabled = true;
-        _boxCollider.enabled = true;
-        transform.position = placement.Position;
-        transform.rotation = placement.Rotation;
-        _orientation = placement.Orientation;
-    }
+    //public void SetPortal(PortalPlacement placement)
+    //{
+    //    _spriteRenderer.enabled = true;
+    //    _boxCollider.enabled = true;
+    //    transform.position = placement.Position;
+    //    transform.rotation = placement.Rotation;
+    //    _orientation = placement.Orientation;
+    //}
 
     public void ClearPortal()
     {
         _spriteRenderer.enabled = false;
         _boxCollider.enabled = false;
+    }
+
+    public Bounds GetBounds()
+    {
+        return _spriteRenderer.bounds;
     }
 }

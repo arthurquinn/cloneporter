@@ -10,8 +10,7 @@ using UnityEngine.InputSystem;
 public class PlayerWeapon : MonoBehaviour
 {
     [Header("Events")]
-    [SerializeField] private UnityEvent<Vector2, Vector2> _onPurplePortalFire;
-    [SerializeField] private UnityEvent<Vector2, Vector2> _onTealPortalFire;
+    [SerializeField] private UnityEvent<PortalColor, Ray2D> _onPortalGunFired;
     [SerializeField] private UnityEvent<Vector2> _onPlayerAimPosition;
     [SerializeField] private UnityEvent _onPlayerStopAim;
 
@@ -93,11 +92,8 @@ public class PlayerWeapon : MonoBehaviour
 
         // Raycast to find nearest collider
         RaycastHit2D hit = Physics2D.Raycast(_aimOrigin, _aimDirection, _raycastLength, _targetLayer);
-        Debug.Log(hit);
         if (hit.collider != null)
         {
-            Debug.Log(hit.collider);
-
             // Draw line to nearest collider in mouse direction
             Vector2 aimPos = _aimOrigin + (_aimDirection * hit.distance);
             _lineRenderer.enabled = true;
@@ -128,7 +124,7 @@ public class PlayerWeapon : MonoBehaviour
     private void OnFireLeftCanceled(InputAction.CallbackContext context)
     {
         _isAiming = false;
-        TryShootPortal(_onPurplePortalFire);
+        TryShootPortal(PortalColor.Purple);
 
         _onPlayerStopAim.Invoke();
     }
@@ -136,12 +132,12 @@ public class PlayerWeapon : MonoBehaviour
     private void OnFireRightCanceled(InputAction.CallbackContext context)
     {
         _isAiming = false;
-        TryShootPortal(_onTealPortalFire);
+        TryShootPortal(PortalColor.Teal);
 
         _onPlayerStopAim.Invoke();
     }
 
-    private void TryShootPortal(UnityEvent<Vector2, Vector2> shootEvent)
+    private void TryShootPortal(PortalColor portalColor)
     {
         // Check if we are aiming at a portal tile
         RaycastHit2D hit = Physics2D.Raycast(_aimOrigin, _aimDirection, _raycastLength, _targetLayer);
@@ -149,12 +145,13 @@ public class PlayerWeapon : MonoBehaviour
         {
             // TODO: I really want something better than this
             Vector2 adjustedHitPoint = hit.point + ((hit.point - _aimOrigin).normalized) * _hitDetectionMultiplier;
+            Vector2 entryDirection = (adjustedHitPoint - _aimOrigin).normalized;
 
-            // Invoke the unity event
-            if (shootEvent != null)
-            {
-                shootEvent.Invoke(adjustedHitPoint, _aimOrigin);
-            }
+            // Set up the entry ray of the fired shot
+            Ray2D entry = new Ray2D(adjustedHitPoint, entryDirection);
+
+            // Call unity event for portal gun fired
+            _onPortalGunFired.Invoke(portalColor, entry);
         }
     }
 

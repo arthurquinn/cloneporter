@@ -165,11 +165,11 @@ public class PlayerMovement : MonoBehaviour
         // Set collision state
         if (didHitPortal)
         {
-            DisableCollisions(_ignoreCollisionsInPortal);
+            //DisableCollisions(_ignoreCollisionsInPortal);
         }
         else
         {
-            EnableCollisions(_ignoreCollisionsInPortal);
+            //EnableCollisions(_ignoreCollisionsInPortal);
         }
 
         LastFixedPosition = _rb.position;
