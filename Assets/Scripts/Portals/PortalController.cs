@@ -66,14 +66,14 @@ public class PortalController : MonoBehaviour, IPortal
         rigidbody.AddForce(appliedForce, ForceMode2D.Impulse);
     }
 
-    //public void SetPortal(PortalPlacement placement)
-    //{
-    //    _spriteRenderer.enabled = true;
-    //    _boxCollider.enabled = true;
-    //    transform.position = placement.Position;
-    //    transform.rotation = placement.Rotation;
-    //    _orientation = placement.Orientation;
-    //}
+    public void SetPortal(PortalPlacement placement)
+    {
+        _spriteRenderer.enabled = true;
+        _boxCollider.enabled = true;
+        transform.position = placement.Position;
+        transform.rotation = placement.Rotation;
+        //_orientation = placement.Orientation;
+    }
 
     public void ClearPortal()
     {

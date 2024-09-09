@@ -236,7 +236,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 30
+  m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -31595,6 +31595,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1851839252, guid: 3e48e5f6dc45c2049b13e9241ed88406, type: 3}
+    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7546552540717065692, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_Name
       value: PurplePortal
@@ -31656,10 +31664,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -763142509, guid: 3e48e5f6dc45c2049b13e9241ed88406, type: 3}
     - target: {fileID: 7546552540717065692, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_Name
       value: TealPortal
@@ -32661,6 +32665,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _groundTilemap: {fileID: 340186016}
+  _onPurplePortalOpened:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1490769322}
+        m_TargetAssemblyTypeName: PortalController, Assembly-CSharp
+        m_MethodName: SetPortal
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onTealPortalOpened:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 472691209}
+        m_TargetAssemblyTypeName: PortalController, Assembly-CSharp
+        m_MethodName: SetPortal
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!66 &1958379586
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -32869,7 +32903,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 30
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16

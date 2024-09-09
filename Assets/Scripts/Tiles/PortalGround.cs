@@ -2,21 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 
+public struct PortalPlacement
+{
+    public Vector2 Position { get; private set; }
+    public Quaternion Rotation { get; private set; }
+
+    public PortalPlacement(Vector2 position, Quaternion rotation)
+    {
+        Position = position;
+        Rotation = rotation;
+    }
+}
 
 public class PortalGround : MonoBehaviour
 {
     [SerializeField] private Tilemap _groundTilemap;
 
+    [SerializeField] private UnityEvent<PortalPlacement> _onPurplePortalOpened;
+    [SerializeField] private UnityEvent<PortalPlacement> _onTealPortalOpened;
+
     private PortalController _portal;
     private Tilemap _tilemap;
-
-    private readonly Vector3Int[] VERTICAL_TILES = new Vector3Int[]
-    {
-        Vector3Int.up,
-        Vector3Int.zero,
-        Vector3Int.down
-    };
 
     private void Start()
     {
@@ -31,12 +39,32 @@ public class PortalGround : MonoBehaviour
         {
             if (CanOpenVertically(cellPosition, entry))
             {
-                Debug.Log("YES");
+                // Get the cell centered target location for the portal
+                Vector2 cellCenterWorld = _tilemap.GetCellCenterWorld(cellPosition);
+                Vector2 targetCentered = new Vector2(cellCenterWorld.x, entry.origin.y);
+
+                OpenPortalForColor(color, targetCentered, Quaternion.identity);
             }
             else
             {
                 Debug.Log("NO");
             }
+        }
+    }
+
+    private void OpenPortalForColor(PortalColor color, Vector2 position, Quaternion rotation)
+    {
+        if (color == PortalColor.Purple)
+        {
+            _onPurplePortalOpened.Invoke(new PortalPlacement(position, rotation));
+        }
+        else if (color == PortalColor.Teal)
+        {
+            _onTealPortalOpened.Invoke(new PortalPlacement(position, rotation));
+        }
+        else
+        {
+            Debug.LogWarning("Unreachable code: Should have a portal color of teal or purple");
         }
     }
 
