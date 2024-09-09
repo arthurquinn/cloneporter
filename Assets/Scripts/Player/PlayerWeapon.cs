@@ -92,8 +92,11 @@ public class PlayerWeapon : MonoBehaviour
 
         // Raycast to find nearest collider
         RaycastHit2D hit = Physics2D.Raycast(transform.position, _aimDirection, _raycastLength, _targetLayer);
+        Debug.Log(hit);
         if (hit.collider != null)
         {
+            Debug.Log(hit.collider);
+
             // Draw line to nearest collider in mouse direction
             Vector2 aimPos = (Vector2)transform.position + (_aimDirection * hit.distance);
             _lineRenderer.enabled = true;

@@ -332,8 +332,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        //Gizmos.color = Color.green;
-        //Gizmos.DrawWireCube(_groundCheck.position, _groundCheckSize);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(_groundCheck.position, _groundCheckSize);
 
         //Gizmos.color = Color.red;
         //Gizmos.DrawLine(_boxCollider.bounds.center, (Vector2)_boxCollider.bounds.center + (Vector2.up * _rayPortalCheckVert));
