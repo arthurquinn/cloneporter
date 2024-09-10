@@ -32695,6 +32695,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _openPortalAlgorithmType: 0
 --- !u!66 &1958379586
 CompositeCollider2D:
   m_ObjectHideFlags: 0
