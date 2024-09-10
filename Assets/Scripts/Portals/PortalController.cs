@@ -27,10 +27,14 @@ public class PortalController : MonoBehaviour, IPortal
     private Vector2 _orientation;
     public Vector2 Orientation { get { return _orientation; } }
 
+    private float _portalLength;
+
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _boxCollider = GetComponent<BoxCollider2D>();
+
+        CachePortalLength();
     }
 
     #region Public Methods
@@ -85,9 +89,9 @@ public class PortalController : MonoBehaviour, IPortal
         _boxCollider.enabled = false;
     }
 
-    public Bounds GetBounds()
+    public float GetLength()
     {
-        return _spriteRenderer.bounds;
+        return _portalLength;
     }
 
     #endregion
@@ -102,5 +106,10 @@ public class PortalController : MonoBehaviour, IPortal
         {
             transform.rotation = Quaternion.identity;
         }
+    }
+
+    private void CachePortalLength()
+    {
+        _portalLength = _spriteRenderer.bounds.size.y;
     }
 }
