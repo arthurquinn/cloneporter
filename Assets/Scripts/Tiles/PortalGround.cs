@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public struct PortalPlacement
 {
@@ -45,6 +46,8 @@ public class PortalGround : MonoBehaviour, IPortalGround
 
     [SerializeField] private OpenPortalAlgorithmType _openPortalAlgorithmType;
 
+    [SerializeField] private LayerMask _portalLayer;
+
     private PortalController _portal;
     private Tilemap _tilemap;
 
@@ -52,6 +55,8 @@ public class PortalGround : MonoBehaviour, IPortalGround
 
     private Vector3Int[] _activePurpleTiles;
     private Vector3Int[] _activeTealTiles;
+
+    private readonly Vector2 OVERLAP_CHECK_DIMENSIONS = new Vector2(0.1f, 0.1f);
 
     public Tilemap Tilemap { get { return _tilemap; } }
     public Tilemap Ground { get { return _groundTilemap; } }
@@ -77,8 +82,11 @@ public class PortalGround : MonoBehaviour, IPortalGround
         PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(entry);
         if (!portalPlacement.Position.Equals(Vector2.negativeInfinity))
         {
-            OpenPortalForColor(color, portalPlacement);
-            UpdateTileCollision(color, portalPlacement);
+            if (!IsOverlapPortal(portalPlacement))
+            {
+                OpenPortalForColor(color, portalPlacement);
+                UpdateTileCollision(color, portalPlacement);
+            }
         }
     }
 
@@ -187,5 +195,25 @@ public class PortalGround : MonoBehaviour, IPortalGround
                 _groundTilemap.SetColliderType(tiles[i], Tile.ColliderType.Sprite);
             }
         }
+    }
+
+    private bool IsOverlapPortal(PortalPlacement placement)
+    {
+        for (int i = 0; i < placement.AffectedTiles.Length; i++)
+        {
+            // Get the world position of tile
+            Vector3Int checkTile = placement.AffectedTiles[i];
+            Vector2 checkTileWorldPosition = _tilemap.GetCellCenterWorld(checkTile);
+
+            // Check if the tile is occupied by a portal
+            Collider2D collider = Physics2D.OverlapBox(checkTileWorldPosition, OVERLAP_CHECK_DIMENSIONS, 0.0f, _portalLayer);
+            if (collider != null)
+            {
+                return true;
+            }
+        }
+
+        // No overlaps found, return false
+        return false;
     }
 }
