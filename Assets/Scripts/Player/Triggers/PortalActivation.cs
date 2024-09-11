@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class PortalActivation : MonoBehaviour
 {
     [SerializeField] private UnityEvent<IPortal> _onPortalEntered;
+    [SerializeField] private float _portalTimeout;
 
     private Vector2 _lastBoxSize;
     private Vector2 _boxSize;
@@ -18,6 +19,15 @@ public class PortalActivation : MonoBehaviour
     private const float BOX_SIZE_MULTIPLIER = 0.80f;
     private const float BOX_SIZE_MIN_X = 0.5f;
     private const float BOX_SIZE_MIN_Y = 1.0f;
+
+    private bool _firstPortalEntry;
+    private PortalColor _lastInPortalColor;
+    private float _lastInPortalTime;
+
+    private void Awake()
+    {
+        _firstPortalEntry = true;
+    }
 
     private void Start()
     {
@@ -31,6 +41,9 @@ public class PortalActivation : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Decrease timer
+        _lastInPortalTime -= Time.fixedDeltaTime;
+
         // Calculate box size based on speed
         _boxSize.x = Mathf.Max(BOX_SIZE_MIN_X, Mathf.Abs(_rb.velocity.x) * Time.fixedDeltaTime * BOX_SIZE_MULTIPLIER);
         _boxSize.y = Mathf.Max(BOX_SIZE_MIN_Y, Mathf.Abs(_rb.velocity.y) * Time.fixedDeltaTime * BOX_SIZE_MULTIPLIER);
@@ -50,6 +63,22 @@ public class PortalActivation : MonoBehaviour
         IPortal portal = collision.GetComponent<IPortal>();
         if (portal != null)
         {
+            HandlePortalTriggerEnter(portal);
+        }
+    }
+
+    private void HandlePortalTriggerEnter(IPortal portal)
+    {
+        // Ignore all conditions if this is our first portal entry
+        // Ignore the portal color check if we haven't collided with a portal after _portalTimeout time
+        // If this isn't our first entry, and we entered a portal within the portal timeout time,
+        //   then it is only a valid portal entry if our portal color is different than the last one
+        //   we entered
+        if (_firstPortalEntry || _lastInPortalTime < 0 || portal.Color != _lastInPortalColor)
+        {
+            _firstPortalEntry = false;
+            _lastInPortalColor = portal.Color;
+            _lastInPortalTime = _portalTimeout;
             _onPortalEntered.Invoke(portal);
         }
     }

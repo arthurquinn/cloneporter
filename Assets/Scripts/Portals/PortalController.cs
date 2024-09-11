@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,12 +14,14 @@ public enum PortalColor
 
 public interface IPortal
 {
+    public PortalColor Color { get; }
     Ray2D SimulatePort(Ray2D entry);
     void ApplyPort(Ray2D entry, Rigidbody2D rigidbody);
 }
 
 public class PortalController : MonoBehaviour, IPortal
 {
+    [SerializeField] private PortalColor _portalColor;
     [SerializeField] private PortalController _linkedPortal;
 
     private SpriteRenderer _spriteRenderer;
@@ -26,6 +29,8 @@ public class PortalController : MonoBehaviour, IPortal
 
     private Vector2 _orientation;
     public Vector2 Orientation { get { return _orientation; } }
+
+    public PortalColor Color { get {  return _portalColor; } }
 
     private float _portalLength;
 
@@ -68,6 +73,8 @@ public class PortalController : MonoBehaviour, IPortal
 
         // Calculate the exit velocity and apply it to our rigidbody
         Vector2 exitVelocity = rigidbody.velocity.magnitude * exitRay.direction;
+
+        // Apply the force
         Vector2 appliedForce = exitVelocity - rigidbody.velocity;
         rigidbody.AddForce(appliedForce, ForceMode2D.Impulse);
     }
@@ -79,8 +86,6 @@ public class PortalController : MonoBehaviour, IPortal
         transform.position = placement.Position;
         SetRotation(placement.Orientation);
         _orientation = placement.Orientation;
-
-        Debug.Log("Orientation: " + _orientation);
     }
 
     public void ClearPortal()

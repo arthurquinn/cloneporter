@@ -147,6 +147,9 @@ public class PlayerMovement : MonoBehaviour
             HandleJump();
         }
         HandleGravity();
+
+        // Keep track of our last fixed position
+        LastFixedPosition = _rb.position;
     }
 
     private void HandlePortalInteractions()
@@ -171,8 +174,6 @@ public class PlayerMovement : MonoBehaviour
         {
             //EnableCollisions(_ignoreCollisionsInPortal);
         }
-
-        LastFixedPosition = _rb.position;
     }
 
     private bool CheckPortalRaycast(Vector2 direction, float distance)
@@ -299,19 +300,16 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnPortalEntered(IPortal portal)
     {
-        if (LastInPortalTime < 0)
-        {
-            // Get our entry ray
-            Vector2 entryDirection = _rb.velocity.normalized;
-            Vector2 entryPoint = LastFixedPosition;
-            Ray2D entryRay = new Ray2D(entryPoint, entryDirection);
+        // Get our entry ray
+        Vector2 entryDirection = _rb.velocity.normalized;
+        Vector2 entryPoint = LastFixedPosition;
+        Ray2D entryRay = new Ray2D(entryPoint, entryDirection);
 
-            // Use portal interface to apply port to our rigidbody
-            portal.ApplyPort(entryRay, _rb);
+        // Use portal interface to apply port to our rigidbody
+        portal.ApplyPort(entryRay, _rb);
 
-            // Set our last in portal time
-            LastInPortalTime = _stats.portalInputTimeout;
-        }
+        // Set our last in portal time
+        LastInPortalTime = _stats.portalInputTimeout;
     }
 
     private void InvokeGunPositionChanged()

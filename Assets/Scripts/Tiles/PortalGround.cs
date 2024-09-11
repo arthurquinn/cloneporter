@@ -112,10 +112,10 @@ public class PortalGround : MonoBehaviour, IPortalGround
 
     private void UpdateTileCollision(PortalColor color, PortalPlacement placement)
     {
-        // Disable collision for the new tiles
+        // Get the tiles that we will need to disable collision for
         Vector3Int[] collisionTiles = GetCollisionTilesForPlacement(placement);
-        DisableTileCollision(collisionTiles);
-        if (color ==  PortalColor.Purple)
+
+        if (color == PortalColor.Purple)
         {
             // Enable tile collision for the previous tiles
             EnableTileCollision(_activePurpleTiles);
@@ -131,6 +131,9 @@ public class PortalGround : MonoBehaviour, IPortalGround
             // Update the new active purple tiles
             _activeTealTiles = collisionTiles;
         }
+
+        // Disable the collision on the new tiles
+        DisableTileCollision(collisionTiles);
     }
 
     private Vector3Int[] GetCollisionTilesForPlacement(PortalPlacement placement)
