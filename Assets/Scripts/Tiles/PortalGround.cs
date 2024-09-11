@@ -77,7 +77,7 @@ public class PortalGround : MonoBehaviour, IPortalGround
         PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(entry);
         if (!portalPlacement.Position.Equals(Vector2.negativeInfinity))
         {
-            UpdateTileCollision(color, portalPlacement.AffectedTiles);
+            UpdateTileCollision(color, portalPlacement);
             OpenPortalForColor(color, portalPlacement);
         }
     }
@@ -110,17 +110,18 @@ public class PortalGround : MonoBehaviour, IPortalGround
         }
     }
 
-    private void UpdateTileCollision(PortalColor color, Vector3Int[] newTiles)
+    private void UpdateTileCollision(PortalColor color, PortalPlacement placement)
     {
         // Disable collision for the new tiles
-        DisableTileCollision(newTiles);
+        Vector3Int[] collisionTiles = GetCollisionTilesForPlacement(placement);
+        DisableTileCollision(collisionTiles);
         if (color ==  PortalColor.Purple)
         {
             // Enable tile collision for the previous tiles
             EnableTileCollision(_activePurpleTiles);
 
             // Update the new active purple tiles
-            _activePurpleTiles = newTiles;
+            _activePurpleTiles = collisionTiles;
         }
         else if (color == PortalColor.Teal)
         {
@@ -128,15 +129,42 @@ public class PortalGround : MonoBehaviour, IPortalGround
             EnableTileCollision(_activeTealTiles);
 
             // Update the new active purple tiles
-            _activeTealTiles = newTiles;
+            _activeTealTiles = collisionTiles;
         }
+    }
+
+    private Vector3Int[] GetCollisionTilesForPlacement(PortalPlacement placement)
+    {
+        // Get the tiles "behind" the tiles that will hold the portal to disable collision on them also
+        Vector2 checkDirection = -placement.Orientation;
+        Vector3Int[] collisionTiles = new Vector3Int[placement.AffectedTiles.Length * 2];
+        for (int i = 0; i < placement.AffectedTiles.Length; i++)
+        {
+            Vector3Int checkTile = placement.AffectedTiles[i];
+            Vector3Int behindTile = new Vector3Int(
+                checkTile.x + (int)checkDirection.x,
+                checkTile.y + (int)checkDirection.y,
+                0);
+
+            // Add the check tile and behind tile to our collision tile array
+            collisionTiles[i * 2] = checkTile;
+            collisionTiles[i * 2 + 1] = behindTile;
+        }
+        return collisionTiles;
     }
 
     private void DisableTileCollision(Vector3Int[] tiles)
     {
         for (int i = 0; i < tiles.Length; i++)
         {
-            _tilemap.SetColliderType(tiles[i], Tile.ColliderType.None);
+            if (_tilemap.HasTile(tiles[i]))
+            {
+                _tilemap.SetColliderType(tiles[i], Tile.ColliderType.None);
+            }
+            else if (_groundTilemap.HasTile(tiles[i]))
+            {
+                _groundTilemap.SetColliderType(tiles[i], Tile.ColliderType.None);
+            }
         }
     }
 
@@ -144,7 +172,14 @@ public class PortalGround : MonoBehaviour, IPortalGround
     {
         for (int i = 0; i < tiles.Length; i++)
         {
-            _tilemap.SetColliderType(tiles[i], Tile.ColliderType.Sprite);
+            if (_tilemap.HasTile(tiles[i]))
+            {
+                _tilemap.SetColliderType(tiles[i], Tile.ColliderType.Sprite);
+            }
+            else if (_groundTilemap.HasTile(tiles[i]))
+            {
+                _groundTilemap.SetColliderType(tiles[i], Tile.ColliderType.Sprite);
+            }
         }
     }
 }
