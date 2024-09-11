@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityStrength: -77.77777
   gravityScale: 2.5925925
-  fallGravityMult: 1.5
-  maxFallSpeed: 25
+  fallGravityMult: 1
+  maxFallSpeed: 100
   fastFallGravityMult: 0
   maxFastFallSpeed: 0
   runMaxSpeed: 11
