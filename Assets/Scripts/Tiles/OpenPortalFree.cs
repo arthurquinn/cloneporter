@@ -13,6 +13,9 @@ public class OpenPortalFree : IOpenPortalAlgorithm
 
     public PortalPlacement OpenPortal(Ray2D entry)
     {
+        // TODO: Implement this if needed (not using this algorithm currently)
+        Vector3Int[] affectedTiles = new Vector3Int[3];
+
         Vector3Int cellPosition = _portalGround.Tilemap.WorldToCell(entry.origin);
         if (_portalGround.Tilemap.HasTile(cellPosition))
         {
@@ -22,7 +25,7 @@ public class OpenPortalFree : IOpenPortalAlgorithm
                 Vector2 cellCenterWorld = _portalGround.Tilemap.GetCellCenterWorld(cellPosition);
                 Vector2 targetCentered = new Vector2(cellCenterWorld.x, entry.origin.y);
 
-                return new PortalPlacement(targetCentered, GetVerticalOrientation(entry.direction));
+                return new PortalPlacement(targetCentered, GetVerticalOrientation(entry.direction), affectedTiles);
             }
             else if (CanOpenHorizontally(cellPosition, entry))
             {
@@ -30,10 +33,10 @@ public class OpenPortalFree : IOpenPortalAlgorithm
                 Vector2 cellCenterWorld = _portalGround.Tilemap.GetCellCenterWorld(cellPosition);
                 Vector2 targetCentered = new Vector2(entry.origin.x, cellCenterWorld.y);
 
-                return new PortalPlacement(targetCentered, GetHorizontalOrientation(entry.direction));
+                return new PortalPlacement(targetCentered, GetHorizontalOrientation(entry.direction), affectedTiles);
             }
         }
-        return new PortalPlacement(Vector2.negativeInfinity, Vector2.negativeInfinity);
+        return new PortalPlacement(Vector2.negativeInfinity, Vector2.negativeInfinity, affectedTiles);
     }
 
     private Vector2 GetVerticalOrientation(Vector2 entryDirection)

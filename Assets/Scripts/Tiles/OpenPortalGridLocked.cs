@@ -13,30 +13,37 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
 
     public PortalPlacement OpenPortal(Ray2D entry)
     {
+        Vector3Int[] placementTiles;
+
         Vector3Int cellPosition = _portalGround.Tilemap.WorldToCell(entry.origin);
         if (_portalGround.Tilemap.HasTile(cellPosition))
         {
-            if (CanOpenVertically(cellPosition, entry))
+            // Check if we can place a portal vertically
+            placementTiles = GetVerticalPlacementTiles(cellPosition, entry);
+            if (placementTiles != null)
             {
                 // Get the cell centered target location for the portal
                 Vector2 cellCenterWorld = _portalGround.Tilemap.GetCellCenterWorld(cellPosition);
 
                 // Return the portal placement for this portal
-                return new PortalPlacement(cellCenterWorld, GetVerticalOrientation(entry.direction));
+                return new PortalPlacement(cellCenterWorld, GetVerticalOrientation(entry.direction), placementTiles);
             }
-            else if (CanOpenHorizontally(cellPosition, entry))
+
+            // Check if we can place a portal horizontally
+            placementTiles = GetHorizontalPlacementTiles(cellPosition, entry);
+            if (placementTiles != null)
             {
                 // Get the cell centered target location for the portal
                 Vector2 cellCenterWorld = _portalGround.Tilemap.GetCellCenterWorld(cellPosition);
 
                 // Return the portal placement for this portal
-                return new PortalPlacement(cellCenterWorld, GetHorizontalOrientation(entry.direction));
+                return new PortalPlacement(cellCenterWorld, GetHorizontalOrientation(entry.direction), placementTiles);
             }
         }
-        return new PortalPlacement(Vector2.negativeInfinity, Vector2.negativeInfinity);
+        return new PortalPlacement(Vector2.negativeInfinity, Vector2.negativeInfinity, null);
     }
 
-    private bool CanOpenVertically(Vector3Int cellPosition, Ray2D entry)
+    private Vector3Int[] GetVerticalPlacementTiles(Vector3Int cellPosition, Ray2D entry)
     {
         // Get the cell centered target location for the portal
         Vector2 cellCenterWorld = _portalGround.Tilemap.GetCellCenterWorld(cellPosition);
@@ -44,6 +51,9 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         // Calculate portal height in tiles
         int portalTileHeight = Mathf.CeilToInt(_portalGround.PortalLength / _portalGround.Tilemap.cellSize.y);
         Debug.AssertFormat(portalTileHeight % 2 == 1, "Portal of length {0} cannot be centered on tiles", _portalGround.PortalLength);
+
+        // Create array to store the tiles that would be affected
+        Vector3Int[] affectedTiles = new Vector3Int[portalTileHeight];
 
         // Calculate how many tiles up and down we will need to check
         int tileExtents = (portalTileHeight - 1) / 2;
@@ -63,18 +73,20 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
             Vector2 checkTileWorldPosition = _portalGround.Tilemap.GetCellCenterWorld(checkTile);
             if (IsValidPosition(checkTile, emptyDirection))
             {
+                // Store the checked tile in our affected tiles array
+                affectedTiles[tileOffset + tileExtents] = checkTile;
                 DebugRayAtPosition(checkTileWorldPosition, Color.green, Vector2.right);
             }
             else
             {
-                // Return false if we found an invalid position
+                // Return null if we found an invalid position
                 DebugRayAtPosition(checkTileWorldPosition, Color.red, Vector2.right);
-                return false;
+                return null;
             }
         }
 
-        // We checked all positions and all were valid, return true
-        return true;
+        // We checked all positions and all were valid, return placement tiles
+        return affectedTiles;
     }
 
     private Vector2 GetVerticalOrientation(Vector2 entryDirection)
@@ -101,7 +113,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         }
     }
 
-    private bool CanOpenHorizontally(Vector3Int cellPosition, Ray2D entry)
+    private Vector3Int[] GetHorizontalPlacementTiles(Vector3Int cellPosition, Ray2D entry)
     {
         // Get the cell centered target location for the portal
         Vector2 cellCenterWorld = _portalGround.Tilemap.GetCellCenterWorld(cellPosition);
@@ -113,6 +125,9 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         // Calculate how many tiles left and right we will need to check
         int tileExtents = (portalTileHeight - 1) / 2;
         int startTileOffset = -tileExtents;
+
+        // Create array to store the tiles that would be affected
+        Vector3Int[] affectedTiles = new Vector3Int[portalTileHeight];
 
         // Get the empty direction to check
         Vector3Int emptyDirection = GetHorizontalEmptyDirection(entry.direction);
@@ -128,18 +143,20 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
             Vector2 checkTileWorldPosition = _portalGround.Tilemap.GetCellCenterWorld(checkTile);
             if (IsValidPosition(checkTile, emptyDirection))
             {
+                // Store the checked tile in our affected tiles array
+                affectedTiles[tileOffset + tileExtents] = checkTile;
                 DebugRayAtPosition(checkTileWorldPosition, Color.green, Vector2.up);
             }
             else
             {
-                // Return false if we found an invalid position
+                // Return null if we found an invalid position
                 DebugRayAtPosition(checkTileWorldPosition, Color.red, Vector2.up);
-                return false;
+                return null;
             }
         }
 
-        // We checked all positions and all were valid, return true
-        return true;
+        // We checked all positions and all were valid, return the tiles affected
+        return affectedTiles;
     }
 
     private Vector3Int GetHorizontalEmptyDirection(Vector2 entryDirection)
