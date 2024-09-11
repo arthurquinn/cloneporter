@@ -30718,6 +30718,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _openPortalAlgorithmType: 0
+  _portalLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!66 &1958379586
 CompositeCollider2D:
   m_ObjectHideFlags: 0

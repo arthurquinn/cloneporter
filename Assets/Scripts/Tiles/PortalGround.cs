@@ -82,7 +82,7 @@ public class PortalGround : MonoBehaviour, IPortalGround
         PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(entry);
         if (!portalPlacement.Position.Equals(Vector2.negativeInfinity))
         {
-            if (!IsOverlapPortal(portalPlacement))
+            if (!IsOverlapPortal(portalPlacement, color))
             {
                 OpenPortalForColor(color, portalPlacement);
                 UpdateTileCollision(color, portalPlacement);
@@ -197,23 +197,93 @@ public class PortalGround : MonoBehaviour, IPortalGround
         }
     }
 
-    private bool IsOverlapPortal(PortalPlacement placement)
+    private bool IsOverlapPortal(PortalPlacement placement, PortalColor color)
     {
-        for (int i = 0; i < placement.AffectedTiles.Length; i++)
+        if (placement.Orientation.x != 0)
         {
-            // Get the world position of tile
-            Vector3Int checkTile = placement.AffectedTiles[i];
-            Vector2 checkTileWorldPosition = _tilemap.GetCellCenterWorld(checkTile);
+            return IsOverlapPortalVertical(placement, color);
+        }
+        else
+        {
+            return IsOverlapPortalHorizontal(placement, color);
+        }
+    }
 
-            // Check if the tile is occupied by a portal
-            Collider2D collider = Physics2D.OverlapBox(checkTileWorldPosition, OVERLAP_CHECK_DIMENSIONS, 0.0f, _portalLayer);
-            if (collider != null)
+    private bool IsOverlapPortalHorizontal(PortalPlacement placement, PortalColor color)
+    {
+        // Get the middle tile
+        int middleIndex = placement.AffectedTiles.Length / 2;
+        Vector3Int middleTile = placement.AffectedTiles[middleIndex];
+        Vector2 middleTileWorld = _tilemap.GetCellCenterWorld(middleTile);
+
+        // Calculate raycast distance
+        float distance = _portal.GetLength() / 2 + _tilemap.cellSize.x / 2;
+
+        // Check raycasts
+        RaycastHit2D rightHit = Physics2D.Raycast(middleTileWorld, Vector2.right, distance, _portalLayer);
+        Debug.DrawLine(middleTileWorld, middleTileWorld + distance * Vector2.right, Color.yellow, 5.0f);
+        if (rightHit.collider != null)
+        {
+            // Check if it's the same color, if so we are fine
+            IPortal portal = rightHit.collider.GetComponent<IPortal>();
+            if (portal != null && portal.Color != color)
             {
                 return true;
             }
         }
 
-        // No overlaps found, return false
+        RaycastHit2D leftHit = Physics2D.Raycast(middleTileWorld, Vector2.left, distance, _portalLayer);
+        Debug.DrawLine(middleTileWorld, middleTileWorld + distance * Vector2.left, Color.yellow, 5.0f);
+        if (leftHit.collider != null)
+        {
+            // Check if it's the same color, if so we are fine
+            IPortal portal = leftHit.collider.GetComponent<IPortal>();
+            if (portal != null && portal.Color != color)
+            {
+                return true;
+            }
+        }
+
+        // No portal found, return false
+        return false;
+    }
+
+    private bool IsOverlapPortalVertical(PortalPlacement placement, PortalColor color)
+    {
+        // Get the middle tile
+        int middleIndex = placement.AffectedTiles.Length / 2;
+        Vector3Int middleTile = placement.AffectedTiles[middleIndex];
+        Vector2 middleTileWorld = _tilemap.GetCellCenterWorld(middleTile);
+
+        // Calculate raycast distance
+        float distance = _portal.GetLength() / 2 + _tilemap.cellSize.y / 2;
+
+        // Check raycasts
+        RaycastHit2D rightHit = Physics2D.Raycast(middleTileWorld, Vector2.up, distance, _portalLayer);
+        Debug.DrawLine(middleTileWorld, middleTileWorld + distance * Vector2.up, Color.yellow, 5.0f);
+        if (rightHit.collider != null)
+        {
+            // Check if it's the same color, if so we are fine
+            IPortal portal = rightHit.collider.GetComponent<IPortal>();
+            if (portal != null && portal.Color != color)
+            {
+                return true;
+            }
+        }
+
+        RaycastHit2D leftHit = Physics2D.Raycast(middleTileWorld, Vector2.down, distance, _portalLayer);
+        Debug.DrawLine(middleTileWorld, middleTileWorld + distance * Vector2.down, Color.yellow, 5.0f);
+        if (leftHit.collider != null)
+        {
+            // Check if it's the same color, if so we are fine
+            IPortal portal = leftHit.collider.GetComponent<IPortal>();
+            if (portal != null && portal.Color != color)
+            {
+                return true;
+            }
+        }
+
+        // No portal found, return false
         return false;
     }
 }
