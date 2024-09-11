@@ -77,8 +77,8 @@ public class PortalGround : MonoBehaviour, IPortalGround
         PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(entry);
         if (!portalPlacement.Position.Equals(Vector2.negativeInfinity))
         {
-            UpdateTileCollision(color, portalPlacement);
             OpenPortalForColor(color, portalPlacement);
+            UpdateTileCollision(color, portalPlacement);
         }
     }
 
@@ -140,7 +140,10 @@ public class PortalGround : MonoBehaviour, IPortalGround
         Vector3Int[] collisionTiles = new Vector3Int[placement.AffectedTiles.Length * 2];
         for (int i = 0; i < placement.AffectedTiles.Length; i++)
         {
-            Vector3Int checkTile = placement.AffectedTiles[i];
+            Vector3Int checkTile = new Vector3Int(
+                placement.AffectedTiles[i].x,
+                placement.AffectedTiles[i].y);
+
             Vector3Int behindTile = new Vector3Int(
                 checkTile.x + (int)checkDirection.x,
                 checkTile.y + (int)checkDirection.y,
