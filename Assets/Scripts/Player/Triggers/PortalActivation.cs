@@ -16,9 +16,9 @@ public class PortalActivation : MonoBehaviour
     private BoxCollider2D _boxCollider;
     private Rigidbody2D _rb;
 
-    private const float BOX_SIZE_MULTIPLIER = 0.80f;
-    private const float BOX_SIZE_MIN_X = 0.5f;
-    private const float BOX_SIZE_MIN_Y = 1.0f;
+    private const float BOX_SIZE_MULTIPLIER = 1.5f;
+    private const float BOX_SIZE_MIN_X = 0.1f;
+    private const float BOX_SIZE_MIN_Y = 0.1f;
 
     private bool _firstPortalEntry;
     private PortalColor _lastInPortalColor;
@@ -45,8 +45,8 @@ public class PortalActivation : MonoBehaviour
         _lastInPortalTime -= Time.fixedDeltaTime;
 
         // Calculate box size based on speed
-        _boxSize.x = Mathf.Max(BOX_SIZE_MIN_X, Mathf.Abs(_rb.velocity.x) * Time.fixedDeltaTime * BOX_SIZE_MULTIPLIER);
-        _boxSize.y = Mathf.Max(BOX_SIZE_MIN_Y, Mathf.Abs(_rb.velocity.y) * Time.fixedDeltaTime * BOX_SIZE_MULTIPLIER);
+        //_boxSize.x = Mathf.Max(BOX_SIZE_MIN_X, Mathf.Abs(_rb.velocity.x) * Time.fixedDeltaTime * BOX_SIZE_MULTIPLIER);
+        //_boxSize.y = Mathf.Max(BOX_SIZE_MIN_Y, Mathf.Abs(_rb.velocity.y) * Time.fixedDeltaTime * BOX_SIZE_MULTIPLIER);
 
         // If the box size changed, update our box collider
         if (_boxSize != _lastBoxSize)

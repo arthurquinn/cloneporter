@@ -24,6 +24,8 @@ public class PortalController : MonoBehaviour, IPortal
     [SerializeField] private PortalColor _portalColor;
     [SerializeField] private PortalController _linkedPortal;
 
+    [SerializeField] private float _exitUpVelocityThreshold;
+
     private SpriteRenderer _spriteRenderer;
     private BoxCollider2D _boxCollider;
 
@@ -74,8 +76,11 @@ public class PortalController : MonoBehaviour, IPortal
         // Calculate the exit velocity and apply it to our rigidbody
         Vector2 exitVelocity = rigidbody.velocity.magnitude * exitRay.direction;
 
+        // Handle minor adjustments for player experience (e.g. min velocity out of portal)
+        Vector2 adjustedExitVelocity = ApplyExitForceAdjustments(exitRay, exitVelocity);
+
         // Apply the force
-        Vector2 appliedForce = exitVelocity - rigidbody.velocity;
+        Vector2 appliedForce = adjustedExitVelocity - rigidbody.velocity;
         rigidbody.AddForce(appliedForce, ForceMode2D.Impulse);
     }
 
@@ -100,6 +105,20 @@ public class PortalController : MonoBehaviour, IPortal
     }
 
     #endregion
+
+    private Vector2 ApplyExitForceAdjustments(Ray2D exitRay, Vector2 currentForce)
+    {
+        Vector2 adjustedForce = currentForce;
+
+        // Give the player an exit boost if they are exiting a portal upward and they are below a certain speed
+        // This helps them to jump out of a portal if they entered at a slow speed
+        if (_linkedPortal.Orientation == Vector2.up)
+        {
+            adjustedForce.y = Mathf.Max(_exitUpVelocityThreshold, adjustedForce.y);
+        }
+
+        return adjustedForce;
+    }
 
     private void SetRotation(Vector2 orientation)
     {
