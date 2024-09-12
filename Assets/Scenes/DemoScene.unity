@@ -29462,10 +29462,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 472691209}
     - target: {fileID: 6017843662625651584, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6017843662625651584, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -29504,50 +29500,6 @@ PrefabInstance:
     - target: {fileID: 6017843662625651584, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 7482667652216324306, guid: fb3dac8ccf8cd684fa57135c173498e7, type: 3}
-    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_SortingOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a9fa942002643fd44b466a343d195f55, type: 2}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Size.x
-      value: 0.99126345
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Size.y
-      value: 0.9977339
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.0010445416
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.0005878508
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7546552540717065692, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_Name
@@ -29575,10 +29527,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1490769322}
     - target: {fileID: 6017843662625651584, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6017843662625651584, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -29619,45 +29567,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 7482667652216324306, guid: fb3dac8ccf8cd684fa57135c173498e7, type: 3}
-    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8e9d4a3d89c6a22419dab2b393b12684, type: 2}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Size.x
-      value: 0.9949276
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Size.y
-      value: 0.994692
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.00000008940697
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.0002885759
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7546552540717065692, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_Name
       value: TealPortal
@@ -30522,37 +30434,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 185214416}
     m_Modifications:
-    - target: {fileID: 18063129911268166, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.012868694
-      objectReference: {fileID: 0}
-    - target: {fileID: 18063129911268166, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.9999172
-      objectReference: {fileID: 0}
     - target: {fileID: 285159922035840873, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
       propertyPath: m_Name
       value: Hunter
-      objectReference: {fileID: 0}
-    - target: {fileID: 1233002388348974660, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.0632259
-      objectReference: {fileID: 0}
-    - target: {fileID: 1233002388348974660, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.14215885
-      objectReference: {fileID: 0}
-    - target: {fileID: 1386280361689124618, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1386280361689124618, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1386280361689124618, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1386280361689124618, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30598,22 +30482,6 @@ PrefabInstance:
       propertyPath: _onGunPositionChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 828445003}
-    - target: {fileID: 3939187531311787367, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.98648345
-      objectReference: {fileID: 0}
-    - target: {fileID: 3939187531311787367, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.16386108
-      objectReference: {fileID: 0}
-    - target: {fileID: 8191975319837150003, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
-      propertyPath: _portalTimeout
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8661128823797666600, guid: dbbb7426fff0cb04b9f3730c3f45d451, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32707,14 +32575,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 131472833}
     - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
-      propertyPath: _targetLayer.m_Bits
-      value: 448
-      objectReference: {fileID: 0}
-    - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
-      propertyPath: _onPortalGunFired.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
       propertyPath: _onPlayerStopAim.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1906442358}
@@ -32723,33 +32583,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1958379585}
     - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
-      propertyPath: _onTealPortalFire.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1958379585}
-    - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
-      propertyPath: _onPurplePortalFire.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1958379585}
-    - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
       propertyPath: _onPlayerAimPosition.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1906442358}
-    - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
-      propertyPath: _onPortalGunFired.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
-      propertyPath: _onPortalGunFired.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenPortal
-      objectReference: {fileID: 0}
-    - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
-      propertyPath: _onPortalGunFired.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PortalGround, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 899680108584968586, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
-      propertyPath: _onPortalGunFired.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 2853524243377194045, guid: 9b00540eadad0ef489fe46c6acad4ab0, type: 3}
       propertyPath: m_Name
       value: PlayerWeapon

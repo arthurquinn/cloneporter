@@ -149,27 +149,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b577b007f795cd846895eba4f09cdbce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onPurplePortalFire:
+  _onPortalGunFired:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PortalGround, Assembly-CSharp
-        m_MethodName: OnPurplePortalFired
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _onTealPortalFire:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PortalGround, Assembly-CSharp
-        m_MethodName: OnTealPortalFired
+        m_MethodName: OpenPortal
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -213,6 +198,6 @@ MonoBehaviour:
   _hitDetectionMultiplier: 0.01
   _targetLayer:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 448
   _rightArmEffector: {fileID: 0}
   _initialAimOrigin: {fileID: 0}

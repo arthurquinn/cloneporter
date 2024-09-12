@@ -141,17 +141,25 @@ public class PlayerWeapon : MonoBehaviour
     {
         // Check if we are aiming at a portal tile
         RaycastHit2D hit = Physics2D.Raycast(_aimOrigin, _aimDirection, _raycastLength, _targetLayer);
-        if (hit.collider != null && hit.collider.CompareTag("PortalTiles"))
+        if (hit.collider != null)
         {
-            // TODO: I really want something better than this
-            Vector2 adjustedHitPoint = hit.point + ((hit.point - _aimOrigin).normalized) * _hitDetectionMultiplier;
-            Vector2 entryDirection = (adjustedHitPoint - _aimOrigin).normalized;
+            // Check what we hit
+            bool hitPortalTile = hit.collider.CompareTag("PortalTiles");
+            bool hitPortal = hit.collider.CompareTag("Portal");
 
-            // Set up the entry ray of the fired shot
-            Ray2D entry = new Ray2D(adjustedHitPoint, entryDirection);
+            // If we hit a portal or a portal tile
+            if (hitPortalTile || hitPortal)
+            {
+                // TODO: I really want something better than this
+                Vector2 adjustedHitPoint = hit.point + ((hit.point - _aimOrigin).normalized) * _hitDetectionMultiplier;
+                Vector2 entryDirection = (adjustedHitPoint - _aimOrigin).normalized;
 
-            // Call unity event for portal gun fired
-            _onPortalGunFired.Invoke(portalColor, entry);
+                // Set up the entry ray of the fired shot
+                Ray2D entry = new Ray2D(adjustedHitPoint, entryDirection);
+
+                // Call unity event for portal gun fired
+                _onPortalGunFired.Invoke(portalColor, entry);
+            }
         }
     }
 

@@ -220,28 +220,19 @@ public class PortalGround : MonoBehaviour, IPortalGround
         float distance = _portal.GetLength() / 2 + _tilemap.cellSize.x / 2;
 
         // Check raycasts
-        RaycastHit2D rightHit = Physics2D.Raycast(middleTileWorld, Vector2.right, distance, _portalLayer);
+        RaycastHit2D[] rightHit = Physics2D.RaycastAll(middleTileWorld, Vector2.right, distance, _portalLayer);
         Debug.DrawLine(middleTileWorld, middleTileWorld + distance * Vector2.right, Color.yellow, 5.0f);
-        if (rightHit.collider != null)
+        if (CheckRayPortalCollision(rightHit, color))
         {
-            // Check if it's the same color, if so we are fine
-            IPortal portal = rightHit.collider.GetComponent<IPortal>();
-            if (portal != null && portal.Color != color)
-            {
-                return true;
-            }
+            return true;
         }
 
-        RaycastHit2D leftHit = Physics2D.Raycast(middleTileWorld, Vector2.left, distance, _portalLayer);
+        // Check raycasts
+        RaycastHit2D[] leftHit = Physics2D.RaycastAll(middleTileWorld, Vector2.left, distance, _portalLayer);
         Debug.DrawLine(middleTileWorld, middleTileWorld + distance * Vector2.left, Color.yellow, 5.0f);
-        if (leftHit.collider != null)
+        if (CheckRayPortalCollision(leftHit, color))
         {
-            // Check if it's the same color, if so we are fine
-            IPortal portal = leftHit.collider.GetComponent<IPortal>();
-            if (portal != null && portal.Color != color)
-            {
-                return true;
-            }
+            return true;
         }
 
         // No portal found, return false
@@ -259,31 +250,39 @@ public class PortalGround : MonoBehaviour, IPortalGround
         float distance = _portal.GetLength() / 2 + _tilemap.cellSize.y / 2;
 
         // Check raycasts
-        RaycastHit2D rightHit = Physics2D.Raycast(middleTileWorld, Vector2.up, distance, _portalLayer);
+        RaycastHit2D[] upHit = Physics2D.RaycastAll(middleTileWorld, Vector2.up, distance, _portalLayer);
         Debug.DrawLine(middleTileWorld, middleTileWorld + distance * Vector2.up, Color.yellow, 5.0f);
-        if (rightHit.collider != null)
+        if (CheckRayPortalCollision(upHit, color))
         {
-            // Check if it's the same color, if so we are fine
-            IPortal portal = rightHit.collider.GetComponent<IPortal>();
-            if (portal != null && portal.Color != color)
-            {
-                return true;
-            }
+            return true;
         }
 
-        RaycastHit2D leftHit = Physics2D.Raycast(middleTileWorld, Vector2.down, distance, _portalLayer);
+
+        RaycastHit2D[] downHit = Physics2D.RaycastAll(middleTileWorld, Vector2.down, distance, _portalLayer);
         Debug.DrawLine(middleTileWorld, middleTileWorld + distance * Vector2.down, Color.yellow, 5.0f);
-        if (leftHit.collider != null)
+        if (CheckRayPortalCollision(downHit, color))
         {
-            // Check if it's the same color, if so we are fine
-            IPortal portal = leftHit.collider.GetComponent<IPortal>();
-            if (portal != null && portal.Color != color)
-            {
-                return true;
-            }
+            return true;
         }
 
         // No portal found, return false
+        return false;
+    }
+
+    private bool CheckRayPortalCollision(RaycastHit2D[] hits, PortalColor sameColor)
+    {
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider != null)
+            {
+                // Check if it's the same color, if so we are fine
+                IPortal portal = hits[i].collider.GetComponent<IPortal>();
+                if (portal != null && portal.Color != sameColor)
+                {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }
