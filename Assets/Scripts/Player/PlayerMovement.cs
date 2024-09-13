@@ -15,8 +15,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Layers")]
     [SerializeField] private LayerMask _standableTerrainLayers;
-    [SerializeField] private LayerMask _portalLayer;
-    [SerializeField] private LayerMask _ignoreCollisionsInPortal;
 
     [Header("Events")]
     [SerializeField] private UnityEvent _onJumpStart;
@@ -142,7 +140,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (LastInPortalTime < 0)
         {
-            HandlePortalInteractions();
             HandleMovement();
             HandleJump();
         }
@@ -150,35 +147,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Keep track of our last fixed position
         LastFixedPosition = _rb.position;
-    }
-
-    private void HandlePortalInteractions()
-    {
-        // Calculate raycast lengths
-        _rayPortalCheckVert = _boxCollider.bounds.extents.y + Mathf.Abs(_rb.velocity.y) * Time.fixedDeltaTime;
-        _rayPortalCheckHoriz = _boxCollider.bounds.extents.x + Mathf.Abs(_rb.velocity.x) * Time.fixedDeltaTime;
-
-        // Check raycast hits
-        // TODO: Not getting collision if both inside?? check this
-        bool didHitPortal = CheckPortalRaycast(Vector2.up, _rayPortalCheckVert) ||
-            CheckPortalRaycast(Vector2.down, _rayPortalCheckVert) ||
-            CheckPortalRaycast(Vector2.left, _rayPortalCheckHoriz) ||
-            CheckPortalRaycast(Vector2.right, _rayPortalCheckHoriz);
-
-        // Set collision state
-        if (didHitPortal)
-        {
-            //DisableCollisions(_ignoreCollisionsInPortal);
-        }
-        else
-        {
-            //EnableCollisions(_ignoreCollisionsInPortal);
-        }
-    }
-
-    private bool CheckPortalRaycast(Vector2 direction, float distance)
-    {
-        return Physics2D.Raycast(_boxCollider.bounds.center, direction, distance, _portalLayer).collider != null;
     }
 
     private void EnableCollisions(LayerMask collisionMask)

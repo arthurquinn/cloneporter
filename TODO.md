@@ -1,0 +1,1 @@
+* Convert ground check to trigger
