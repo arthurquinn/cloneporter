@@ -49,11 +49,12 @@ public class PortalActivation : MonoBehaviour
     private void HandlePortalTriggerEnter(IPortal portal)
     {
         // Ignore all conditions if this is our first portal entry
-        // Ignore the portal color check if we haven't collided with a portal after _portalTimeout time
-        // If this isn't our first entry, and we entered a portal within the portal timeout time,
-        //   then it is only a valid portal entry if our portal color is different than the last one
-        //   we entered
-        if (_firstPortalEntry || _lastInPortalTime < 0 || portal.Color != _lastInPortalColor)
+        // Ignore collision if we entered the portal within the portal timeout time and the portal is
+        //   of the opposite color
+        // This effectively means we are ignoring the entry of the opposite colored portal as soon as
+        //   we teleport there
+        bool didEnterPortalWithinTimer = _lastInPortalTime > 0 && portal.Color != _lastInPortalColor;
+        if (_firstPortalEntry || !didEnterPortalWithinTimer)
         {
             _firstPortalEntry = false;
             _lastInPortalColor = portal.Color;
