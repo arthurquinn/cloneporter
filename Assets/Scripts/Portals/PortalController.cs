@@ -68,6 +68,10 @@ public class PortalController : MonoBehaviour, IPortal
         // Calculate out position
         Vector2 offset = entry.origin - (Vector2)transform.position;
         offset = rotationDiff * offset;
+
+        // Break the rules for opposite orientations for more fun gameplay
+        offset = AdjustForOppositeOrientations(offset);
+
         Vector2 outPosition = (Vector2)_linkedPortal.transform.position + offset;
 
         // Return ray defining simulated port
@@ -119,6 +123,20 @@ public class PortalController : MonoBehaviour, IPortal
     }
 
     #endregion
+
+    private Vector2 AdjustForOppositeOrientations(Vector2 offset)
+    {
+        // Adjust when the portals are vertical and opposite from each other
+        // This will allow the player to walk smoothly between portals placed near the ground
+        //   without porting to the top of the next portal
+        bool adjustVerticals = Orientation.x == -_linkedPortal.Orientation.x;
+        if (adjustVerticals)
+        {
+            offset.y = -offset.y;
+        }
+
+        return offset;
+    }
 
     private Vector2 ApplyExitForceAdjustments(Ray2D exitRay, Vector2 currentForce)
     {
