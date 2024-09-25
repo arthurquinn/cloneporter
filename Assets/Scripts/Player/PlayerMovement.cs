@@ -7,6 +7,7 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerMoveStats _stats;
+    [SerializeField] private PlayerEventChannel _playerEvents;
 
     [Header("Checks")]
     [SerializeField] private Transform _groundCheck;
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     public bool IsJumping { get; private set; }
     public bool IsJumpFalling { get; private set; }
     public bool IsJumpCut { get; private set; }
+    public bool DidExitPortal { get; private set; }
 
     // Timers
     public float LastPressedJumpTime { get; private set; }
@@ -64,11 +66,17 @@ public class PlayerMovement : MonoBehaviour
         _inputs.Enable();
         _inputs.Player.Jump.started += OnJumpStarted;
         _inputs.Player.Jump.canceled += OnJumpCanceled;
+
+        _playerEvents.OnPortalLeave.Subscribe(HandlePortalLeave);
     }
 
     private void OnDisable()
     {
+        _inputs.Player.Jump.started -= OnJumpStarted;
+        _inputs.Player.Jump.canceled -= OnJumpCanceled;
         _inputs.Disable();
+
+        _playerEvents.OnPortalLeave.Unsubscribe(HandlePortalLeave);
     }
 
     private void Update()
@@ -138,11 +146,22 @@ public class PlayerMovement : MonoBehaviour
         // Target velocity is our move input times our max speed
         float targetVelocity = _moveInput.x * _stats.runMaxSpeed;
 
-        // Our acceleration rate will be our run acceleration if we have a target velocity (i.e. player is inputting a
-        //   horizontal movement command)
-        // Else (the player is not inputting movement) we will use our deceleration amount
-        // This ensures we have a different acceleration when the player is moving vs. when we are returning to idle
-        float accelRate = (Mathf.Abs(targetVelocity) > 0.01f) ? _stats.runAccelAmount : _stats.runDeccelAmount;
+        float accelRate = 0;
+        if (DidExitPortal)
+        {
+            // Different acceleration rates after player exited a portal
+            // This is to preserve their exit velocity after leaving the portal for more enjoyable exit portal experience
+            // Also allows some better puzzle making
+            accelRate = Mathf.Abs(targetVelocity) > 0.01f ? _stats.runAccelAmount * _stats.accelAfterPortal : _stats.runDeccelAmount * _stats.deccelAfterPortal;
+        }
+        else
+        {
+            // Our acceleration rate will be our run acceleration if we have a target velocity (i.e. player is inputting a
+            //   horizontal movement command)
+            // Else (the player is not inputting movement) we will use our deceleration amount
+            // This ensures we have a different acceleration when the player is moving vs. when we are returning to idle
+            accelRate = (Mathf.Abs(targetVelocity) > 0.01f) ? _stats.runAccelAmount : _stats.runDeccelAmount;
+        }
 
         // The difference between our current and target velocity
         float velocityDiff = targetVelocity - _rb.velocity.x;
@@ -236,6 +255,13 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
+    private void HandlePortalLeave(PlayerLeavePortalEvent e)
+    {
+        // We want to adjust horizontal movement acceleration until player collides with any object
+        // This is to preserve their exit velocity coming out of the portal
+        DidExitPortal = true;
+    }
+
     #region Input Callbacks
 
     public void OnJumpStarted(InputAction.CallbackContext context)
@@ -253,6 +279,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #endregion
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Unset DidExitPortal after first collision
+        DidExitPortal = false;
+    }
 
     #region Editor Methods
 

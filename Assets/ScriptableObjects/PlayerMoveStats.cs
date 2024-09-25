@@ -28,6 +28,8 @@ public class PlayerMoveStats : ScriptableObject
     [Range(0f, 1)] public float accelInAir; //Multipliers applied to acceleration rate when airborne.
     [Range(0f, 1)] public float deccelInAir;
     [Space(5)]
+    [Range(0f, 1)] public float accelAfterPortal; // Multipliers applied to acceleration after leaving portal
+    [Range(0f, 1)] public float deccelAfterPortal;
     public bool doConserveMomentum = true;
 
     [Space(20)]

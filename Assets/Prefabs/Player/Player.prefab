@@ -446,6 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ff865d7cf558f4186de8ad72714b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerEvents: {fileID: 11400000, guid: c7296f729b7437a44a70c9d9155ed28e, type: 2}
 --- !u!1 &7932284853699527512
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,6 +837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: 45b90d55688145d4890b6983beaab464, type: 2}
+  _playerEvents: {fileID: 11400000, guid: c7296f729b7437a44a70c9d9155ed28e, type: 2}
   _groundCheck: {fileID: 8553024730843398127}
   _groundCheckSize: {x: 0.23, y: 0.05}
   _standableTerrainLayers:

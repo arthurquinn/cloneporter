@@ -19,9 +19,20 @@ public class PlayerPortalGunFireEventChannel : AbstractEventChannel<PlayerPortal
 
 }
 
+public struct PlayerLeavePortalEvent
+{
+
+}
+
+public class PlayerLeavePortalEventChannel : AbstractEventChannel<PlayerLeavePortalEvent>
+{
+
+}
+
 
 [CreateAssetMenu(fileName = "PlayerEventChannel", menuName = "EventChannels/PlayerEventChannel")]
 public class PlayerEventChannel : ScriptableObject
 {
-    public PlayerPortalGunFireEventChannel OnPortalGunFired {  get; private set; } = new PlayerPortalGunFireEventChannel();
+    public PlayerPortalGunFireEventChannel OnPortalGunFired { get; private set; } = new PlayerPortalGunFireEventChannel();
+    public PlayerLeavePortalEventChannel OnPortalLeave { get; private set; } = new PlayerLeavePortalEventChannel();
 }

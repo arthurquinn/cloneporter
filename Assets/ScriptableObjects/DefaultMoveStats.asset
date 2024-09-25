@@ -25,6 +25,8 @@ MonoBehaviour:
   runDeccelAmount: 22.727272
   accelInAir: 0
   deccelInAir: 0
+  accelAfterPortal: 0.05
+  deccelAfterPortal: 0.05
   doConserveMomentum: 1
   jumpHeight: 6
   jumpTimeToApex: 0.6
@@ -51,4 +53,3 @@ MonoBehaviour:
   dashEndRunLerp: 0
   dashRefillTime: 0
   dashInputBufferTime: 0.01
-  portalInputTimeout: 0.25
