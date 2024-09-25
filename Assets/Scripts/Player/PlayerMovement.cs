@@ -33,18 +33,12 @@ public class PlayerMovement : MonoBehaviour
     // Timers
     public float LastPressedJumpTime { get; private set; }
     public float LastOnGroundTime { get; private set; }
-    public float LastInPortalTime { get; private set; }
 
     // Cached Values
     public Vector2 LastFixedPosition { get; private set; }
 
     // Inputs
     private Vector2 _moveInput;
-
-    // Collision detections
-    private float _rayPortalCheckVert;
-    private float _rayPortalCheckHoriz;
-    private Vector2 _portalEnterCheck;
 
     // Constant values
     private float SNAP_X_OFFSET = 0.05f;
@@ -82,7 +76,6 @@ public class PlayerMovement : MonoBehaviour
         // Update timers
         LastPressedJumpTime -= Time.deltaTime;
         LastOnGroundTime -= Time.deltaTime;
-        LastInPortalTime -= Time.deltaTime;
 
         // Get player input
         _moveInput = _inputs.Player.Movement.ReadValue<Vector2>();
@@ -132,31 +125,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (LastInPortalTime < 0)
-        {
-            HandleMovement();
-            HandleJump();
-        }
+        HandleMovement();
+        HandleJump();
         HandleGravity();
 
         // Keep track of our last fixed position
         LastFixedPosition = _rb.position;
-    }
-
-    private void EnableCollisions(LayerMask collisionMask)
-    {
-        // Turn on collision for specified ignore layers (i.e. stop ignoring them)
-        LayerMask current = Physics2D.GetLayerCollisionMask(gameObject.layer);
-        LayerMask newMask = collisionMask | current;
-        Physics2D.SetLayerCollisionMask(gameObject.layer, newMask);
-    }
-
-    private void DisableCollisions(LayerMask collisionMask)
-    {
-        // Turn off collision for specified ignore layers
-        LayerMask current = Physics2D.GetLayerCollisionMask(gameObject.layer);
-        LayerMask newMask = ~collisionMask & current;
-        Physics2D.SetLayerCollisionMask(gameObject.layer, newMask);
     }
 
     private void HandleMovement()
@@ -258,20 +232,6 @@ public class PlayerMovement : MonoBehaviour
             offset.x = highestColliderPoint.x > lowestPlayerPoint.x ? SNAP_X_OFFSET : -SNAP_X_OFFSET;
             _rb.MovePosition(_rb.position += offset);
         }
-    }
-
-    public void OnPortalEntered(IPortal portal)
-    {
-        // Get our entry ray
-        Vector2 entryDirection = _rb.velocity.normalized;
-        Vector2 entryPoint = LastFixedPosition;
-        Ray2D entryRay = new Ray2D(entryPoint, entryDirection);
-
-        // Use portal interface to apply port to our rigidbody
-        portal.ApplyPort(entryRay, _rb);
-
-        // Set our last in portal time
-        LastInPortalTime = _stats.portalInputTimeout;
     }
 
     #endregion
