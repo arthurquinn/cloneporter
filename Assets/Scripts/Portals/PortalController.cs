@@ -19,6 +19,7 @@ public interface IPortal
 
 public class PortalController : MonoBehaviour, IPortal
 {
+    [SerializeField] private PortalEventChannel _portalEventChannel;
     [SerializeField] private PortalColor _portalColor;
     [SerializeField] private PortalController _linkedPortal;
 
@@ -40,6 +41,16 @@ public class PortalController : MonoBehaviour, IPortal
         _boxCollider = GetComponent<BoxCollider2D>();
 
         CachePortalLength();
+    }
+
+    private void OnEnable()
+    {
+        _portalEventChannel.OnPortalOpened.Subscribe(HandlePortalOpened);
+    }
+
+    private void OnDisable()
+    {
+        _portalEventChannel.OnPortalOpened.Unsubscribe(HandlePortalOpened);
     }
 
     #region Public Methods
@@ -82,13 +93,18 @@ public class PortalController : MonoBehaviour, IPortal
         rigidbody.AddForce(appliedForce, ForceMode2D.Impulse);
     }
 
-    public void SetPortal(PortalPlacement placement)
+    private void HandlePortalOpened(PortalOpenedEvent portalOpenedEvent)
+    {
+        SetPortal(portalOpenedEvent.Position, portalOpenedEvent.Orientation);
+    }
+
+    public void SetPortal(Vector2 position, Vector2 orientation)
     {
         _spriteRenderer.enabled = true;
         _boxCollider.enabled = true;
-        transform.position = placement.Position;
-        SetRotation(placement.Orientation);
-        _orientation = placement.Orientation;
+        transform.position = position;
+        SetRotation(orientation);
+        _orientation = orientation;
     }
 
     public void ClearPortal()
@@ -133,5 +149,8 @@ public class PortalController : MonoBehaviour, IPortal
     private void CachePortalLength()
     {
         _portalLength = _spriteRenderer.bounds.size.y;
+
+        // This assumes both portals will be the same size (likely won't change)
+        _portalEventChannel.OnPortalStarted.Raise(new PortalStartedEvent(_portalLength));
     }
 }

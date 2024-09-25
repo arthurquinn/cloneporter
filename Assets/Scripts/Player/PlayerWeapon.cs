@@ -9,10 +9,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(LineRenderer))]
 public class PlayerWeapon : MonoBehaviour
 {
-    [Header("Events")]
-    [SerializeField] private UnityEvent<PortalColor, Ray2D> _onPortalGunFired;
-    [SerializeField] private UnityEvent<Vector2> _onPlayerAimPosition;
-    [SerializeField] private UnityEvent _onPlayerStopAim;
+    [Header("Event Channels")]
+    [SerializeField] private PlayerWeaponEventChannel _weaponEventChannel;
 
     [Header("Hit Detection")]
     [SerializeField] private float _raycastLength;
@@ -41,7 +39,7 @@ public class PlayerWeapon : MonoBehaviour
     {
         _lineRenderer = GetComponent<LineRenderer>();
 
-        _aimOrigin = _initialAimOrigin.position;
+        //_aimOrigin = _initialAimOrigin.position;
     }
 
     private void OnEnable()
@@ -101,7 +99,7 @@ public class PlayerWeapon : MonoBehaviour
             _lineRenderer.SetPosition(1, aimPos);
 
             // Invoke our on aim event
-            _onPlayerAimPosition.Invoke(aimPos);
+            _weaponEventChannel.OnAimPositionChanged.Raise(new AimPositionChangedEvent(aimPos));
         }
         else
         {
@@ -126,7 +124,7 @@ public class PlayerWeapon : MonoBehaviour
         _isAiming = false;
         TryShootPortal(PortalColor.Purple);
 
-        _onPlayerStopAim.Invoke();
+        _weaponEventChannel.OnAimStopped.Raise(new AimStoppedEvent());
     }
 
     private void OnFireRightCanceled(InputAction.CallbackContext context)
@@ -134,7 +132,7 @@ public class PlayerWeapon : MonoBehaviour
         _isAiming = false;
         TryShootPortal(PortalColor.Teal);
 
-        _onPlayerStopAim.Invoke();
+        _weaponEventChannel.OnAimStopped.Raise(new AimStoppedEvent());
     }
 
     private void TryShootPortal(PortalColor portalColor)
@@ -144,7 +142,7 @@ public class PlayerWeapon : MonoBehaviour
         if (hit.collider != null)
         {
             // Check what we hit
-            bool hitPortalTile = hit.collider.CompareTag("PortalTiles");
+            bool hitPortalTile = hit.collider.CompareTag("Panels");
             bool hitPortal = hit.collider.CompareTag("Portal");
 
             // If we hit a portal or a portal tile
@@ -158,7 +156,7 @@ public class PlayerWeapon : MonoBehaviour
                 Ray2D entry = new Ray2D(adjustedHitPoint, entryDirection);
 
                 // Call unity event for portal gun fired
-                _onPortalGunFired.Invoke(portalColor, entry);
+                _weaponEventChannel.OnPortalGunFired.Raise(new PortalGunFiredEvent(portalColor, entry));
             }
         }
     }

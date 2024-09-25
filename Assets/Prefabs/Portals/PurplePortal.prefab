@@ -8,6 +8,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 543462055505153846, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 543462055505153846, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: _portalEventChannel
+      value: 
+      objectReference: {fileID: 11400000, guid: af3bed9d3daf5464bb6ca6b114c521ba, type: 2}
+    - target: {fileID: 6017843662625651584, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6017843662625651584, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6017843662625651584, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -48,9 +64,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 6ce0a23a477c0fe42b4ecc59c91b4a49, type: 3}
+    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7546552540717065692, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_Name
-      value: Portal
+      value: PurplePortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 7546552540717065692, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

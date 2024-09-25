@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PortalTiles
+  - Panels
+  - Portals
   - Portal
   layers:
   - Default
@@ -14,7 +15,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - PortalGround
+  - Panels
   - Portal
   - Interactables
   - ActivationArea

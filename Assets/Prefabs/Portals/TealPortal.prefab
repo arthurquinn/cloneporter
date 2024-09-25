@@ -9,9 +9,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 543462055505153846, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 543462055505153846, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: _portalColor
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 543462055505153846, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: _portalEventChannel
+      value: 
+      objectReference: {fileID: 11400000, guid: a05e899f2b0c69b4facc97265adf54f4, type: 2}
     - target: {fileID: 6017843662625651584, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -53,12 +61,48 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 6ce0a23a477c0fe42b4ecc59c91b4a49, type: 3}
+    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757850029820483436, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8e9d4a3d89c6a22419dab2b393b12684, type: 2}
+    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420298722333715003, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7546552540717065692, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_Name
       value: TealPortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 7546552540717065692, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

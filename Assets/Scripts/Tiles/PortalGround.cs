@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Events;
-using UnityEngine.UIElements;
 
 public struct PortalPlacement
 {
@@ -39,16 +38,17 @@ public enum OpenPortalAlgorithmType
 
 public class PortalGround : MonoBehaviour, IPortalGround
 {
+    [Header("EventChannels")]
+    [SerializeField] private PlayerWeaponEventChannel _weaponEventChannel;
+    [SerializeField] private PortalEventChannel _purplePortalEventChannel;
+    [SerializeField] private PortalEventChannel _tealPortalEventChannel;
+
+    [Space(20)]
+
     [SerializeField] private Tilemap _groundTilemap;
-
-    [SerializeField] private UnityEvent<PortalPlacement> _onPurplePortalOpened;
-    [SerializeField] private UnityEvent<PortalPlacement> _onTealPortalOpened;
-
     [SerializeField] private OpenPortalAlgorithmType _openPortalAlgorithmType;
-
     [SerializeField] private LayerMask _portalLayer;
 
-    private PortalController _portal;
     private Tilemap _tilemap;
 
     private IOpenPortalAlgorithm _openPortalAlgorithm;
@@ -58,9 +58,11 @@ public class PortalGround : MonoBehaviour, IPortalGround
 
     private readonly Vector2 OVERLAP_CHECK_DIMENSIONS = new Vector2(0.1f, 0.1f);
 
+    private float _portalLength;
+
     public Tilemap Tilemap { get { return _tilemap; } }
     public Tilemap Ground { get { return _groundTilemap; } }
-    public float PortalLength { get { return _portal.GetLength(); } }
+    public float PortalLength { get { return _portalLength; } }
 
     private void Awake()
     {
@@ -73,19 +75,35 @@ public class PortalGround : MonoBehaviour, IPortalGround
     private void Start()
     {
         _tilemap = GetComponent<Tilemap>();
-        _portal = GetComponentInChildren<PortalController>();
     }
 
-    public void OpenPortal(PortalColor color, Ray2D entry)
+    private void OnEnable()
+    {
+        _weaponEventChannel.OnPortalGunFired.Subscribe(HandlePortalGunFired);
+        _purplePortalEventChannel.OnPortalStarted.Subscribe(HandlePortalStarted);
+    }
+
+    private void OnDisable()
+    {
+        _weaponEventChannel.OnPortalGunFired.Unsubscribe(HandlePortalGunFired);
+        _purplePortalEventChannel.OnPortalStarted.Unsubscribe(HandlePortalStarted);
+    }
+
+    private void HandlePortalStarted(PortalStartedEvent portalStartedEvent)
+    {
+        _portalLength = portalStartedEvent.PortalLength;
+    }
+
+    private void HandlePortalGunFired(PortalGunFiredEvent weaponFiredEvent)
     {
         // If we returned a valid portal placement position, then open the portal
-        PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(entry);
+        PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(weaponFiredEvent.Entry);
         if (!portalPlacement.Position.Equals(Vector2.negativeInfinity))
         {
-            if (!IsOverlapPortal(portalPlacement, color))
+            if (!IsOverlapPortal(portalPlacement, weaponFiredEvent.Color))
             {
-                OpenPortalForColor(color, portalPlacement);
-                UpdateTileCollision(color, portalPlacement);
+                OpenPortalForColor(weaponFiredEvent.Color, portalPlacement);
+                UpdateTileCollision(weaponFiredEvent.Color, portalPlacement);
             }
         }
     }
@@ -94,11 +112,13 @@ public class PortalGround : MonoBehaviour, IPortalGround
     {
         if (color == PortalColor.Purple)
         {
-            _onPurplePortalOpened.Invoke(placement);
+            _purplePortalEventChannel.OnPortalOpened.Raise(new PortalOpenedEvent(
+                placement.Position, placement.Orientation, placement.AffectedTiles));
         }
         else if (color == PortalColor.Teal)
         {
-            _onTealPortalOpened.Invoke(placement);
+            _tealPortalEventChannel.OnPortalOpened.Raise(new PortalOpenedEvent(
+                placement.Position, placement.Orientation, placement.AffectedTiles));
         }
         else
         {
@@ -217,7 +237,7 @@ public class PortalGround : MonoBehaviour, IPortalGround
         Vector2 middleTileWorld = _tilemap.GetCellCenterWorld(middleTile);
 
         // Calculate raycast distance
-        float distance = _portal.GetLength() / 2 + _tilemap.cellSize.x / 2;
+        float distance = _portalLength / 2 + _tilemap.cellSize.x / 2;
 
         // Check raycasts
         RaycastHit2D[] rightHit = Physics2D.RaycastAll(middleTileWorld, Vector2.right, distance, _portalLayer);
@@ -247,7 +267,7 @@ public class PortalGround : MonoBehaviour, IPortalGround
         Vector2 middleTileWorld = _tilemap.GetCellCenterWorld(middleTile);
 
         // Calculate raycast distance
-        float distance = _portal.GetLength() / 2 + _tilemap.cellSize.y / 2;
+        float distance = _portalLength / 2 + _tilemap.cellSize.y / 2;
 
         // Check raycasts
         RaycastHit2D[] upHit = Physics2D.RaycastAll(middleTileWorld, Vector2.up, distance, _portalLayer);
