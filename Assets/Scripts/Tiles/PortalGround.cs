@@ -39,7 +39,7 @@ public enum OpenPortalAlgorithmType
 public class PortalGround : MonoBehaviour, IPortalGround
 {
     [Header("EventChannels")]
-    [SerializeField] private PlayerWeaponEventChannel _weaponEventChannel;
+    [SerializeField] private PlayerEventChannel _playerEventChannel;
     [SerializeField] private PortalEventChannel _purplePortalEventChannel;
     [SerializeField] private PortalEventChannel _tealPortalEventChannel;
 
@@ -79,13 +79,13 @@ public class PortalGround : MonoBehaviour, IPortalGround
 
     private void OnEnable()
     {
-        _weaponEventChannel.OnPortalGunFired.Subscribe(HandlePortalGunFired);
+        _playerEventChannel.OnPortalGunFired.Subscribe(HandlePortalGunFired);
         _purplePortalEventChannel.OnPortalStarted.Subscribe(HandlePortalStarted);
     }
 
     private void OnDisable()
     {
-        _weaponEventChannel.OnPortalGunFired.Unsubscribe(HandlePortalGunFired);
+        _playerEventChannel.OnPortalGunFired.Unsubscribe(HandlePortalGunFired);
         _purplePortalEventChannel.OnPortalStarted.Unsubscribe(HandlePortalStarted);
     }
 
@@ -94,16 +94,16 @@ public class PortalGround : MonoBehaviour, IPortalGround
         _portalLength = portalStartedEvent.PortalLength;
     }
 
-    private void HandlePortalGunFired(PortalGunFiredEvent weaponFiredEvent)
+    private void HandlePortalGunFired(PlayerPortalGunFireEvent portalGunFiredEvent)
     {
         // If we returned a valid portal placement position, then open the portal
-        PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(weaponFiredEvent.Entry);
+        PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(portalGunFiredEvent.AimRay);
         if (!portalPlacement.Position.Equals(Vector2.negativeInfinity))
         {
-            if (!IsOverlapPortal(portalPlacement, weaponFiredEvent.Color))
+            if (!IsOverlapPortal(portalPlacement, portalGunFiredEvent.PortalColor))
             {
-                OpenPortalForColor(weaponFiredEvent.Color, portalPlacement);
-                UpdateTileCollision(weaponFiredEvent.Color, portalPlacement);
+                OpenPortalForColor(portalGunFiredEvent.PortalColor, portalPlacement);
+                UpdateTileCollision(portalGunFiredEvent.PortalColor, portalPlacement);
             }
         }
     }

@@ -11,18 +11,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Checks")]
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private Vector2 _groundCheckSize;
-    [SerializeField] private Transform _weaponRestPoint;
 
     [Header("Layers")]
     [SerializeField] private LayerMask _standableTerrainLayers;
 
     [Header("Events")]
     [SerializeField] private UnityEvent _onJumpStart;
-    [SerializeField] private UnityEvent<Vector2> _onGunPositionChanged;
-
-    [Header("IK Objects")]
-    [SerializeField] private Transform _gunTarget;
-    [SerializeField] private Transform _gunEffector;
 
     // Components
     private Rigidbody2D _rb;
@@ -278,30 +272,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Set our last in portal time
         LastInPortalTime = _stats.portalInputTimeout;
-    }
-
-    private void InvokeGunPositionChanged()
-    {
-        _onGunPositionChanged.Invoke(_gunEffector.position);
-    }
-
-    public void AimGun(Vector2 aimPosition)
-    {
-        // Change the position of our gun target to the aim position
-        _gunTarget.position = aimPosition;
-
-        // Invoke the event on gun position changed using the effector
-        //   to represent the tip of our gun
-        InvokeGunPositionChanged();
-    }
-
-    public void ResetGunPose()
-    {
-        // Change our gun position to the weapon rest position
-        _gunTarget.position = _weaponRestPoint.position;
-
-        // Invoke gun position changed event
-        InvokeGunPositionChanged();
     }
 
     #endregion

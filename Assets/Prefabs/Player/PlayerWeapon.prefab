@@ -149,11 +149,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b577b007f795cd846895eba4f09cdbce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerEventChannel: {fileID: 11400000, guid: c7296f729b7437a44a70c9d9155ed28e, type: 2}
   _weaponEventChannel: {fileID: 11400000, guid: ff2864df792d4614b8035438a97fdb47, type: 2}
   _raycastLength: 100
   _hitDetectionMultiplier: 0.01
   _targetLayer:
     serializedVersion: 2
     m_Bits: 448
-  _rightArmEffector: {fileID: 0}
-  _initialAimOrigin: {fileID: 0}
