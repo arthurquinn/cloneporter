@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using System.Runtime.CompilerServices;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, ISnappable
 {
     [SerializeField] private PlayerMoveStats _stats;
     [SerializeField] private PlayerEventChannel _playerEvents;
@@ -41,9 +41,6 @@ public class PlayerMovement : MonoBehaviour
 
     // Inputs
     private Vector2 _moveInput;
-
-    // Constant values
-    private float SNAP_X_OFFSET = 0.05f;
 
     private void Awake()
     {
@@ -236,23 +233,6 @@ public class PlayerMovement : MonoBehaviour
 
     #region Player Event Handlers
 
-    public void SnapAboveCollider(Collider2D collider)
-    {
-        Vector2 highestColliderPoint = collider.bounds.max;
-        Vector2 lowestPlayerPoint = _boxCollider.bounds.min;
-
-        // Snap the player above the collider if we are below it
-        // This is useful for the player walking directly into switches without
-        //   having to jump on top of them
-        if (lowestPlayerPoint.y < highestColliderPoint.y)
-        {
-            Vector2 offset = Vector2.zero;
-            offset.y = highestColliderPoint.y - lowestPlayerPoint.y;
-            offset.x = highestColliderPoint.x > lowestPlayerPoint.x ? SNAP_X_OFFSET : -SNAP_X_OFFSET;
-            _rb.MovePosition(_rb.position += offset);
-        }
-    }
-
     #endregion
 
     private void HandlePortalLeave(PlayerLeavePortalEvent e)
@@ -304,4 +284,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #endregion
+
+    public void SnapOffset(Vector2 offset)
+    {
+        Vector2 newPosition = _rb.position + offset;
+        _rb.position = newPosition;
+    }
 }
