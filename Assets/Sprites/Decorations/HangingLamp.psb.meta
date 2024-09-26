@@ -1789,7 +1789,7 @@ ScriptedImporter:
     - {x: 19, y: 20}
     tessellationDetail: 0
     uvTransform: {x: 3, y: 54}
-    spritePosition: {x: 50, y: 15}
+    spritePosition: {x: 50, y: 13}
   characterData:
     bones:
     - name: bone_1
