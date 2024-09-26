@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PlayerSpawnPlatform : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private SpawnerEventChannel _spawnerEvents;
+    [SerializeField] private Transform _spawnPoint;
+
+    private void Start()
     {
-        
+        SpawnPlayer();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SpawnPlayer()
     {
-        
+        _spawnerEvents.OnSpawnPlayer.Raise(new SpawnPlayerEvent(_spawnPoint.position));
     }
 }
