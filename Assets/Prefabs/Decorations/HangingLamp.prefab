@@ -1,5 +1,87 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2043985481371966646
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3721115686047416546}
+  - component: {fileID: 4277947147496023922}
+  m_Layer: 0
+  m_Name: SpotLight2D
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3721115686047416546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043985481371966646}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 0.70710725, w: -0.7071064}
+  m_LocalPosition: {x: 0.021525398, y: 0.0019718367, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3650040523605132641}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!114 &4277947147496023922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043985481371966646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0.9607843, g: 0.9137255, b: 0.7490196, a: 1}
+  m_Intensity: 4
+  m_LightVolumeIntensity: 1
+  m_LightVolumeIntensityEnabled: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensity: 0.75
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 76.190475
+  m_PointLightOuterAngle: 170.88434
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 10
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
 --- !u!1 &2304940143015984899
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,7 +158,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.6008731, y: -2.747542}
+  m_ConnectedAnchor: {x: -0.6008731, y: 1.002458}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -103,7 +185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.74
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -143,6 +225,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -7552582706839291426, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       insertIndex: 3
       addedObject: {fileID: 5238753506606575001}
+    - targetCorrespondingSourceObject: {fileID: -2720636225374589003, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3721115686047416546}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 386791141387813222, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       insertIndex: -1
@@ -244,7 +329,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.078872204, y: -0.000000020546963}
+  m_ConnectedAnchor: {x: 0.078872085, y: -0.000000020545258}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -253,6 +338,11 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -20
     m_UpperAngle: 20
+--- !u!4 &3650040523605132641 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -2720636225374589003, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
+  m_PrefabInstance: {fileID: 7537292121363917524}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4304913204367509957 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5991978282278052625, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
@@ -301,7 +391,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.08282174, y: 0.00000004738103}
+  m_ConnectedAnchor: {x: 0.08282156, y: 0.000000049476505}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -393,7 +483,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.07197093, y: 0.000000028884761}
+  m_ConnectedAnchor: {x: 0.07197081, y: 0.000000028884713}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -450,7 +540,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.09269594, y: -0.000000036787238}
+  m_ConnectedAnchor: {x: 0.09269576, y: -0.000000033061948}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -507,7 +597,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.072983205, y: 0.000000008614734}
+  m_ConnectedAnchor: {x: 0.072983384, y: 0.0000000037252903}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -564,7 +654,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.08973856, y: 0.00000020861626}
+  m_ConnectedAnchor: {x: 0.08973868, y: 0.00000020605512}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -621,7 +711,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.08380729, y: 0.0000001157168}
+  m_ConnectedAnchor: {x: 0.08380741, y: 0.000000117113785}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
