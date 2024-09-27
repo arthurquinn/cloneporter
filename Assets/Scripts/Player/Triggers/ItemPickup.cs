@@ -6,12 +6,15 @@ using UnityEngine.UIElements;
 
 public interface ICarryable
 {
+    Collider2D Collider { get; }
+
     void Pickup(Transform carryPoint);
     void Drop();
 }
 
 public class ItemPickup : MonoBehaviour
 {
+    [SerializeField] private Collider2D _playerCollider;
     [SerializeField] private Transform _holdPosition;
 
     private PlayerInputActions _input;
@@ -65,13 +68,23 @@ public class ItemPickup : MonoBehaviour
 
     private void CarryItem()
     {
+        // Pickup item
         _cachedItem.Pickup(_holdPosition);
+
+        // Remove item from cache and store in held item
         _heldItem = _cachedItem;
         _cachedItem = null;
+
+        // Disable collisions between us and the carried item
+        Physics2D.IgnoreCollision(_playerCollider, _heldItem.Collider, true);
     }
 
     private void DropItem()
     {
+        // Reenable collisions between us and the previously held item
+        Physics2D.IgnoreCollision(_playerCollider, _heldItem.Collider, false);
+
+        // Drop the item
         _heldItem.Drop();
         _heldItem = null;
     }
