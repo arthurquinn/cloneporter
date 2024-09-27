@@ -158,7 +158,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.6008731, y: 1.002458}
+  m_ConnectedAnchor: {x: -0.6008731, y: 1.516458}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -189,7 +189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.01
+      value: 0.524
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -403,7 +403,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.08282156, y: 0.000000049476505}
+  m_ConnectedAnchor: {x: 0.08282162, y: 0.000000048778013}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -552,7 +552,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.09269576, y: -0.000000033061948}
+  m_ConnectedAnchor: {x: 0.09269582, y: -0.0000000342261}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -609,7 +609,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.072983384, y: 0.0000000037252903}
+  m_ConnectedAnchor: {x: 0.072983325, y: 0.000000005355105}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
