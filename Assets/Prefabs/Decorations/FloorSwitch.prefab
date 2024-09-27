@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorSwitch
       objectReference: {fileID: 0}
+    - target: {fileID: -8653719598885068355, guid: 32c5f437481d02e45977dfe59783ce19, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 32c5f437481d02e45977dfe59783ce19, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.5
@@ -51,6 +55,14 @@ PrefabInstance:
     - target: {fileID: -7552582706839291426, guid: 32c5f437481d02e45977dfe59783ce19, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547846827081519095, guid: 32c5f437481d02e45977dfe59783ce19, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3624957860183718913, guid: 32c5f437481d02e45977dfe59783ce19, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -269,6 +281,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2f7501ad9f7e7f4eb4efda49b4b7244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _floorSwitchMap: {fileID: 11400000, guid: 2e3aa8c117527f34dbbf62a0244d48b9, type: 2}
   _switchEventChannel: {fileID: 11400000, guid: 61f4b7ed6d9ad1640842fb9c257a4384, type: 2}
   _trigger: {fileID: 1916996353477087538}

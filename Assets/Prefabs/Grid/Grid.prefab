@@ -234,7 +234,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 5fb939ed6558daa4bb34fd5b650c63e1, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2810c35c4b712ec48a3b4cd5d1cbe71e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponEventChannel: {fileID: 11400000, guid: ff2864df792d4614b8035438a97fdb47, type: 2}
+  _playerEventChannel: {fileID: 0}
   _purplePortalEventChannel: {fileID: 11400000, guid: af3bed9d3daf5464bb6ca6b114c521ba, type: 2}
   _tealPortalEventChannel: {fileID: 11400000, guid: a05e899f2b0c69b4facc97265adf54f4, type: 2}
   _groundTilemap: {fileID: 3565704756933015373}
@@ -589,7 +589,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 5fb939ed6558daa4bb34fd5b650c63e1, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

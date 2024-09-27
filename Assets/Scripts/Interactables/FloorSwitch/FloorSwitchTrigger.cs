@@ -8,11 +8,16 @@ public class FloorSwitchTrigger : MonoBehaviour
     public UnityAction<Collider2D> OnSwitchActivated { get; set; }
     public UnityAction<Collider2D> OnSwitchDeactivated { get; set; }
 
+    private int _collisionCount;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (OnSwitchActivated != null)
         {
-            OnSwitchActivated(collision);
+            if (_collisionCount++ == 0)
+            {
+                OnSwitchActivated(collision);
+            }
         }
     }
 
@@ -20,7 +25,10 @@ public class FloorSwitchTrigger : MonoBehaviour
     {
         if (OnSwitchDeactivated != null)
         {
-            OnSwitchDeactivated(collision);
+            if (--_collisionCount == 0)
+            {
+                OnSwitchDeactivated(collision);
+            }
         }
     }
 }
