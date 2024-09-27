@@ -1,38 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(BoxCollider2D)), RequireComponent(typeof(SpriteRenderer))]
 public class DoorController : MonoBehaviour
 {
-    private BoxCollider2D _collider;
-    private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
 
-    private bool _isOpen;
-
-    private void Start()
+    private void Awake()
     {
-        _collider = GetComponent<BoxCollider2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    public void OpenDoor()
-    {
-        if (!_isOpen)
-        {
-            _isOpen = true;
-            _collider.enabled = false;
-            _spriteRenderer.enabled = false;
-        }
-    }
-
-    public void CloseDoor()
-    {
-        if (_isOpen)
-        {
-            _isOpen = false;
-            _collider.enabled = true;
-            _spriteRenderer.enabled = true;
-        }
+        _animator = GetComponent<Animator>();
     }
 }
