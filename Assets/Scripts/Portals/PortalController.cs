@@ -21,9 +21,11 @@ public class PortalController : MonoBehaviour, IPortal
 {
     [SerializeField] private PortalEventChannel _portalEventChannel;
     [SerializeField] private PortalColor _portalColor;
-    [SerializeField] private PortalController _linkedPortal;
 
+    [Header("Exit Velocity Adjustments")]
     [SerializeField] private float _exitUpVelocityThreshold;
+
+    private PortalController _linkedPortal;
 
     private SpriteRenderer _spriteRenderer;
     private BoxCollider2D _boxCollider;
@@ -51,6 +53,11 @@ public class PortalController : MonoBehaviour, IPortal
     private void OnDisable()
     {
         _portalEventChannel.OnPortalOpened.Unsubscribe(HandlePortalOpened);
+    }
+
+    public void SetLinkedPortal(PortalController linkedPortal)
+    {
+        _linkedPortal = linkedPortal;
     }
 
     #region Public Methods
@@ -129,8 +136,9 @@ public class PortalController : MonoBehaviour, IPortal
         // Adjust when the portals are vertical and opposite from each other
         // This will allow the player to walk smoothly between portals placed near the ground
         //   without porting to the top of the next portal
-        bool adjustVerticals = Orientation.x == -_linkedPortal.Orientation.x;
-        if (adjustVerticals)
+        bool portalsVertical = Orientation.x != 0 && _linkedPortal.Orientation.x != 0;
+        bool adjustVerticals =  Orientation.x == -_linkedPortal.Orientation.x;
+        if (portalsVertical && adjustVerticals)
         {
             offset.y = -offset.y;
         }

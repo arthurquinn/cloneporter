@@ -19,6 +19,10 @@ public class PlayerMovement : MonoBehaviour, ISnappable
     [Header("Events")]
     [SerializeField] private UnityEvent _onJumpStart;
 
+    [Header("Teleport Trigger")]
+    [Tooltip("The teleport trigger is a prefab that allows objects with rigidbodys to pass through portals.")]
+    [SerializeField] private TeleportTrigger _teleportTrigger;
+
     // Components
     private Rigidbody2D _rb;
     private PlayerInputActions _inputs;
@@ -36,8 +40,6 @@ public class PlayerMovement : MonoBehaviour, ISnappable
     public float LastPressedJumpTime { get; private set; }
     public float LastOnGroundTime { get; private set; }
 
-    // Cached Values
-    public Vector2 LastFixedPosition { get; private set; }
 
     // Inputs
     private Vector2 _moveInput;
@@ -64,7 +66,7 @@ public class PlayerMovement : MonoBehaviour, ISnappable
         _inputs.Player.Jump.started += OnJumpStarted;
         _inputs.Player.Jump.canceled += OnJumpCanceled;
 
-        _playerEvents.OnPortalLeave.Subscribe(HandlePortalLeave);
+        _teleportTrigger.OnPortalLeave += HandlePortalLeave;
     }
 
     private void OnDisable()
@@ -73,7 +75,7 @@ public class PlayerMovement : MonoBehaviour, ISnappable
         _inputs.Player.Jump.canceled -= OnJumpCanceled;
         _inputs.Disable();
 
-        _playerEvents.OnPortalLeave.Unsubscribe(HandlePortalLeave);
+        _teleportTrigger.OnPortalLeave -= HandlePortalLeave;
     }
 
     private void Update()
@@ -133,9 +135,6 @@ public class PlayerMovement : MonoBehaviour, ISnappable
         HandleMovement();
         HandleJump();
         HandleGravity();
-
-        // Keep track of our last fixed position
-        LastFixedPosition = _rb.position;
     }
 
     private void HandleMovement()
@@ -235,7 +234,7 @@ public class PlayerMovement : MonoBehaviour, ISnappable
 
     #endregion
 
-    private void HandlePortalLeave(PlayerLeavePortalEvent e)
+    private void HandlePortalLeave()
     {
         // We want to adjust horizontal movement acceleration until player collides with any object
         // This is to preserve their exit velocity coming out of the portal

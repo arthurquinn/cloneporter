@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9b0a13068dd5964448c1ecf4c1a6ea35
+guid: c04552e8882f9c64494d10620d954dd5
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -94,7 +94,28 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: DoorTop
+  - name: WallLight
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 76
+      width: 6
+      height: 33
+    spriteID: 7d6303695faa4b049bad1f7111773cbf
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 3, y: 75}
+    spritePosition: {x: 4, y: 26}
+  - name: WallLightBase
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -103,9 +124,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 65
-      height: 129
-    spriteID: a89f1de073ac4294aab7c473062bf217
+      width: 10
+      height: 64
+    spriteID: 8573f743d567fdb41a4c281b614b1bc5
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -113,29 +134,8 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 2, y: 3}
-    spritePosition: {x: 96, y: 127}
-  - name: DoorBottom
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 77
-      y: 4
-      width: 65
-      height: 129
-    spriteID: c6ca6b362e4f36446ba36b76a03b8a85
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 75, y: 4}
-    spritePosition: {x: 96, y: 0}
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 0, y: 0}
   characterData:
     bones: []
     parts: []
@@ -191,7 +191,7 @@ ScriptedImporter:
   mosaicLayers: 1
   characterMode: 1
   documentPivot: {x: 0, y: 0}
-  documentAlignment: 0
+  documentAlignment: 4
   importHiddenLayers: 0
   layerMappingOption: 2
   generatePhysicsShape: 0
@@ -208,30 +208,30 @@ ScriptedImporter:
   resliceFromLayer: 0
   mosaicPSDLayers: []
   rigPSDLayers:
-  - name: DoorTop
-    spriteName: DoorTop
+  - name: WallLight
+    spriteName: WallLight
     isGroup: 0
     parentIndex: -1
-    spriteID: a89f1de073ac4294aab7c473062bf217
-    layerID: 30
-    mosaicPosition: {x: 4, y: 4}
+    spriteID: 7d6303695faa4b049bad1f7111773cbf
+    layerID: 5
+    mosaicPosition: {x: 4, y: 76}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: DoorBottom
-    spriteName: DoorBottom
+  - name: WallLightBase
+    spriteName: WallLightBase
     isGroup: 0
     parentIndex: -1
-    spriteID: c6ca6b362e4f36446ba36b76a03b8a85
-    layerID: 29
-    mosaicPosition: {x: 77, y: 4}
+    spriteID: 8573f743d567fdb41a4c281b614b1bc5
+    layerID: 3
+    mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
   sharedRigPSDLayers: []
   pSDLayerImportSetting: []
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638629750102671851
+  platformSettingsDirtyTick: 638630604126821973
   spriteSizeExpandChanged: 0
   generateGOHierarchy: 0
   textureAssetName: 

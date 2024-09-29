@@ -145,5 +145,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _portalEventChannel: {fileID: 0}
   _portalColor: 0
-  _linkedPortal: {fileID: 0}
   _exitUpVelocityThreshold: 10.5

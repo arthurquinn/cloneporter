@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3721115686047416546}
   - component: {fileID: 4277947147496023922}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: LampLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 5238753506606575001}
   - component: {fileID: 1895550491516584972}
   - component: {fileID: 5951675879618107202}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 2304940143015984899}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.008873105, y: 0.992458, z: 0}
+  m_LocalPosition: {x: -0.008873105, y: 0.492458, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -158,7 +158,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.6008731, y: 1.516458}
+  m_ConnectedAnchor: {x: -8.741873, y: 1.492458}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -181,11 +181,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: -8596930853604061233, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: -7652842337298341928, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -193,11 +193,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 6c0cabd484b7eda49a55e8a35e502469, type: 2}
     - target: {fileID: -7552582706839291426, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.592
+      value: -8.733
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.524
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -233,11 +233,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1024815538560704356, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 386791141387813222, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 2700461892647434572, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -245,23 +245,23 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     - target: {fileID: 2874507048560749494, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3282801681038763871, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3297364353584691495, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4157741701538757237, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4614850231469255755, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5330312366926860561, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -269,19 +269,19 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     - target: {fileID: 5991978282278052625, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6455679679765667090, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6536024099097789449, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8459986232563488743, guid: 412f833e9baea7b4a8c8c53757f8d6b7, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -393,7 +393,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.078872085, y: -0.000000020545258}
+  m_ConnectedAnchor: {x: 0.078872204, y: -0.0000001993609}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -455,7 +455,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.08282162, y: 0.000000048778013}
+  m_ConnectedAnchor: {x: 0.08282157, y: 0.00000016868579}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -547,7 +547,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.07197081, y: 0.000000028884713}
+  m_ConnectedAnchor: {x: 0.07197093, y: 0.000000028884761}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -604,7 +604,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.09269582, y: -0.0000000342261}
+  m_ConnectedAnchor: {x: 0.09269581, y: -0.0000005110632}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -661,7 +661,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.072983325, y: 0.000000005355105}
+  m_ConnectedAnchor: {x: 0.07298333, y: 0.00000030337833}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -718,7 +718,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.08973868, y: 0.00000020605512}
+  m_ConnectedAnchor: {x: 0.08973856, y: 0.00000044703484}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -775,7 +775,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.08380741, y: 0.000000117113785}
+  m_ConnectedAnchor: {x: 0.08380729, y: 0.0000002945307}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
