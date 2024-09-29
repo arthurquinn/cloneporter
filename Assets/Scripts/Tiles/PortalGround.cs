@@ -197,7 +197,7 @@ public class PortalGround : MonoBehaviour, IPortalGround
             }
             else if (_groundTilemap.HasTile(tiles[i]))
             {
-                _groundTilemap.SetColliderType(tiles[i], Tile.ColliderType.None);
+                _tilemap.SetColliderType(tiles[i], Tile.ColliderType.None);
             }
         }
     }
@@ -208,11 +208,11 @@ public class PortalGround : MonoBehaviour, IPortalGround
         {
             if (_tilemap.HasTile(tiles[i]))
             {
-                _tilemap.SetColliderType(tiles[i], Tile.ColliderType.Sprite);
+                _tilemap.SetColliderType(tiles[i], Tile.ColliderType.Grid);
             }
             else if (_groundTilemap.HasTile(tiles[i]))
             {
-                _groundTilemap.SetColliderType(tiles[i], Tile.ColliderType.Sprite);
+                _groundTilemap.SetColliderType(tiles[i], Tile.ColliderType.Grid);
             }
         }
     }
