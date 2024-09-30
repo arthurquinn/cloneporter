@@ -2,6 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct PlayerStartedEvent
+{
+    public Transform Player { get; private set; }
+    
+    public PlayerStartedEvent(Transform player)
+    {
+        Player = player;
+    }
+}
+
+public class PlayerStartedEventChannel : AbstractEventChannel<PlayerStartedEvent>
+{
+
+}
+
 public struct PlayerPortalGunFireEvent
 {
     public PortalColor PortalColor { get; private set; }
@@ -19,12 +34,12 @@ public class PlayerPortalGunFireEventChannel : AbstractEventChannel<PlayerPortal
 
 }
 
-public struct PlayerLeavePortalEvent
+public struct PlayerTeleportedEvent
 {
 
 }
 
-public class PlayerLeavePortalEventChannel : AbstractEventChannel<PlayerLeavePortalEvent>
+public class PlayerTeleportedEventChannel : AbstractEventChannel<PlayerTeleportedEvent>
 {
 
 }
@@ -62,8 +77,9 @@ public class PlayerDropItemEventChannel : AbstractEventChannel<PlayerDropItemEve
 [CreateAssetMenu(fileName = "PlayerEventChannel", menuName = "EventChannels/PlayerEventChannel")]
 public class PlayerEventChannel : ScriptableObject
 {
+    public PlayerStartedEventChannel OnPlayerStarted {  get; private set; } = new PlayerStartedEventChannel();
     public PlayerPortalGunFireEventChannel OnPortalGunFired { get; private set; } = new PlayerPortalGunFireEventChannel();
-    public PlayerLeavePortalEventChannel OnPortalLeave { get; private set; } = new PlayerLeavePortalEventChannel();
+    public PlayerTeleportedEventChannel OnTeleported { get; private set; } = new PlayerTeleportedEventChannel();
     public PlayerPickupItemEventChannel OnPickupItem { get; private set; } = new PlayerPickupItemEventChannel();
     public PlayerDropItemEventChannel OnDropItem { get; private set; } = new PlayerDropItemEventChannel();
 }

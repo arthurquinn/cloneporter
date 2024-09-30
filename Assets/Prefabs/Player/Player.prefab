@@ -990,7 +990,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc4c07f78ab917846b9737353686c5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerEvents: {fileID: 11400000, guid: c7296f729b7437a44a70c9d9155ed28e, type: 2}
   _spawnerEvents: {fileID: 11400000, guid: 825f9df4d1a1173489b0a2668e3dc7c9, type: 2}
+  _teleportTrigger: {fileID: 4406902719079127697}
 --- !u!4 &8284138063593270215 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 311580695235782034, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
