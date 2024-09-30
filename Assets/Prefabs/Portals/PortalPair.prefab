@@ -46,7 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94bc36b517234c24eaa7c3df21d84b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _portalEvents: {fileID: 11400000, guid: e5d7b9b2a53c1354e82482ba8e0ad77c, type: 2}
   _forceFieldEvents: {fileID: 11400000, guid: 68f8c956902d618449158c42d4543a22, type: 2}
+  _panelTilesEvents: {fileID: 11400000, guid: 8ccfd51e22db89949b54294806c7d350, type: 2}
   _purplePortal: {fileID: 5722229436946197532}
   _tealPortal: {fileID: 5845006483659161845}
 --- !u!1001 &2804298954040631766

@@ -19,7 +19,6 @@ public interface IPortal
 
 public class PortalController : MonoBehaviour, IPortal
 {
-    [SerializeField] private PortalEventChannel _portalEventChannel;
     [SerializeField] private PortalColor _portalColor;
 
     [Header("Exit Velocity Adjustments")]
@@ -37,22 +36,10 @@ public class PortalController : MonoBehaviour, IPortal
 
     private float _portalLength;
 
-    private void Start()
+    private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _boxCollider = GetComponent<BoxCollider2D>();
-
-        CachePortalLength();
-    }
-
-    private void OnEnable()
-    {
-        _portalEventChannel.OnPortalOpened.Subscribe(HandlePortalOpened);
-    }
-
-    private void OnDisable()
-    {
-        _portalEventChannel.OnPortalOpened.Unsubscribe(HandlePortalOpened);
     }
 
     public void SetLinkedPortal(PortalController linkedPortal)
@@ -102,11 +89,6 @@ public class PortalController : MonoBehaviour, IPortal
         // Apply the force
         Vector2 appliedForce = adjustedExitVelocity - rigidbody.velocity;
         rigidbody.AddForce(appliedForce, ForceMode2D.Impulse);
-    }
-
-    private void HandlePortalOpened(PortalOpenedEvent portalOpenedEvent)
-    {
-        SetPortal(portalOpenedEvent.Position, portalOpenedEvent.Orientation);
     }
 
     public void SetPortal(Vector2 position, Vector2 orientation)
@@ -174,11 +156,8 @@ public class PortalController : MonoBehaviour, IPortal
         }
     }
 
-    private void CachePortalLength()
+    public void CachePortalLength()
     {
         _portalLength = _spriteRenderer.bounds.size.y;
-
-        // This assumes both portals will be the same size (likely won't change)
-        _portalEventChannel.OnPortalStarted.Raise(new PortalStartedEvent(_portalLength));
     }
 }

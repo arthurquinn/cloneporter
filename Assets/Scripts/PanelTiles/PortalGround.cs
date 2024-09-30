@@ -40,8 +40,8 @@ public class PortalGround : MonoBehaviour, IPortalGround
 {
     [Header("EventChannels")]
     [SerializeField] private PlayerEventChannel _playerEventChannel;
-    [SerializeField] private PortalEventChannel _purplePortalEventChannel;
-    [SerializeField] private PortalEventChannel _tealPortalEventChannel;
+    [SerializeField] private PanelTilesEventChannel _panelEventChannel;
+    [SerializeField] private PortalPairEventChannel _portalEventChannel;
 
     [Space(20)]
 
@@ -80,16 +80,16 @@ public class PortalGround : MonoBehaviour, IPortalGround
     private void OnEnable()
     {
         _playerEventChannel.OnPortalGunFired.Subscribe(HandlePortalGunFired);
-        _purplePortalEventChannel.OnPortalStarted.Subscribe(HandlePortalStarted);
+        _portalEventChannel.OnPortalPairStarted.Subscribe(HandlePortalPairStarted);
     }
 
     private void OnDisable()
     {
         _playerEventChannel.OnPortalGunFired.Unsubscribe(HandlePortalGunFired);
-        _purplePortalEventChannel.OnPortalStarted.Unsubscribe(HandlePortalStarted);
+        _portalEventChannel.OnPortalPairStarted.Unsubscribe(HandlePortalPairStarted);
     }
 
-    private void HandlePortalStarted(PortalStartedEvent portalStartedEvent)
+    private void HandlePortalPairStarted(PortalPairStartedEvent portalStartedEvent)
     {
         _portalLength = portalStartedEvent.PortalLength;
     }
@@ -110,20 +110,8 @@ public class PortalGround : MonoBehaviour, IPortalGround
 
     private void OpenPortalForColor(PortalColor color, PortalPlacement placement)
     {
-        if (color == PortalColor.Purple)
-        {
-            _purplePortalEventChannel.OnPortalOpened.Raise(new PortalOpenedEvent(
-                placement.Position, placement.Orientation, placement.AffectedTiles));
-        }
-        else if (color == PortalColor.Teal)
-        {
-            _tealPortalEventChannel.OnPortalOpened.Raise(new PortalOpenedEvent(
-                placement.Position, placement.Orientation, placement.AffectedTiles));
-        }
-        else
-        {
-            Debug.LogWarning("Unreachable code: Should have a portal color of teal or purple");
-        }
+        _panelEventChannel.OnPanelPlacePortal.Raise(new PanelPlacePortalEvent(
+            color, placement.Position, placement.Orientation, placement.AffectedTiles));
     }
 
     private void SetOpenPortalAlgorithm()
