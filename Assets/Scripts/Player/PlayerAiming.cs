@@ -139,8 +139,11 @@ public class PlayerAiming : MonoBehaviour
     private void DrawTargetingBeam(Vector2 targetPosition)
     {
         _lineRenderer.enabled = true;
-        _lineRenderer.SetPosition(0, _gunEffector.position);
+        Vector2 gunPosition = (Vector2)_gunEffector.position;
+        _lineRenderer.SetPosition(0, gunPosition);
         _lineRenderer.SetPosition(1, targetPosition);
+
+        Debug.DrawLine(_gunEffector.position, targetPosition);
     }
 
     private void ResetWeapon()

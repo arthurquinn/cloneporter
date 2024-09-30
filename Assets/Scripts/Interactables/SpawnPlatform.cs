@@ -14,6 +14,6 @@ public class PlayerSpawnPlatform : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        //_spawnerEvents.OnSpawnPlayer.Raise(new SpawnPlayerEvent(_spawnPoint.position));
+        _spawnerEvents.OnSpawnPlayer.Raise(new SpawnPlayerEvent(_spawnPoint.position));
     }
 }
