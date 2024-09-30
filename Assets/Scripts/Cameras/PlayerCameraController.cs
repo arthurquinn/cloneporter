@@ -1,7 +1,6 @@
 using Cinemachine;
-using System.Runtime.CompilerServices;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerCameraController : MonoBehaviour
 {
@@ -48,6 +47,14 @@ public class PlayerCameraController : MonoBehaviour
         // Switch the active camera when the player teleports
         // We have an ease in out blend between these two cameras so that the camera motion on teleport
         //   is not too jarring for the user
+        StartCoroutine(SwitchCameraNextFixedUpdate());
+    }
+
+    private IEnumerator SwitchCameraNextFixedUpdate()
+    {
+        // Wait for next fixed update so we set the camera follow target after the player's rigidbody has updated
+        // Then switch the camera
+        yield return new WaitForFixedUpdate();
         SwitchCamera();
     }
 
