@@ -10,6 +10,7 @@ public class DoorController : MonoBehaviour
     [SerializeField] private FloorSwitchMap _floorSwitchMap;
     [SerializeField] private FloorSwitchEventChannel _floorSwitchChannel;
 
+    private BoxCollider2D[] _colliders;
     private Animator _animator;
     private int _isOpenID;
 
@@ -18,6 +19,7 @@ public class DoorController : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _colliders = GetComponentsInChildren<BoxCollider2D>();
         _isOpenID = Animator.StringToHash("isOpen");
     }
 
@@ -70,10 +72,20 @@ public class DoorController : MonoBehaviour
     private void OpenDoor()
     {
         _animator.SetBool(_isOpenID, true);
+        SetCollidersEnabled(false);
     }
 
     private void CloseDoor()
     {
         _animator.SetBool(_isOpenID, false);
+        SetCollidersEnabled(true);
+    }
+
+    private void SetCollidersEnabled(bool enabled)
+    {
+        for (int i = 0; i < _colliders.Length; i++)
+        {
+            _colliders[i].enabled = enabled;
+        }
     }
 }

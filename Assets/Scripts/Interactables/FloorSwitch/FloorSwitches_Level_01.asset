@@ -15,5 +15,3 @@ MonoBehaviour:
   Map:
   - SwitchID: FloorSwitch_01
     EntityID: Door_01
-  - SwitchID: FloorSwitch_02
-    EntityID: Door_02
