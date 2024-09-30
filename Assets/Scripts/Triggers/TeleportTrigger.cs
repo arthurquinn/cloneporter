@@ -8,12 +8,9 @@ public class TeleportTrigger : MonoBehaviour
 {
     public UnityAction OnPortalLeave { get; set; }
 
-    private const float PORTAL_TIMEOUT = 0.1f;
-
     private Rigidbody2D _rb;
 
-    private bool _didEnterPortal;
-    private IPortal _enteredPortal;
+    private const float PORTAL_TIMEOUT = 0.1f;
     private float _portalTimeoutTimer;
 
     private Vector2 _lastFixedPosition;
@@ -28,11 +25,7 @@ public class TeleportTrigger : MonoBehaviour
         // Decrease timer
         _portalTimeoutTimer -= Time.fixedDeltaTime;
 
-        if (_didEnterPortal)
-        {
-            HandleEnteredPortal();
-        }
-
+        // Set last fixed position
         _lastFixedPosition = _rb.position;
     }
 
@@ -44,12 +37,12 @@ public class TeleportTrigger : MonoBehaviour
             // Do not port if we are within the portal timeout
             if (_portalTimeoutTimer < 0)
             {
-                SetEnteredPortal(portal);
+                HandleEnteredPortal(portal);
             }
         }
     }
 
-    private void HandleEnteredPortal()
+    private void HandleEnteredPortal(IPortal portal)
     {
         // Calculate the entry ray
         Vector2 entryDirection = _rb.velocity.normalized;
@@ -57,13 +50,10 @@ public class TeleportTrigger : MonoBehaviour
         Ray2D entryRay = new Ray2D(entryPoint, entryDirection);
 
         // Use portal interface to apply port to our rigidbody
-        _enteredPortal.ApplyPort(entryRay, _rb);
+        portal.ApplyPort(entryRay, _rb);
 
         // Set the portal timeout
         _portalTimeoutTimer = PORTAL_TIMEOUT;
-
-        // Clear the entered portal flags
-        ClearEnteredPortal();
 
         // Raise the portal leave event next frame
         StartCoroutine(RaisePortalLeaveEvent());
@@ -78,15 +68,15 @@ public class TeleportTrigger : MonoBehaviour
         }
     }
 
-    private void SetEnteredPortal(IPortal portal)
-    {
-        _didEnterPortal = true;
-        _enteredPortal = portal;
-    }
+    //private void SetEnteredPortal(IPortal portal)
+    //{
+    //    _didEnterPortal = true;
+    //    _enteredPortal = portal;
+    //}
 
-    private void ClearEnteredPortal()
-    {
-        _didEnterPortal = false;
-        _enteredPortal = null;
-    }
+    //private void ClearEnteredPortal()
+    //{
+    //    _didEnterPortal = false;
+    //    _enteredPortal = null;
+    //}
 }

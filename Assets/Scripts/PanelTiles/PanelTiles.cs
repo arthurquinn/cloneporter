@@ -203,7 +203,7 @@ public class PanelTiles : MonoBehaviour, IPortalGround
             }
             else if (_groundTilemap.HasTile(tiles[i]))
             {
-                _tilemap.SetColliderType(tiles[i], Tile.ColliderType.None);
+                _groundTilemap.SetColliderType(tiles[i], Tile.ColliderType.None);
             }
         }
     }
