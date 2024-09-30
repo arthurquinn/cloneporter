@@ -35,8 +35,12 @@ public class PortalPairController : MonoBehaviour
 
     private void HandleForceFieldEntered(PortalForceFieldEnteredEvent @event)
     {
+        // Clear the portals
         _purplePortal.ClearPortal();
         _tealPortal.ClearPortal();
+
+        // Raise the event
+        _portalEvents.OnPortalPairCleared.Raise(new PortalPairClearedEvent());
     }
 
     private void HandlePanelPlacedPortal(PanelPlacePortalEvent @event)

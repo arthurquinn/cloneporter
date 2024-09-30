@@ -36,7 +36,7 @@ public enum OpenPortalAlgorithmType
     Free
 }
 
-public class PortalGround : MonoBehaviour, IPortalGround
+public class PanelTiles : MonoBehaviour, IPortalGround
 {
     [Header("EventChannels")]
     [SerializeField] private PlayerEventChannel _playerEventChannel;
@@ -81,12 +81,19 @@ public class PortalGround : MonoBehaviour, IPortalGround
     {
         _playerEventChannel.OnPortalGunFired.Subscribe(HandlePortalGunFired);
         _portalEventChannel.OnPortalPairStarted.Subscribe(HandlePortalPairStarted);
+        _portalEventChannel.OnPortalPairCleared.Subscribe(HandlePortalPairCleared);
     }
 
     private void OnDisable()
     {
         _playerEventChannel.OnPortalGunFired.Unsubscribe(HandlePortalGunFired);
         _portalEventChannel.OnPortalPairStarted.Unsubscribe(HandlePortalPairStarted);
+        _portalEventChannel.OnPortalPairCleared.Unsubscribe(HandlePortalPairCleared);
+    }
+
+    private void HandlePortalPairCleared(PortalPairClearedEvent portalClearedEvent)
+    {
+        ClearPortalCollision();
     }
 
     private void HandlePortalPairStarted(PortalPairStartedEvent portalStartedEvent)
@@ -173,6 +180,17 @@ public class PortalGround : MonoBehaviour, IPortalGround
             collisionTiles[i * 2 + 1] = behindTile;
         }
         return collisionTiles;
+    }
+
+    private void ClearPortalCollision()
+    {
+        // Reenable collision
+        EnableTileCollision(_activePurpleTiles);
+        EnableTileCollision(_activeTealTiles);
+
+        // Clear the cached tiles
+        _activeTealTiles = new Vector3Int[0];
+        _activePurpleTiles = new Vector3Int[0];
     }
 
     private void DisableTileCollision(Vector3Int[] tiles)

@@ -18,8 +18,20 @@ public class PortalPairStartedEventChannel : AbstractEventChannel<PortalPairStar
 
 }
 
+public struct PortalPairClearedEvent
+{
+
+}
+
+public class PortalPairClearedEventChannel : AbstractEventChannel<PortalPairClearedEvent>
+{
+
+}
+
+
 [CreateAssetMenu(fileName = "PortalPairEventChannel", menuName = "EventChannels/PortalPairEventChannel")]
 public class PortalPairEventChannel : ScriptableObject
 {
     public PortalPairStartedEventChannel OnPortalPairStarted { get; private set; } = new PortalPairStartedEventChannel();
+    public PortalPairClearedEventChannel OnPortalPairCleared { get; private set; } = new PortalPairClearedEventChannel();
 }

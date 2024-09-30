@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3012508733823967797}
   - component: {fileID: 8996196143834136818}
   - component: {fileID: 5174412062096171484}
-  - component: {fileID: 6353782556235424854}
+  - component: {fileID: 8655329589136489823}
   m_Layer: 7
   m_Name: Panels
   m_TagString: Panels
@@ -988,7 +988,7 @@ CompositeCollider2D:
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 2943362093371073767}
---- !u!114 &6353782556235424854
+--- !u!114 &8655329589136489823
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
