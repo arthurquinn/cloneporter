@@ -36,21 +36,20 @@ public class PortalOpenedEventChannel : AbstractEventChannel<PortalOpenedEvent>
 
 }
 
+public struct PortalClearedEvent
+{
+
+}
+
+public class PortalClearedEventChannel : AbstractEventChannel<PortalClearedEvent>
+{
+
+}
+
 [CreateAssetMenu(fileName = "PortalEventChannel", menuName = "EventChannels/PortalEventChannel")]
 public class PortalEventChannel : ScriptableObject 
 {
-    public PortalStartedEventChannel OnPortalStarted { get; private set; }
-    public PortalOpenedEventChannel OnPortalOpened { get; private set; }
-
-    private void OnEnable()
-    {
-        if (OnPortalOpened == null)
-        {
-            OnPortalOpened = new PortalOpenedEventChannel();
-        }
-        if (OnPortalStarted == null)
-        {
-            OnPortalStarted = new PortalStartedEventChannel();
-        }
-    }
+    public PortalStartedEventChannel OnPortalStarted { get; private set; } = new PortalStartedEventChannel();
+    public PortalOpenedEventChannel OnPortalOpened { get; private set; } = new PortalOpenedEventChannel();
+    public PortalClearedEventChannel OnPortalCleared { get; private set; } = new PortalClearedEventChannel();
 }

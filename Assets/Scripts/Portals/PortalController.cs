@@ -122,6 +122,8 @@ public class PortalController : MonoBehaviour, IPortal
     {
         _spriteRenderer.enabled = false;
         _boxCollider.enabled = false;
+
+
     }
 
     public float GetLength()

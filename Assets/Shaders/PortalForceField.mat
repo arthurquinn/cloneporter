@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DoorBeam
-  m_Shader: {fileID: -6465566751694194690, guid: 3abbc914ffdba9c44b104b066153c1b7, type: 3}
+  m_Name: PortalForceField
+  m_Shader: {fileID: -6465566751694194690, guid: 31c81a7831240c04dba0e018b34fb478, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -42,9 +42,9 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _Color: {r: 1.8741478, g: 0.39012197, b: 0.15726233, a: 0}
+    - _Color: {r: 0.38041505, g: 0.7275418, b: 2.270603, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &7750691721728926508
+--- !u!114 &7252553632949412716
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

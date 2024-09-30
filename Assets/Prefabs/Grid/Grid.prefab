@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2810c35c4b712ec48a3b4cd5d1cbe71e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerEventChannel: {fileID: 0}
+  _playerEventChannel: {fileID: 11400000, guid: c7296f729b7437a44a70c9d9155ed28e, type: 2}
   _purplePortalEventChannel: {fileID: 11400000, guid: af3bed9d3daf5464bb6ca6b114c521ba, type: 2}
   _tealPortalEventChannel: {fileID: 11400000, guid: a05e899f2b0c69b4facc97265adf54f4, type: 2}
   _groundTilemap: {fileID: 3565704756933015373}
