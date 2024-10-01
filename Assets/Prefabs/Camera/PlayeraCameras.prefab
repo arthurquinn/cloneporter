@@ -130,6 +130,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3861286907098137875}
     m_Modifications:
+    - target: {fileID: 2313896872252916790, guid: 9df37932a9a66c6429e513030c6534ad, type: 3}
+      propertyPath: m_DeadZoneWidth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313896872252916790, guid: 9df37932a9a66c6429e513030c6534ad, type: 3}
+      propertyPath: m_DeadZoneHeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2802181592621061432, guid: 9df37932a9a66c6429e513030c6534ad, type: 3}
       propertyPath: m_Name
       value: PlayerCameraA
