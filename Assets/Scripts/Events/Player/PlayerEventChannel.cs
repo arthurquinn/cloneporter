@@ -74,6 +74,16 @@ public class PlayerDropItemEventChannel : AbstractEventChannel<PlayerDropItemEve
 
 }
 
+public struct PlayerCompleteLevelEvent
+{
+
+}
+
+public class PlayerCompleteLevelEventChannel : AbstractEventChannel<PlayerCompleteLevelEvent>
+{
+
+}
+
 [CreateAssetMenu(fileName = "PlayerEventChannel", menuName = "EventChannels/PlayerEventChannel")]
 public class PlayerEventChannel : ScriptableObject
 {
@@ -82,4 +92,5 @@ public class PlayerEventChannel : ScriptableObject
     public PlayerTeleportedEventChannel OnTeleported { get; private set; } = new PlayerTeleportedEventChannel();
     public PlayerPickupItemEventChannel OnPickupItem { get; private set; } = new PlayerPickupItemEventChannel();
     public PlayerDropItemEventChannel OnDropItem { get; private set; } = new PlayerDropItemEventChannel();
+    public PlayerCompleteLevelEventChannel OnCompleteLevel { get; private set; } = new PlayerCompleteLevelEventChannel();
 }
