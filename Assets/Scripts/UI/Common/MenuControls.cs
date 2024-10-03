@@ -7,6 +7,7 @@ namespace Cloneporter.UI
 {
     public class MenuControls : MonoBehaviour
     {
+        [SerializeField] private MenuEventChannel _menuEvents;
         [SerializeField] private MenuItem[] _menuItems;
 
         private PlayerInputActions _input;
@@ -25,6 +26,8 @@ namespace Cloneporter.UI
 
             _input.UI.Navigate.Enable();
             _input.UI.Navigate.performed += HandleNavigate;
+
+            _menuEvents.OnHover.Subscribe(HandleHoverEnter);
         }
 
         private void OnDisable()
@@ -33,7 +36,9 @@ namespace Cloneporter.UI
             _input.UI.Submit.Disable();
 
             _input.UI.Navigate.performed -= HandleNavigate;
-            _input.UI.Navigate.Disable();   
+            _input.UI.Navigate.Disable();
+
+            _menuEvents.OnHover.Unsubscribe(HandleHoverEnter);
         }
 
         private void Start()
@@ -61,6 +66,12 @@ namespace Cloneporter.UI
                 ChangeCurrentIndex(-1);
             }
 
+            SelectCurrentIndex();
+        }
+
+        private void HandleHoverEnter(MenuItemHoverEvent @event)
+        {
+            _currentIndex = @event.HoverIndex;
             SelectCurrentIndex();
         }
 

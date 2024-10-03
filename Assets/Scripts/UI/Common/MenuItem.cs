@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Cloneporter.UI
 {
-    public class MenuItem : MonoBehaviour
+    public class MenuItem : MonoBehaviour, IPointerEnterHandler
     {
         [Header("Event Channel")]
         [SerializeField] private MenuEventChannel _menuChannel;
@@ -14,14 +15,10 @@ namespace Cloneporter.UI
         [SerializeField] private Color _selectedColor;
         [SerializeField] private Color _baseColor;
 
-        private TextMeshProUGUI _text;
+        [Header("Components")]
+        [SerializeField] private TextMeshProUGUI _text;
 
         private int _index;
-
-        private void Awake()
-        {
-            _text = GetComponent<TextMeshProUGUI>();
-        }
 
         public void SetIndex(int index)
         {
@@ -41,6 +38,11 @@ namespace Cloneporter.UI
         public void Confirm()
         {
             _menuChannel.OnItemSelected.Raise(new MenuItemSelectedEvent(_index));
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            _menuChannel.OnHover.Raise(new MenuItemHoverEvent(_index));
         }
     }
 }
