@@ -103,6 +103,7 @@ public class BurnoutController : MonoBehaviour
                     // This shouldn't happen unless we have a level set up where a laser position is more
                     //   than the max distance from the nearest collider
                     Debug.LogWarning("Laser did not find terminal position");
+                    return;
                 }
             } 
         }

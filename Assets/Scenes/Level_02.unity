@@ -241,70 +241,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 526d3489f8f526c499e5aa7d92382f56, type: 3}
---- !u!1 &695842105 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2585096723776704973, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
-  m_PrefabInstance: {fileID: 5819688326801449875}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &695842106 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3686198574795180462, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
-  m_PrefabInstance: {fileID: 5819688326801449875}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &695842107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 695842105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bba65f0ecc02b44d862ce4740b92e51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _laserOriginPosition: {fileID: 0}
-  _maxLaserDistance: 0
-  _laserCollisionMask:
-    serializedVersion: 2
-    m_Bits: 0
-  _portalMask:
-    serializedVersion: 2
-    m_Bits: 0
-  _onLaserPositionsChanged:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!1 &1464435345
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1464435346}
-  m_Layer: 0
-  m_Name: LaserOrigin
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1464435346
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1464435345}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.093, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 695842106}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1488450848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -766,14 +702,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3686198574795180462, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1464435346}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2585096723776704973, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 695842107}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ded342e6c5ed6994d99fa265fe1f6d62, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

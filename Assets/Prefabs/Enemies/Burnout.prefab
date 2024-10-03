@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4558599693278808225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4481986032393750037}
+  m_Layer: 0
+  m_Name: LaserOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4481986032393750037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4558599693278808225}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.093, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3686198574795180462}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2596276917533552752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54,6 +85,133 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -7552582706839291426, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4481986032393750037}
+    - targetCorrespondingSourceObject: {fileID: -7552582706839291426, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8627306028434931875}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8488895257341771943}
+  m_SourcePrefab: {fileID: 4843985084834002234, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+--- !u!1 &2585096723776704973 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8653719598885068355, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+  m_PrefabInstance: {fileID: 2596276917533552752}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8488895257341771943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2585096723776704973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bba65f0ecc02b44d862ce4740b92e51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _laserOriginPosition: {fileID: 4481986032393750037}
+  _maxLaserDistance: 100
+  _laserCollisionMask:
+    serializedVersion: 2
+    m_Bits: 15304
+  _portalMask:
+    serializedVersion: 2
+    m_Bits: 256
+  _onLaserPositionsChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7625385090071419243}
+        m_TargetAssemblyTypeName: LaserController, Assembly-CSharp
+        m_MethodName: SetLaserPositions
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!4 &3686198574795180462 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+  m_PrefabInstance: {fileID: 2596276917533552752}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5097711994163110391
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3686198574795180462}
+    m_Modifications:
+    - target: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9083846667022639753, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+      propertyPath: m_Name
+      value: Laser
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 4843985084834002234, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+--- !u!114 &7625385090071419243 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3417239646366824604, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+  m_PrefabInstance: {fileID: 5097711994163110391}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 423862778bc569d4eae049174f7db0a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &8627306028434931875 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3532210874161062228, guid: 5821c906c9d69c54a9434545ca465c13, type: 3}
+  m_PrefabInstance: {fileID: 5097711994163110391}
+  m_PrefabAsset: {fileID: 0}
