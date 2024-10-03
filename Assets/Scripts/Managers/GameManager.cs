@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,5 +36,19 @@ public class GameManager : MonoBehaviour
     private void HandleLevelComplete(PlayerCompleteLevelEvent @event)
     {
         Debug.Log("LEVEL COMPLETE!");
+    }
+
+    public void ChangeScene(SceneNameIndex scene)
+    {
+        SceneManager.LoadScene(scene.SceneIndex);
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

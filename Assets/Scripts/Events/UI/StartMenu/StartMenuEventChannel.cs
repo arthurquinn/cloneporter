@@ -26,9 +26,20 @@ namespace Cloneporter.UI
 
     }
 
+    public struct StartMenuReadyEvent
+    {
+
+    }
+
+    public class StartMenuReadyEventChannel : AbstractEventChannel<StartMenuReadyEvent>
+    {
+
+    }
+
     [CreateAssetMenu(fileName = "StartMenuEventChannel", menuName = "EventChannels/UI/StartMenuEventChannel")]
     public class StartMenuEventChannel : ScriptableObject
     {
         public StartMenuAnimationEventChannel OnAnimationEvent { get; private set; } = new StartMenuAnimationEventChannel();
+        public StartMenuReadyEventChannel OnReady { get; private set; } = new StartMenuReadyEventChannel();
     }
 }
