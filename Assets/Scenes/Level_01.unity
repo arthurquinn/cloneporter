@@ -465,11 +465,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 273327786959093669, guid: 88d06422f8a4f3a4ea2ba0ea58abdc9c, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: 0.07298364
+      value: 0.07298369
       objectReference: {fileID: 0}
     - target: {fileID: 273327786959093669, guid: 88d06422f8a4f3a4ea2ba0ea58abdc9c, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: -0.0000016130507
+      value: 0.00000029359944
       objectReference: {fileID: 0}
     - target: {fileID: 3080504754034921961, guid: 88d06422f8a4f3a4ea2ba0ea58abdc9c, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -482,6 +482,14 @@ PrefabInstance:
     - target: {fileID: 3161539564883269288, guid: 88d06422f8a4f3a4ea2ba0ea58abdc9c, type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: 0.0000007543134
+      objectReference: {fileID: 0}
+    - target: {fileID: 4252590125774315874, guid: 88d06422f8a4f3a4ea2ba0ea58abdc9c, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.082821496
+      objectReference: {fileID: 0}
+    - target: {fileID: 4252590125774315874, guid: 88d06422f8a4f3a4ea2ba0ea58abdc9c, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.0000007842899
       objectReference: {fileID: 0}
     - target: {fileID: 4678448657498320487, guid: 88d06422f8a4f3a4ea2ba0ea58abdc9c, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -501,7 +509,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5951675879618107202, guid: 88d06422f8a4f3a4ea2ba0ea58abdc9c, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: 12.591782
+      value: -8.688219
       objectReference: {fileID: 0}
     - target: {fileID: 5951675879618107202, guid: 88d06422f8a4f3a4ea2ba0ea58abdc9c, type: 3}
       propertyPath: m_ConnectedAnchor.y
@@ -665,7 +673,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 0.9100407, g: 0.8723922, b: 0.9607843, a: 1}
-  m_Intensity: 0.2
+  m_Intensity: 0.4
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000

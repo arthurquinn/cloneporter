@@ -48,7 +48,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.374
-  m_Color: {r: 0.96, g: 0.91424, b: 0.7488, a: 1}
+  m_Color: {r: 0.9490196, g: 0.91424, b: 0.8039216, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -100,7 +100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: c04552e8882f9c64494d10620d954dd5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.386375
+      value: -1.3473125
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: c04552e8882f9c64494d10620d954dd5, type: 3}
       propertyPath: m_LocalPosition.z
