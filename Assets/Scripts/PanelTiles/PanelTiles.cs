@@ -115,6 +115,19 @@ public class PanelTiles : MonoBehaviour, IPortalGround
         }
     }
 
+    public void OpenPortalManual(PortalColor color, Ray2D manualRay)
+    {
+        PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(manualRay);
+        if (!portalPlacement.Position.Equals(Vector2.negativeInfinity))
+        {
+            if (!IsOverlapPortal(portalPlacement, color))
+            {
+                OpenPortalForColor(color, portalPlacement);
+                UpdateTileCollision(color, portalPlacement);
+            }
+        }
+    }
+
     private void OpenPortalForColor(PortalColor color, PortalPlacement placement)
     {
         _panelEventChannel.OnPanelPlacePortal.Raise(new PanelPlacePortalEvent(

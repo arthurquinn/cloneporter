@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: daf2c152b2404cd478840015a528b625
+guid: 90c38bb2a24a8b24ab4ba180b2629ba2
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -23,7 +23,7 @@ ScriptedImporter:
     normalMapFilter: 0
     flipGreenChannel: 0
     swizzle: 50462976
-    isReadable: 1
+    isReadable: 0
     streamingMipmaps: 1
     streamingMipmapsPriority: 0
     vTOnly: 0
@@ -71,7 +71,7 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   spriteImportData:
-  - name: SimpleTiles_1
+  - name: Components_1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -80,9 +80,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 0
       y: 0
-      width: 512
-      height: 512
-    spriteID: 543b3fe477511aa4a997af809cf9e3ca
+      width: 1024
+      height: 1024
+    spriteID: 7ec063af5ed84f84494403ba2521e9bd
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -92,60 +92,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
     spritePosition: {x: 0, y: 0}
-  - name: SimpleTiles_0
-    originalName: 
-    pivot: {x: 0, y: 0}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 64
-      y: 384
-      width: 64
-      height: 64
-    spriteID: fd29906f583abd64a9def733643aa238
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-    spritePosition: {x: 0, y: 0}
-  - name: SimpleTiles_1
-    originalName: 
-    pivot: {x: 0, y: 0}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 128
-      y: 384
-      width: 64
-      height: 64
-    spriteID: 426c21256871cb146b3a86a32eca43ea
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-    spritePosition: {x: 0, y: 0}
-  - name: SimpleTiles_2
+  - name: Components_0
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 192
-      y: 384
-      width: 64
-      height: 64
-    spriteID: 0f37bd0f4a99f3442baeb06734e36f7a
+      x: 384
+      y: 448
+      width: 512
+      height: 192
+    spriteID: 37d4109a7f135454d89837bbbdc43099
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -157,7 +115,28 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: GroundTile
+  - name: Layer 2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 524
+      y: 4
+      width: 0
+      height: 0
+    spriteID: 737bb565d76f3184e9ce50c91472c5e2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 524, y: 4}
+    spritePosition: {x: 0, y: 1024}
+  - name: Rectangle 1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -166,9 +145,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 64
-      height: 64
-    spriteID: dab19b69833ebea44b8b44126fbf5246
+      width: 512
+      height: 192
+    spriteID: a216662ce766c584494976cf0928152c
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -176,20 +155,20 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 2, y: 3}
-    spritePosition: {x: 64, y: 384}
-  - name: PanelTile
+    uvTransform: {x: 3, y: 3}
+    spritePosition: {x: 384, y: 448}
+  - name: Layer 1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 76
-      width: 64
-      height: 64
-    spriteID: 8b4b1ba9d1acec244a61d95e9f5f1f58
+      x: 532
+      y: 4
+      width: 0
+      height: 0
+    spriteID: 910b82354a2a835409ab8c9f8f55c17f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -197,8 +176,8 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 2, y: 75}
-    spritePosition: {x: 128, y: 384}
+    uvTransform: {x: 532, y: 4}
+    spritePosition: {x: 0, y: 1024}
   characterData:
     bones: []
     parts: []
@@ -251,7 +230,7 @@ ScriptedImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     androidETC2FallbackOverride: 0
-  mosaicLayers: 1
+  mosaicLayers: 0
   characterMode: 1
   documentPivot: {x: 0, y: 0}
   documentAlignment: 7
@@ -271,30 +250,40 @@ ScriptedImporter:
   resliceFromLayer: 0
   mosaicPSDLayers: []
   rigPSDLayers:
-  - name: GroundTile
-    spriteName: GroundTile
+  - name: Layer 2
+    spriteName: Layer 2
     isGroup: 0
     parentIndex: -1
-    spriteID: dab19b69833ebea44b8b44126fbf5246
+    spriteID: 737bb565d76f3184e9ce50c91472c5e2
+    layerID: 4
+    mosaicPosition: {x: 524, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Rectangle 1
+    spriteName: Rectangle 1
+    isGroup: 0
+    parentIndex: -1
+    spriteID: a216662ce766c584494976cf0928152c
     layerID: 3
     mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: PanelTile
-    spriteName: PanelTile
+  - name: Layer 1
+    spriteName: Layer 1
     isGroup: 0
     parentIndex: -1
-    spriteID: 8b4b1ba9d1acec244a61d95e9f5f1f58
-    layerID: 6
-    mosaicPosition: {x: 4, y: 76}
+    spriteID: 910b82354a2a835409ab8c9f8f55c17f
+    layerID: 2
+    mosaicPosition: {x: 532, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
   sharedRigPSDLayers: []
   pSDLayerImportSetting: []
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638628170237741953
+  platformSettingsDirtyTick: 638634303980115302
   spriteSizeExpandChanged: 0
   generateGOHierarchy: 0
   textureAssetName: 

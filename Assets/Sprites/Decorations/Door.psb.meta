@@ -113,8 +113,8 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 2, y: 3}
-    spritePosition: {x: 96, y: 127}
+    uvTransform: {x: 3, y: 3}
+    spritePosition: {x: 96, y: 128}
   - name: DoorBottom
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -122,7 +122,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 77
+      x: 76
       y: 4
       width: 65
       height: 129
@@ -224,7 +224,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: c6ca6b362e4f36446ba36b76a03b8a85
     layerID: 29
-    mosaicPosition: {x: 77, y: 4}
+    mosaicPosition: {x: 76, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1

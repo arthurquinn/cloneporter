@@ -1518,7 +1518,7 @@ ScriptedImporter:
     - {x: 21, y: 85}
     tessellationDetail: 0
     uvTransform: {x: 3, y: 89}
-    spritePosition: {x: 61, y: 56}
+    spritePosition: {x: 60, y: 56}
   - name: LampLightBulb
     originalName: 
     pivot: {x: 0.5, y: 0.5}
