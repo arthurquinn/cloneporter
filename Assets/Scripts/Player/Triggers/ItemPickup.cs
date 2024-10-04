@@ -14,6 +14,7 @@ public interface ICarryable
 
 public class ItemPickup : MonoBehaviour
 {
+    [SerializeField] private InteractablesEventChannel _interactablesEvents;
     [SerializeField] private Collider2D _playerCollider;
     [SerializeField] private Transform _holdPosition;
 
@@ -28,12 +29,16 @@ public class ItemPickup : MonoBehaviour
 
     private void OnEnable()
     {
+        _interactablesEvents.OnItemDropped.Subscribe(HandleItemDropped);
+
         _input.Player.Interact.Enable();
         _input.Player.Interact.performed += HandleInteract;
     }
 
     private void OnDisable()
     {
+        _interactablesEvents.OnItemDropped.Unsubscribe(HandleItemDropped);
+
         _input.Player.Interact.performed -= HandleInteract;
         _input.Player.Interact.Disable();
     }
@@ -52,6 +57,16 @@ public class ItemPickup : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         _cachedItem = null;
+    }
+
+    private void HandleItemDropped(HeldItemDroppedEvent @event)
+    {
+        // This event will be called if the held item is dropped for some reason
+        //   other than player input (e.g. if it became too far away)
+        if (_heldItem != null)
+        {
+            DropItem();
+        }
     }
 
     private void HandleInteract(InputAction.CallbackContext context)

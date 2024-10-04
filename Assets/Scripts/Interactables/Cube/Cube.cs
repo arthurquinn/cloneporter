@@ -5,8 +5,12 @@ using UnityEngine.Events;
 
 public class Cube : MonoBehaviour, ICarryable
 {
+    [SerializeField] private InteractablesEventChannel _events;
+
     [Tooltip("The speed at which the carryable object will follow its target.")]
     [SerializeField] private float _followSpeed;
+    [Tooltip("The max distance we are allowed to be from the follow target before we are dropped.")]
+    [SerializeField] private float _followDistance;
 
     public Collider2D Collider { get { return _collider; } }
 
@@ -17,6 +21,12 @@ public class Cube : MonoBehaviour, ICarryable
     private bool _isCarried;
 
     private float _cachedGravityScale;
+
+    private void Awake()
+    {
+        // Square the follow distance so we can compare against squared magnitude
+        _followDistance = Mathf.Pow(_followDistance, 2);
+    }
 
     private void Start()
     {
@@ -31,7 +41,10 @@ public class Cube : MonoBehaviour, ICarryable
     {
         if (_isCarried)
         {
-            FollowTarget();
+            if (CheckDistanceToTarget())
+            {
+                FollowTarget();
+            }
         }
     }
 
@@ -53,6 +66,24 @@ public class Cube : MonoBehaviour, ICarryable
         // Unset trackers
         _carryPoint = null;
         _isCarried = false;
+    }
+
+    private bool CheckDistanceToTarget()
+    {
+        // Get the squared magnitude between us and the carry point
+        Vector2 carryDifference = (Vector2)_carryPoint.position - _rb.position;
+        float squareMag = carryDifference.sqrMagnitude;
+
+        // Break connection if greater than max threshold
+        if (squareMag > _followDistance)
+        {
+            // Raise the event so the player can drop item
+            _events.OnItemDropped.Raise(new HeldItemDroppedEvent(this));
+            return false;
+        }
+
+        // Return true if connection can be maintained
+        return true;
     }
 
     private void FollowTarget()

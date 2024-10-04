@@ -595,6 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97027224d7885044e9ee0e853e3f69f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interactablesEvents: {fileID: 11400000, guid: f2351ec3b08652f43a2935c8f3760dbf, type: 2}
   _playerCollider: {fileID: 7336340868308770699}
   _holdPosition: {fileID: 8050875011196360839}
 --- !u!1 &9142574706896073045
