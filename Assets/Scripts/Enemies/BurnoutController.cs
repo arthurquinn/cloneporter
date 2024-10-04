@@ -45,8 +45,6 @@ public class BurnoutController : MonoBehaviour
         // Trace the laser path through reflections and ports through portals
         TracePath();
 
-        Debug.Log("Laser Lines: " + _laserLines);
-
         // TODO: Make it so that this event is only called if our positions or segments are different
         _onLaserPositionsChanged.Invoke(_laserLines);
     }

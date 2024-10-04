@@ -12,10 +12,16 @@ public class PlayerCameraController : MonoBehaviour
 
     [Header("Event Channels")]
     [SerializeField] private PlayerEventChannel _playerEvents;
+    [SerializeField] private CameraEventChannel _cameraEvents;
 
     [Header("Cameras")]
     [SerializeField] private CinemachineVirtualCamera _playerCameraA;
     [SerializeField] private CinemachineVirtualCamera _playerCameraB;
+
+    [Header("Bounding Shape")]
+    [SerializeField] private CameraBoundingShape _boundingShape;
+
+    private bool _isActive;
 
     private Transform _playerTransform;
 
@@ -25,21 +31,24 @@ public class PlayerCameraController : MonoBehaviour
     {
         _playerEvents.OnPlayerStarted.Subscribe(HandlePlayerStarted);
         _playerEvents.OnTeleported.Subscribe(HandlePlayerTeleported);
+
+        _boundingShape.OnZoneEnter += HandleZoneEnter;
+        _boundingShape.OnZoneExit += HandleZoneExit;
     }
 
     private void OnDisable()
     {
         _playerEvents.OnPlayerStarted.Unsubscribe(HandlePlayerStarted);
         _playerEvents.OnTeleported.Unsubscribe(HandlePlayerTeleported);
+
+        _boundingShape.OnZoneEnter -= HandleZoneEnter;
+        _boundingShape.OnZoneExit -= HandleZoneExit;
     }
 
     private void HandlePlayerStarted(PlayerStartedEvent @event)
     {
         // Cache the player transform
         _playerTransform = @event.Player;
-
-        // Initialize the current camera with camera A
-        UseCameraA();
     }
 
     private void HandlePlayerTeleported(PlayerTeleportedEvent @event)
@@ -55,7 +64,12 @@ public class PlayerCameraController : MonoBehaviour
         // Wait for next fixed update so we set the camera follow target after the player's rigidbody has updated
         // Then switch the camera
         yield return new WaitForFixedUpdate();
-        SwitchCamera();
+
+        // Do not switch camera if we are not active (would occur if player teleported into new zone)
+        if (_isActive)
+        {
+            SwitchCamera();
+        }
     }
 
     private void SwitchCamera()
@@ -96,5 +110,34 @@ public class PlayerCameraController : MonoBehaviour
         // Set and unset follow target
         _playerCameraB.Follow = _playerTransform;
         _playerCameraA.Follow = null;
+    }
+
+    private void HandleZoneEnter()
+    {
+        EnableCameras();
+    }
+
+    private void HandleZoneExit()
+    {
+        DisableCameras();
+    }
+
+    public void EnableCameras()
+    {
+        // Start with camera A
+        UseCameraA();
+
+        // Set is active flag
+        _isActive = true;
+    }
+
+    public void DisableCameras()
+    {
+        // Set priorities
+        _playerCameraA.Priority = 0;
+        _playerCameraB.Priority = 0;
+
+        // Set is active flag
+        _isActive = false;
     }
 }
