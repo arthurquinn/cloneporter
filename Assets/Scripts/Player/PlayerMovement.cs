@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour, ISnappable
 
     [Header("Layers")]
     [SerializeField] private LayerMask _standableTerrainLayers;
+    [SerializeField] private LayerMask _portalLayer;
 
     [Header("Events")]
     [SerializeField] private UnityEvent _onJumpStart;
@@ -239,6 +240,8 @@ public class PlayerMovement : MonoBehaviour, ISnappable
         // We want to adjust horizontal movement acceleration until player collides with any object
         // This is to preserve their exit velocity coming out of the portal
         DidExitPortal = true;
+
+        Debug.Log("DidExitPortal = true");
     }
 
     #region Input Callbacks
@@ -261,9 +264,22 @@ public class PlayerMovement : MonoBehaviour, ISnappable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Unset DidExitPortal after first collision
-        DidExitPortal = false;
+        Debug.DrawRay(_boxCollider.bounds.center, Vector2.up, Color.red, 5.0f);
+
+        // Turn player collider into square and use it to check for overlapping portals
+        float maxSide = Mathf.Max(_boxCollider.bounds.size.x, _boxCollider.bounds.size.y);
+        Vector2 checkSize = new Vector2(maxSide, maxSide);
+        Collider2D portalCollider = Physics2D.OverlapBox(_boxCollider.bounds.center, checkSize * .99f, 0.0f, _portalLayer);
+
+        // We left the portal and collided with anything else
+        if (portalCollider == null)
+        {
+            // Set did exit portal to false which will return us to normal acceleration
+            DidExitPortal = false;
+        }
     }
+
+
 
     #region Editor Methods
 

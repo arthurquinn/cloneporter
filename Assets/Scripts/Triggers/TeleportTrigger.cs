@@ -6,6 +6,9 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Collider2D))]
 public class TeleportTrigger : MonoBehaviour
 {
+    [Tooltip("The bounds of the object that will be teleported.")]
+    [SerializeField] private Collider2D _bounds;
+
     public UnityAction OnPortalLeave { get; set; }
 
     private Rigidbody2D _rb;
@@ -35,10 +38,10 @@ public class TeleportTrigger : MonoBehaviour
         if (portal != null)
         {
             // Do not port if we are within the portal timeout
-            if (_portalTimeoutTimer < 0)
-            {
+            //if (_portalTimeoutTimer < 0)
+            //{
                 HandleEnteredPortal(portal);
-            }
+            //}
         }
     }
 
@@ -50,7 +53,7 @@ public class TeleportTrigger : MonoBehaviour
         Ray2D entryRay = new Ray2D(entryPoint, entryDirection);
 
         // Use portal interface to apply port to our rigidbody
-        portal.ApplyPort(entryRay, _rb);
+        portal.ApplyPort(entryRay, _rb, _bounds.bounds);
 
         // Set the portal timeout
         _portalTimeoutTimer = PORTAL_TIMEOUT;

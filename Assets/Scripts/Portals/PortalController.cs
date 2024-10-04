@@ -14,7 +14,7 @@ public interface IPortal
 {
     public PortalColor Color { get; }
     Ray2D SimulatePort(Ray2D entry);
-    void ApplyPort(Ray2D entry, Rigidbody2D rigidbody);
+    void ApplyPort(Ray2D entry, Rigidbody2D rigidbody, Bounds bounds);
 }
 
 public class PortalController : MonoBehaviour, IPortal
@@ -49,7 +49,7 @@ public class PortalController : MonoBehaviour, IPortal
 
     #region Public Methods
 
-    public Ray2D SimulatePort(Ray2D entry)
+    private Ray2D GetExitRay(Ray2D entry)
     {
         // Calculate out direction
         Vector2 outDirection = Vector2.Reflect(entry.direction, Orientation);
@@ -63,22 +63,34 @@ public class PortalController : MonoBehaviour, IPortal
         Vector2 offset = entry.origin - (Vector2)transform.position;
         offset = rotationDiff * offset;
 
-        // Break the rules for opposite orientations for more fun gameplay
-        offset = AdjustForOppositeOrientations(offset);
-
-        Vector2 outPosition = (Vector2)_linkedPortal.transform.position + offset;
-
-        // Return ray defining simulated port
-        return new Ray2D(outPosition, outDirection);
+        return new Ray2D(offset, outDirection);
     }
 
-    public void ApplyPort(Ray2D entry, Rigidbody2D rigidbody)
+    public Ray2D SimulatePort(Ray2D entry)
     {
         // Get the exit ray
-        Ray2D exitRay = SimulatePort(entry);
+        Ray2D exitRay = GetExitRay(entry);
+
+        // Apply the offset from exit ray
+        Vector2 outPosition = (Vector2)_linkedPortal.transform.position + exitRay.origin;
+
+        // Return simulated port
+        return new Ray2D(outPosition, exitRay.direction);
+    }
+
+    public void ApplyPort(Ray2D entry, Rigidbody2D rigidbody, Bounds bounds)
+    {
+        // Get the exit ray
+        Ray2D exitRay = GetExitRay(entry);
+
+        // Break the rules for opposite orientations for more fun gameplay
+        Vector2 offset = ApplyOffsetAdjustments(exitRay.origin, bounds);
+
+        // Get the out position
+        Vector2 outPosition = (Vector2)_linkedPortal.transform.position + offset;
 
         // Apply the port position to our rigibody
-        rigidbody.position = exitRay.origin;
+        rigidbody.position = outPosition;
 
         // Calculate the exit velocity and apply it to our rigidbody
         Vector2 exitVelocity = rigidbody.velocity.magnitude * exitRay.direction;
@@ -114,6 +126,41 @@ public class PortalController : MonoBehaviour, IPortal
     }
 
     #endregion
+
+    private Vector2 ApplyOffsetAdjustments(Vector2 offset, Bounds bounds)
+    {
+        offset = AdjustForOppositeOrientations(offset);
+        offset = AdjustForBounds(offset, bounds);
+        return offset;
+    }
+
+    private Vector2 AdjustForBounds(Vector2 offset, Bounds bounds)
+    {
+        // Don't do this for vertical portals
+        if (_linkedPortal.Orientation.x != 0)
+        {
+            //float portalXLen = _linkedPortal._spriteRenderer.bounds.size.x;
+            float portalYLen = _linkedPortal._spriteRenderer.bounds.size.y;
+
+            //float maxOffsetX = (portalXLen - bounds.size.x) / 2;
+            float maxOffsetY = (portalYLen - bounds.size.y) / 2;
+
+            //maxOffsetX -= 0.05f;
+            maxOffsetY -= 0.05f;
+
+            //float signX = Mathf.Sign(offset.x);
+            float signY = Mathf.Sign(offset.y);
+
+            //float absX = Mathf.Abs(offset.x);
+            float absY = Mathf.Abs(offset.y);
+
+            //float adjustedX = Mathf.Min(absX, maxOffsetX) * signX;
+            float adjustedY = Mathf.Min(absY, maxOffsetY) * signY;
+
+            return new Vector2(offset.x, adjustedY);
+        }
+        return offset;
+    }
 
     private Vector2 AdjustForOppositeOrientations(Vector2 offset)
     {

@@ -63,6 +63,7 @@ public class PortalPairController : MonoBehaviour
     {
         // This assumes that purple and teal portals are the same size (likely won't change)
         _purplePortal.CachePortalLength();
+        _tealPortal.CachePortalLength();
 
         // Raise the portal started event
         _portalEvents.OnPortalPairStarted.Raise(new PortalPairStartedEvent(_purplePortal.GetLength()));
