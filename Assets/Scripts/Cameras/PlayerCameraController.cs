@@ -29,7 +29,6 @@ public class PlayerCameraController : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerEvents.OnPlayerStarted.Subscribe(HandlePlayerStarted);
         _playerEvents.OnTeleported.Subscribe(HandlePlayerTeleported);
 
         _boundingShape.OnZoneEnter += HandleZoneEnter;
@@ -38,17 +37,10 @@ public class PlayerCameraController : MonoBehaviour
 
     private void OnDisable()
     {
-        _playerEvents.OnPlayerStarted.Unsubscribe(HandlePlayerStarted);
         _playerEvents.OnTeleported.Unsubscribe(HandlePlayerTeleported);
 
         _boundingShape.OnZoneEnter -= HandleZoneEnter;
         _boundingShape.OnZoneExit -= HandleZoneExit;
-    }
-
-    private void HandlePlayerStarted(PlayerStartedEvent @event)
-    {
-        // Cache the player transform
-        _playerTransform = @event.Player;
     }
 
     private void HandlePlayerTeleported(PlayerTeleportedEvent @event)
@@ -96,6 +88,9 @@ public class PlayerCameraController : MonoBehaviour
         // Set and unset follow target
         _playerCameraA.Follow = _playerTransform;
         _playerCameraB.Follow = null;
+
+        //// Snap camera
+        //transform.position = _playerTransform.position;
     }
 
     private void UseCameraB()
@@ -110,6 +105,9 @@ public class PlayerCameraController : MonoBehaviour
         // Set and unset follow target
         _playerCameraB.Follow = _playerTransform;
         _playerCameraA.Follow = null;
+
+        //// Snap camera
+        //transform.position = _playerTransform.position;
     }
 
     private void HandleZoneEnter()
@@ -120,6 +118,11 @@ public class PlayerCameraController : MonoBehaviour
     private void HandleZoneExit()
     {
         DisableCameras();
+    }
+
+    public void CachePlayer(Transform player)
+    {
+        _playerTransform = player;
     }
 
     public void EnableCameras()

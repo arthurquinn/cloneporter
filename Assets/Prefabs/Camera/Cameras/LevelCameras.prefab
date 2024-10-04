@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraEvents: {fileID: 11400000, guid: 0f41e76500cbf1c4580d4fd546030437, type: 2}
+  _playerEvents: {fileID: 11400000, guid: c7296f729b7437a44a70c9d9155ed28e, type: 2}
   _initialCameras: {fileID: 8832367560338719643}
 --- !u!1001 &3180509153044723690
 PrefabInstance:

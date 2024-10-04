@@ -168,7 +168,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2927702246256575642}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.40563384, w: 0.9140357}
+  m_LocalRotation: {x: -0, y: -0, z: 0.40563464, w: 0.9140353}
   m_LocalPosition: {x: 0.3498, y: -0.0002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -727,7 +727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8741161081718973438, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.28334564
+      value: 0.28331453
       objectReference: {fileID: 0}
     - target: {fileID: -8741161081718973438, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_LocalRotation.y
@@ -735,7 +735,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8741161081718973438, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.9590179
+      value: 0.95902705
       objectReference: {fileID: 0}
     - target: {fileID: -8695416825521746284, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_Layer
@@ -771,11 +771,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.360048
+      value: -10.019035
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2897315
+      value: -6.7325335
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -899,11 +899,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -3950821115734440992, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.89807945
+      value: 0.8980941
       objectReference: {fileID: 0}
     - target: {fileID: -3950821115734440992, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.43983325
+      value: 0.4398033
       objectReference: {fileID: 0}
     - target: {fileID: -1594966464585396146, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_Layer
@@ -1145,7 +1145,7 @@ MonoBehaviour:
   _groundCheckSize: {x: 0.23, y: 0.05}
   _standableTerrainLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 4800
   _onJumpStart:
     m_PersistentCalls:
       m_Calls: []

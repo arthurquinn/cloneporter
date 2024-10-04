@@ -53,12 +53,12 @@ TagManager:
   - name: Player
     uniqueID: 2380789753
     locked: 0
-  - name: Portals
-    uniqueID: 1757652355
-    locked: 0
   - name: Enemies
     uniqueID: 846510425
     locked: 0
   - name: Interactables
     uniqueID: 3345324547
+    locked: 0
+  - name: Portals
+    uniqueID: 1757652355
     locked: 0
