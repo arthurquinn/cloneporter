@@ -1,3 +1,4 @@
+using Cloneporter.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,10 @@ public class Cube : MonoBehaviour, ICarryable
     [SerializeField] private float _followSpeed;
     [Tooltip("The max distance we are allowed to be from the follow target before we are dropped.")]
     [SerializeField] private float _followDistance;
+
+    [Header("References")]
+    [Tooltip("The game object containing the canvas for the interact hint.")]
+    [SerializeField] private GameObject _hintHUD;
 
     public Collider2D Collider { get { return _collider; } }
 
@@ -48,6 +53,11 @@ public class Cube : MonoBehaviour, ICarryable
         }
     }
 
+    public void SetNearby(bool isNearby)
+    {
+        _hintHUD.SetActive(isNearby);
+    }
+
     public void Pickup(Transform carryPoint)
     {
         // Disable gravity
@@ -56,6 +66,9 @@ public class Cube : MonoBehaviour, ICarryable
         // Set trackers
         _carryPoint = carryPoint;
         _isCarried = true;
+
+        // Disable the hint HUD
+        _hintHUD.SetActive(false);
     }
 
     public void Drop()
@@ -66,6 +79,11 @@ public class Cube : MonoBehaviour, ICarryable
         // Unset trackers
         _carryPoint = null;
         _isCarried = false;
+
+        // Toggle our trigger area to force update
+        // This allows the player to drop and pickup without needing to exit and re-enter our trigger area
+        _collider.enabled = false;
+        _collider.enabled = true;
     }
 
     private bool CheckDistanceToTarget()

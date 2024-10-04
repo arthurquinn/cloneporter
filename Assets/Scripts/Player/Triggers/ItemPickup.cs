@@ -8,6 +8,7 @@ public interface ICarryable
 {
     Collider2D Collider { get; }
 
+    void SetNearby(bool isNearby);
     void Pickup(Transform carryPoint);
     void Drop();
 }
@@ -51,12 +52,17 @@ public class ItemPickup : MonoBehaviour
         if (carryable != null && _heldItem == null)
         {
             _cachedItem = carryable;
+            _cachedItem.SetNearby(true);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _cachedItem = null;
+        if (_cachedItem != null)
+        {
+            _cachedItem.SetNearby(false);
+            _cachedItem = null;
+        }
     }
 
     private void HandleItemDropped(HeldItemDroppedEvent @event)
