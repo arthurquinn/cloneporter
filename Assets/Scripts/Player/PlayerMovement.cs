@@ -269,7 +269,7 @@ public class PlayerMovement : MonoBehaviour, ISnappable
         // Turn player collider into square and use it to check for overlapping portals
         float maxSide = Mathf.Max(_boxCollider.bounds.size.x, _boxCollider.bounds.size.y);
         Vector2 checkSize = new Vector2(maxSide, maxSide);
-        Collider2D portalCollider = Physics2D.OverlapBox(_boxCollider.bounds.center, checkSize * .99f, 0.0f, _portalLayer);
+        Collider2D portalCollider = Physics2D.OverlapBox(_boxCollider.bounds.center, checkSize * .98f, 0.0f, _portalLayer);
 
         // We left the portal and collided with anything else
         if (portalCollider == null)
