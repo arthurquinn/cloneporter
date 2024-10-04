@@ -15,6 +15,12 @@ MonoBehaviour:
   StartMenu:
     SceneIndex: 0
     SceneName: StartMenu
+    NextLevelIndex: 0
   Level01:
     SceneIndex: 1
     SceneName: Level_01
+    NextLevelIndex: 2
+  Level02:
+    SceneIndex: 2
+    SceneName: Level_02
+    NextLevelIndex: 0

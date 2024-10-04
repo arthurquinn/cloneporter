@@ -7,6 +7,21 @@ public class SceneNames : ScriptableObject
 {
     public SceneNameIndex StartMenu;
     public SceneNameIndex Level01;
+    public SceneNameIndex Level02;
+
+    // TODO: Quick solution- fix this up
+    private SceneNameIndex[] _sceneArray;
+    public SceneNameIndex[] SceneArray { get { return _sceneArray; } }
+
+    private void OnEnable()
+    {
+        _sceneArray = new SceneNameIndex[]
+        {
+            StartMenu,
+            Level01,
+            Level02
+        };
+    }
 }
 
 [System.Serializable]
@@ -14,4 +29,5 @@ public struct SceneNameIndex
 {
     public int SceneIndex;
     public string SceneName;
+    public int NextLevelIndex;
 }
