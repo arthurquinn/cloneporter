@@ -38,10 +38,10 @@ public class TeleportTrigger : MonoBehaviour
         if (portal != null)
         {
             // Do not port if we are within the portal timeout
-            //if (_portalTimeoutTimer < 0)
-            //{
+            if (_portalTimeoutTimer < 0)
+            {
                 HandleEnteredPortal(portal);
-            //}
+            }
         }
     }
 

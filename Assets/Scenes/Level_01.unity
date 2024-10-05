@@ -674,6 +674,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8305671440926593844, guid: 16a7edeadb9682943bcb7ea7063c1e64, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[0].y
+      value: -5.62505
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305671440926593844, guid: 16a7edeadb9682943bcb7ea7063c1e64, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[1].y
+      value: 5.62505
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305671440926593844, guid: 16a7edeadb9682943bcb7ea7063c1e64, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[2].y
+      value: 5.625021
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305671440926593844, guid: 16a7edeadb9682943bcb7ea7063c1e64, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[3].y
+      value: -5.62505
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305671440926593844, guid: 16a7edeadb9682943bcb7ea7063c1e64, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[0].Y
+      value: 56250500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305671440926593844, guid: 16a7edeadb9682943bcb7ea7063c1e64, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[1].Y
+      value: 56250500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305671440926593844, guid: 16a7edeadb9682943bcb7ea7063c1e64, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[2].Y
+      value: -56250500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305671440926593844, guid: 16a7edeadb9682943bcb7ea7063c1e64, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[3].Y
+      value: -56250500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2497,11 +2529,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 375534656712073956, guid: 8a3bd873c9a4acc4ab7539f5ee7fda48, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.037786
+      value: 31.521439
       objectReference: {fileID: 0}
     - target: {fileID: 375534656712073956, guid: 8a3bd873c9a4acc4ab7539f5ee7fda48, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.0000398
+      value: 4.0784497
       objectReference: {fileID: 0}
     - target: {fileID: 375534656712073956, guid: 8a3bd873c9a4acc4ab7539f5ee7fda48, type: 3}
       propertyPath: m_LocalPosition.z
