@@ -16,6 +16,10 @@ public class PlayerEvents : MonoBehaviour
     [Tooltip("Controls what layers are ignored while an elevator is in motion.")]
     [SerializeField] private LayerMask _elevatorIgnoreLayer;
 
+    [Header("Transforms")]
+    [Tooltip("Used by the camera to determine lookahead when aiming.")]
+    [SerializeField] private Transform _cameraPoint;
+
     private Rigidbody2D _rb;
 
     private void Awake()
@@ -25,7 +29,7 @@ public class PlayerEvents : MonoBehaviour
 
     private void Start()
     {
-        _playerEvents.OnPlayerStarted.Raise(new PlayerStartedEvent(transform));
+        _playerEvents.OnPlayerStarted.Raise(new PlayerStartedEvent(transform, _cameraPoint));
     }
 
     private void OnEnable()

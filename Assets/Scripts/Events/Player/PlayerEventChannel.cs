@@ -5,10 +5,12 @@ using UnityEngine;
 public struct PlayerStartedEvent
 {
     public Transform Player { get; private set; }
+    public Transform CameraPoint { get; private set; }
     
-    public PlayerStartedEvent(Transform player)
+    public PlayerStartedEvent(Transform player, Transform cameraPoint)
     {
         Player = player;
+        CameraPoint = cameraPoint;
     }
 }
 
@@ -84,6 +86,21 @@ public class PlayerCompleteLevelEventChannel : AbstractEventChannel<PlayerComple
 
 }
 
+public struct PlayerAimEvent
+{
+    public Vector2 Target;
+
+    public PlayerAimEvent(Vector2 target)
+    {
+        Target = target;
+    }
+}
+
+public class PlayerAimEventChannel : AbstractEventChannel<PlayerAimEvent>
+{
+
+}
+
 [CreateAssetMenu(fileName = "PlayerEventChannel", menuName = "EventChannels/PlayerEventChannel")]
 public class PlayerEventChannel : ScriptableObject
 {
@@ -93,4 +110,5 @@ public class PlayerEventChannel : ScriptableObject
     public PlayerPickupItemEventChannel OnPickupItem { get; private set; } = new PlayerPickupItemEventChannel();
     public PlayerDropItemEventChannel OnDropItem { get; private set; } = new PlayerDropItemEventChannel();
     public PlayerCompleteLevelEventChannel OnCompleteLevel { get; private set; } = new PlayerCompleteLevelEventChannel();
+    public PlayerAimEventChannel OnAim { get; private set; } = new PlayerAimEventChannel();
 }

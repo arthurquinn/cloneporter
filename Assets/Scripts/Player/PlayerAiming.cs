@@ -21,6 +21,10 @@ public class PlayerAiming : MonoBehaviour
 
     [SerializeField] private LineRenderer _lineRenderer;
 
+    [Header("Camera Follow Point")]
+    [Tooltip("The camera follow point for the player is controlled by where the player is aiming.")]
+    [SerializeField] private Transform _cameraPoint;
+
     private const float RAYCAST_LENGTH = 100.0f;
     private const float MIN_IK_DISTANCE = 0.5f;
     // Do not calculate targeting updates if the player is aiming too close into their body
@@ -112,6 +116,12 @@ public class PlayerAiming : MonoBehaviour
                 SetGunTarget(ikTarget);
                 DrawTargetingBeam(targetPosition);
 
+                // Fire off the aim event
+                _playerEvents.OnAim.Raise(new PlayerAimEvent(targetPosition));
+
+                // Camera point of the player will be where they are targeting
+                SetCameraPoint(targetPosition);
+
                 // Cache aim target and direction for when player fires
                 _aimTarget = targetPosition;
                 _aimDirection = aimDirection;
@@ -129,6 +139,15 @@ public class PlayerAiming : MonoBehaviour
             // Maybe I can revisit this but for now it will fix the IK weirdness
             ResetWeapon();
         }
+    }
+
+    private void SetCameraPoint(Vector2 point)
+    {
+        // The camera point should lie on the midpoint of our aim line
+        Vector2 midpoint = (point - (Vector2)_gunEffector.position) / 2;
+
+        // Apply it to the transform used by our camera system
+        _cameraPoint.position = (Vector2)transform.position + midpoint;
     }
 
     private void SetGunTarget(Vector2 targetPosition)
@@ -153,6 +172,9 @@ public class PlayerAiming : MonoBehaviour
 
         // Reset weapon to reset position
         _gunTarget.position = _weaponRestPosition.position;
+
+        // Reset the camera position
+        _cameraPoint.position = transform.position;
     }
 
     // TODO: Would be cool to color lines differently based on aiming

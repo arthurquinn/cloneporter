@@ -46,8 +46,8 @@ public class PlayerCameraController : MonoBehaviour
     private void HandlePlayerTeleported(PlayerTeleportedEvent @event)
     {
         // Switch the active camera when the player teleports
-        // We have an ease in out blend between these two cameras so that the camera motion on teleport
-        //   is not too jarring for the user
+        // We have a blend between these two cameras so we have controlled motion between the teleport entry point
+        //   and the teleport exit point
         StartCoroutine(SwitchCameraNextFixedUpdate());
     }
 

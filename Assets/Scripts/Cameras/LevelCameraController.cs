@@ -36,7 +36,7 @@ public class LevelCameraController : MonoBehaviour
 
     private void HandlePlayerStarted(PlayerStartedEvent @event)
     {
-        CachePlayer(@event.Player);
+        CachePlayer(@event.CameraPoint);
         DisableAllCameras();
 
         _initialCameras.EnableCameras();
