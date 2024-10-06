@@ -26,9 +26,14 @@ public class PlayerMovementFallingState : IPlayerMovementState
     public void FixedUpdate()
     {
         // Player has default movement while falling
-        _controller.SetDefaultMovement();
+        _controller.SetMovement();
 
         FixedUpdateStateTransitions();
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+
     }
 
     public void EnterState()

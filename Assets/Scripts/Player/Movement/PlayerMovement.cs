@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,7 @@ public interface IPlayerMovementController
     // Components
     PlayerMovementStats Stats { get; }
     Rigidbody2D Rigidbody2D { get; }
+    BoxCollider2D Collider2D { get; }
 
     // Inputs and Timers
     Vector2 MoveInput { get; }
@@ -19,18 +21,23 @@ public interface IPlayerMovementController
     bool IsMoving { get; }
     bool IsFalling { get; }
 
+    // Layer Masks
+    LayerMask PortalLayer { get; }
+
     // States
     PlayerMovementIdleState IdleState { get; }
     PlayerMovementRunningState RunningState { get; }
     PlayerMovementJumpingState JumpingState { get; }
     PlayerMovementFallingState FallingState { get; }
+    PlayerMovementLeavePortalState LeavePortalState { get; }
 
     // Methods
     void TransitionToState(IPlayerMovementState state);
 
     // Helpers
     void SetDefaultGravity();
-    void SetDefaultMovement();
+    void SetMovement();
+    void SetMovement(float accelAmount, float decelAmount);
 }
 
 public interface IPlayerMovementState
@@ -41,12 +48,15 @@ public interface IPlayerMovementState
     void Update();
     void FixedUpdate();
 
+    // Handlers
+    void OnCollisionEnter2D(Collision2D collision);
+
     // Transition Methods
     void EnterState();
     void ExitState();
 }
 
-public class PlayerMovement : MonoBehaviour, IPlayerMovementController
+public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappable
 {
     private const float FALLING_THRESHOLD = -0.01f;
 
@@ -62,8 +72,14 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController
     [Tooltip("The layers to be considered ground.")]
     [SerializeField] private LayerMask _groundLayers;
 
+    [Header("Teleport Trigger")]
+    [Tooltip("The teleport triggerr allows objects with rigidbodies to pass through portals.")]
+    [SerializeField] private TeleportTrigger _teleportTrigger;
+    [SerializeField] private LayerMask _portalLayer;
+
     public Rigidbody2D Rigidbody2D { get { return _rb; } }
     public PlayerMovementStats Stats { get { return _stats; } }
+    public BoxCollider2D Collider2D { get { return _collider; } }
 
     public Vector2 MoveInput { get { return _moveInput; } }
     public float LastGroundedTime { get { return _lastGroundedTime; } }
@@ -72,13 +88,17 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController
     public bool IsMoving { get { return _moveInput.x != 0; } }
     public bool IsFalling { get { return _rb.velocity.y < FALLING_THRESHOLD; } }
 
+    public LayerMask PortalLayer { get { return _portalLayer; } }
+
     public PlayerMovementIdleState IdleState { get { return _idleState; } }
     public PlayerMovementRunningState RunningState { get { return _runningState; } }
     public PlayerMovementJumpingState JumpingState { get { return _jumpState; } }
     public PlayerMovementFallingState FallingState { get { return _fallingState; } }
+    public PlayerMovementLeavePortalState LeavePortalState {  get { return _leavePortalState; } }
 
     private Rigidbody2D _rb;
     private PlayerInputActions _input;
+    private BoxCollider2D _collider;
 
     private Vector2 _moveInput;
     private float _lastGroundedTime;
@@ -89,6 +109,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController
     private PlayerMovementRunningState _runningState;
     private PlayerMovementJumpingState _jumpState;
     private PlayerMovementFallingState _fallingState;
+    private PlayerMovementLeavePortalState _leavePortalState;
 
     private IPlayerMovementState _currentState;
     private IPlayerMovementState[] _allStates;
@@ -97,6 +118,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController
     {
         _rb = GetComponent<Rigidbody2D>();
         _input = new PlayerInputActions();
+        _collider = GetComponent<BoxCollider2D>();
 
         _isFacingRight = true;
 
@@ -104,6 +126,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController
         _runningState = new PlayerMovementRunningState();
         _jumpState = new PlayerMovementJumpingState();
         _fallingState = new PlayerMovementFallingState();
+        _leavePortalState = new PlayerMovementLeavePortalState();
 
         _allStates = new IPlayerMovementState[]
         {
@@ -111,6 +134,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController
             _runningState,
             _jumpState,
             _fallingState,
+            _leavePortalState,
         };
 
         RunForAllStates(state => state.Awake(this));
@@ -122,6 +146,8 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController
 
         _input.Player.Jump.Enable();
         _input.Player.Jump.performed += HandleJumpInput;
+
+        _teleportTrigger.OnPortalLeave += HandlePortalLeave;
     }
 
     private void OnDisable()
@@ -130,6 +156,8 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController
 
         _input.Player.Jump.performed -= HandleJumpInput;
         _input.Player.Jump.Disable();
+
+        _teleportTrigger.OnPortalLeave -= HandlePortalLeave;
     }
 
     private void Start()
@@ -158,6 +186,11 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController
 
         // Update the state
         _currentState.FixedUpdate();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        _currentState.OnCollisionEnter2D(collision);
     }
 
     private void RunForAllStates(Action<IPlayerMovementState> action)
@@ -190,10 +223,15 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController
         _rb.gravityScale = _stats.gravityScale;
     }
 
-    public void SetDefaultMovement()
+    public void SetMovement()
+    {
+        SetMovement(_stats.runAccelAmount, _stats.runDeccelAmount);
+    }
+
+    public void SetMovement(float accelAmount, float decelAmount)
     {
         float targetVelocity = _moveInput.x * _stats.runMaxSpeed;
-        float accelRate = (Mathf.Abs(targetVelocity) > 0.01f) ? _stats.runAccelAmount : _stats.runDeccelAmount;
+        float accelRate = (Mathf.Abs(targetVelocity) > 0.01f) ? accelAmount : decelAmount;
 
         float velocityDiff = targetVelocity - _rb.velocity.x;
         float movement = velocityDiff * accelRate;
@@ -234,6 +272,18 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController
     private void HandleJumpInput(InputAction.CallbackContext context)
     {
         _lastJumpInput = _stats.jumpInputBufferTime;
+    }
+
+    private void HandlePortalLeave()
+    {
+        TransitionToState(_leavePortalState);
+    }
+
+    public void SnapOffset(Vector2 offset)
+    {
+        Vector2 newPosition = _rb.position + offset;
+        _rb.position = newPosition;
+
     }
 
     private void OnDrawGizmosSelected()

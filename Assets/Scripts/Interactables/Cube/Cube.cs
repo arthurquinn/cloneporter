@@ -6,6 +6,9 @@ using UnityEngine.Events;
 
 public class Cube : MonoBehaviour, ICarryable
 {
+    private const float NEARBY_DRAG = 20f;
+    private const float DROP_THRESHOLD = 0.01f;
+
     [SerializeField] private InteractablesEventChannel _events;
 
     [Tooltip("The speed at which the carryable object will follow its target.")]
@@ -51,11 +54,31 @@ public class Cube : MonoBehaviour, ICarryable
                 FollowTarget();
             }
         }
+
+        // Remove any linear drag if we get a vertical velocity
+        if (Mathf.Abs(_rb.velocity.y) > DROP_THRESHOLD)
+        {
+            _rb.drag = 0;
+        }
     }
 
     public void SetNearby(bool isNearby)
     {
+        // Show and hide the hint HUD depending on if we are in pickup range
         _hintHUD.SetActive(isNearby);
+
+        // Add some linear drag to the cube so it's harder for the player to
+        //   push it out of pickup range
+        // Without this it can be annoying to run into the cube to try and pick it up
+        //   then it moves away from you when you bump into it
+        if (isNearby)
+        {
+            _rb.drag = NEARBY_DRAG;
+        }
+        else
+        {
+            _rb.drag = 0;
+        }
     }
 
     public void Pickup(Transform carryPoint)

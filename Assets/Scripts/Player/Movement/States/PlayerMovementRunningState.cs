@@ -26,9 +26,14 @@ public class PlayerMovementRunningState : IPlayerMovementState
 
     public void FixedUpdate()
     {
-        _controller.SetDefaultMovement();
+        _controller.SetMovement();
 
         FixedUpdateStateTransitions();
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+
     }
 
     public void EnterState()

@@ -520,7 +520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _events: {fileID: 11400000, guid: f2351ec3b08652f43a2935c8f3760dbf, type: 2}
-  _followSpeed: 6
+  _followSpeed: 12
   _followDistance: 3
   _hintHUD: {fileID: 4056838424990748204}
 --- !u!4 &4504455053326711081 stripped

@@ -1046,6 +1046,9 @@ PrefabInstance:
       addedObject: {fileID: 8517367897633065104}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 4939516786731567567}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2979120649839112212}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       insertIndex: -1
@@ -1164,6 +1167,28 @@ MonoBehaviour:
   m_SolverEditorData:
   - color: {r: 0, g: 1, b: 0, a: 1}
     showGizmo: 1
+--- !u!114 &4939516786731567567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8161103682964795368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342c9dde4170c4b438e94a933f8752dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stats: {fileID: 11400000, guid: 45b90d55688145d4890b6983beaab464, type: 2}
+  _groundCheck: {fileID: 8553024730843398127}
+  _groundCheckSize: {x: 0.26, y: 0.1}
+  _groundLayers:
+    serializedVersion: 2
+    m_Bits: 15040
+  _teleportTrigger: {fileID: 4406902719079127697}
+  _portalLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &2979120649839112212
 MonoBehaviour:
   m_ObjectHideFlags: 0
