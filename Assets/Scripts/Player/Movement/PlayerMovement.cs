@@ -31,6 +31,7 @@ public interface IPlayerMovementController
     PlayerMovementJumpingState JumpingState { get; }
     PlayerMovementFallingState FallingState { get; }
     PlayerMovementLeavePortalState LeavePortalState { get; }
+    PlayerMovementKnockbackState KnockbackState { get; }
 
     // Methods
     void TransitionToState(IPlayerMovementState state);
@@ -59,6 +60,7 @@ public interface IPlayerMovementState
 
 public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappable
 {
+    private const float NO_MULTIPLIER = 1.0f;
     private const float FALLING_THRESHOLD = -0.01f;
 
     [Header("Player Movement Stats")]
@@ -97,6 +99,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
     public PlayerMovementJumpingState JumpingState { get { return _jumpState; } }
     public PlayerMovementFallingState FallingState { get { return _fallingState; } }
     public PlayerMovementLeavePortalState LeavePortalState {  get { return _leavePortalState; } }
+    public PlayerMovementKnockbackState KnockbackState { get { return _knockbackState; } }
 
     private Rigidbody2D _rb;
     private PlayerInputActions _input;
@@ -112,6 +115,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
     private PlayerMovementJumpingState _jumpState;
     private PlayerMovementFallingState _fallingState;
     private PlayerMovementLeavePortalState _leavePortalState;
+    private PlayerMovementKnockbackState _knockbackState;
 
     private IPlayerMovementState _currentState;
     private IPlayerMovementState[] _allStates;
@@ -129,6 +133,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
         _jumpState = new PlayerMovementJumpingState();
         _fallingState = new PlayerMovementFallingState();
         _leavePortalState = new PlayerMovementLeavePortalState();
+        _knockbackState = new PlayerMovementKnockbackState();
 
         _allStates = new IPlayerMovementState[]
         {
@@ -137,6 +142,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
             _jumpState,
             _fallingState,
             _leavePortalState,
+            _knockbackState,
         };
 
         RunForAllStates(state => state.Awake(this));
@@ -227,13 +233,15 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
 
     public void SetMovement()
     {
-        SetMovement(_stats.runAccelAmount, _stats.runDeccelAmount);
+        SetMovement(NO_MULTIPLIER, NO_MULTIPLIER);
     }
 
-    public void SetMovement(float accelAmount, float decelAmount)
+    public void SetMovement(float accelMult, float decelMult)
     {
         float targetVelocity = _moveInput.x * _stats.runMaxSpeed;
-        float accelRate = (Mathf.Abs(targetVelocity) > 0.01f) ? accelAmount : decelAmount;
+        float accelRate = (Mathf.Abs(targetVelocity) > 0.01f) ?
+            _stats.runAccelAmount * accelMult :
+            _stats.runDeccelAmount * decelMult;
 
         float velocityDiff = targetVelocity - _rb.velocity.x;
         float movement = velocityDiff * accelRate;
@@ -281,11 +289,22 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
         TransitionToState(_leavePortalState);
     }
 
+    public void Knockback(KnockbackAttack attack)
+    {
+        if (_currentState != _knockbackState)
+        {
+            // Set the knockback force and origin
+            _knockbackState.Attack = attack;
+
+            // Transition to state
+            TransitionToState(_knockbackState);
+        }
+    }
+
     public void SnapOffset(Vector2 offset)
     {
         Vector2 newPosition = _rb.position + offset;
         _rb.position = newPosition;
-
     }
 
     private void OnDrawGizmosSelected()

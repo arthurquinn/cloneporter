@@ -25,8 +25,8 @@ MonoBehaviour:
   runDeccelAmount: 45.454544
   accelInAir: 0
   deccelInAir: 0
-  accelAfterPortal: 0.3
-  deccelAfterPortal: 0.3
+  accelAfterPortal: 0.1
+  deccelAfterPortal: 0.1
   doConserveMomentum: 1
   jumpHeight: 3
   jumpTimeToApex: 0.4

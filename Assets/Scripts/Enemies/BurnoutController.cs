@@ -98,7 +98,7 @@ public class BurnoutController : MonoBehaviour
                     IAttackable attackable = hit.collider.GetComponent<IAttackable>();
                     if (attackable != null)
                     {
-                        attackable.Attack(_attackStats);
+                        attackable.Attack(_attackStats, transform.position);
                     }
 
                     // TODO: Check for surface reflections

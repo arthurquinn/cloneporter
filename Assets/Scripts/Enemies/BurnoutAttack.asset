@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BurnoutAttack
   m_EditorClassIdentifier: 
   Damage: 1
-  KnockbackForce: {x: 160, y: 0}
+  KnockbackForce: 40

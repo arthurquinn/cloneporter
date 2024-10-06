@@ -51,7 +51,7 @@ public class PlayerMovementRunningState : IPlayerMovementState
     private void FixedUpdateStateTransitions()
     {
         // If we inputted jump then transition to jumping state
-        if (_controller.LastJumpInput > 0)
+        if (_controller.IsGrounded && _controller.LastJumpInput > 0)
         {
             _controller.TransitionToState(_controller.JumpingState);
         }
