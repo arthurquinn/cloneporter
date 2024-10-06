@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-[CreateAssetMenu(menuName = "Player Move Stats")]
-public class PlayerMoveStats : ScriptableObject
+[CreateAssetMenu(fileName = "PlayerMovementStats", menuName = "Player/Stats/PlayerMovementStats")]
+public class PlayerMovementStats : ScriptableObject
 {
     [Header("Gravity")]
     [HideInInspector] public float gravityStrength; //Downwards force (gravity) needed for the desired jumpHeight and jumpTimeToApex.
@@ -92,8 +92,8 @@ public class PlayerMoveStats : ScriptableObject
         gravityScale = gravityStrength / Physics2D.gravity.y;
 
         //Calculate are run acceleration & deceleration forces using formula: amount = ((1 / Time.fixedDeltaTime) * acceleration) / runMaxSpeed
-        runAccelAmount = (50 * runAcceleration) / runMaxSpeed;
-        runDeccelAmount = (50 * runDecceleration) / runMaxSpeed;
+        runAccelAmount = (Mathf.Ceil(1 / Time.fixedDeltaTime) * runAcceleration) / runMaxSpeed;
+        runDeccelAmount = (Mathf.Ceil(1 / Time.fixedDeltaTime) * runDecceleration) / runMaxSpeed;
 
         //Calculate jumpForce using the formula (initialJumpVelocity = gravity * timeToJumpApex)
         jumpForce = Mathf.Abs(gravityStrength) * jumpTimeToApex;

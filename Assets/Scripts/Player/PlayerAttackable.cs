@@ -27,6 +27,6 @@ public class PlayerAttackable : MonoBehaviour, IAttackable
 
     public void Attack(EnemyAttack attack)
     {
-        _movement.CurrentAttack = attack;
+        //_movement.CurrentAttack = attack;
     }
 }

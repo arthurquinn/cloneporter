@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
-public class PlayerMovement : MonoBehaviour, ISnappable
+public class PlayerMovementOld : MonoBehaviour, ISnappable
 {
-    [SerializeField] private PlayerMoveStats _stats;
+    [SerializeField] private PlayerMovementStats _stats;
     [SerializeField] private PlayerEventChannel _playerEvents;
 
     [Header("Checks")]
