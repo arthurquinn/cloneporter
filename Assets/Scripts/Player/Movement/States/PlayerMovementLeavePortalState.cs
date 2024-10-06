@@ -57,7 +57,7 @@ public class PlayerMovementLeavePortalState : IPlayerMovementState
     private void TransitionToNextState()
     {
         // If we have a jump buffered and we are grounded then transition directly into the jump state
-        if (_controller.LastJumpInput > 0 && _controller.LastGroundedTime > 0)
+        if (_controller.LastJumpInput > 0 && _controller.IsGrounded)
         {
             _controller.TransitionToState(_controller.JumpingState);
         }

@@ -49,7 +49,7 @@ public class PlayerMovementIdleState : IPlayerMovementState
 
     private void FixedUpdateStateTransitions()
     {
-        if (_controller.LastGroundedTime > 0 && _controller.LastJumpInput > 0)
+        if (_controller.IsGrounded && _controller.LastJumpInput > 0)
         {
             _controller.TransitionToState(_controller.JumpingState);
         }

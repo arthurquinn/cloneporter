@@ -53,19 +53,21 @@ public class PlayerMovementFallingState : IPlayerMovementState
         // If we just reached ground and we have a buffered jump input
         //   This will occur if the player just reached ground and there is a jump input buffered
         //   In this case we can transition directly from falling to jumping
+        // Check the last grounded time instead of checking grounded directly so that we can jump within
+        //   the coyote time buffer after we run off of a ledge
         if (_controller.LastGroundedTime > 0 && _controller.LastJumpInput > 0)
         {
             _controller.TransitionToState(_controller.JumpingState);
         }
 
         // If we reached the ground and are inputting movement then transition directly to the running state
-        else if (_controller.LastGroundedTime > 0 && _controller.IsMoving)
+        else if (_controller.IsGrounded && _controller.IsMoving)
         {
             _controller.TransitionToState(_controller.RunningState);
         }
 
         // Else if we reached ground then transition to idle
-        else if (_controller.LastGroundedTime > 0)
+        else if (_controller.IsGrounded)
         {
             _controller.TransitionToState(_controller.IdleState);
         }

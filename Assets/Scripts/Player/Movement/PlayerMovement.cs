@@ -20,6 +20,7 @@ public interface IPlayerMovementController
     // Trackers
     bool IsMoving { get; }
     bool IsFalling { get; }
+    bool IsGrounded { get; }
 
     // Layer Masks
     LayerMask PortalLayer { get; }
@@ -87,6 +88,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
 
     public bool IsMoving { get { return _moveInput.x != 0; } }
     public bool IsFalling { get { return _rb.velocity.y < FALLING_THRESHOLD; } }
+    public bool IsGrounded { get { return _lastGroundedTime == _stats.coyoteTime; } }
 
     public LayerMask PortalLayer { get { return _portalLayer; } }
 

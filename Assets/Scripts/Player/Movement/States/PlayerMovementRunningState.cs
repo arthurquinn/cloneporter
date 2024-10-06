@@ -56,6 +56,12 @@ public class PlayerMovementRunningState : IPlayerMovementState
             _controller.TransitionToState(_controller.JumpingState);
         }
 
+        // If we started falling then transition to falling state
+        else if (_controller.IsFalling)
+        {
+            _controller.TransitionToState(_controller.FallingState);
+        }
+
         // If we are not inputting movement then transition to idle state
         else if (!_controller.IsMoving)
         {
