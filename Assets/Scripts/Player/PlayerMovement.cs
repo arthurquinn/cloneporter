@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-using System.Runtime.CompilerServices;
-using System.Collections;
 
 public class PlayerMovement : MonoBehaviour, ISnappable
 {
@@ -41,13 +39,15 @@ public class PlayerMovement : MonoBehaviour, ISnappable
     public float LastPressedJumpTime { get; private set; }
     public float LastOnGroundTime { get; private set; }
 
+    // Modifiers
+    public EnemyAttack CurrentAttack { get; set; }
 
     // Inputs
     private Vector2 _moveInput;
 
     private void Awake()
     {
-        _inputs = new PlayerInputActions();   
+        _inputs = new PlayerInputActions();
     }
 
     private void Start()
@@ -133,9 +133,27 @@ public class PlayerMovement : MonoBehaviour, ISnappable
 
     private void FixedUpdate()
     {
-        HandleMovement();
-        HandleJump();
+        if (CurrentAttack != null)
+        {
+            HandleAttacked();
+        }
+        else
+        {
+            HandleMovement();
+            HandleJump();
+        }
         HandleGravity();
+    }
+
+    private void HandleAttacked()
+    {
+        if (CurrentAttack != null)
+        {
+            Vector2 dirMod = new Vector2(Mathf.Sign(_rb.velocity.x) * -1, 0);
+            Vector2 knocbackForce = CurrentAttack.KnockbackForce * dirMod;
+            _rb.AddForce(dirMod, ForceMode2D.Impulse);
+        }
+        CurrentAttack = null;
     }
 
     private void HandleMovement()
@@ -278,8 +296,6 @@ public class PlayerMovement : MonoBehaviour, ISnappable
             DidExitPortal = false;
         }
     }
-
-
 
     #region Editor Methods
 

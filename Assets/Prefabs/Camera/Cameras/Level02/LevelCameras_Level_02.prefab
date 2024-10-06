@@ -8,9 +8,73 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3499781262680942765, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[0].y
+      value: -2.3952827
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499781262680942765, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[1].y
+      value: 11.849087
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499781262680942765, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[2].x
+      value: -22.831741
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499781262680942765, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[2].y
+      value: 11.849057
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499781262680942765, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[3].x
+      value: -22.831713
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499781262680942765, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[3].y
+      value: -2.3952827
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499781262680942765, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[0].Y
+      value: 118490864
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499781262680942765, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[1].X
+      value: -228317408
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499781262680942765, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[1].Y
+      value: 118490864
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499781262680942765, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[2].X
+      value: -228317408
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499781262680942765, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[2].Y
+      value: -23952828
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499781262680942765, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[3].Y
+      value: -23952828
+      objectReference: {fileID: 0}
     - target: {fileID: 5642799870317027582, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
       propertyPath: m_Name
-      value: LevelCameras
+      value: LevelCameras_Level_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 6315374429744128849, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_Size.x
+      value: 29.476788
+      objectReference: {fileID: 0}
+    - target: {fileID: 6315374429744128849, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_Size.y
+      value: 14.2443695
+      objectReference: {fileID: 0}
+    - target: {fileID: 6315374429744128849, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_Offset.x
+      value: -8.093348
+      objectReference: {fileID: 0}
+    - target: {fileID: 6315374429744128849, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
+      propertyPath: m_Offset.y
+      value: 4.726902
       objectReference: {fileID: 0}
     - target: {fileID: 6547840211267360798, guid: 3a7cb53d34c0b9b46a5b822247f433fc, type: 3}
       propertyPath: m_LocalPosition.x

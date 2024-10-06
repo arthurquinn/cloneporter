@@ -15,6 +15,9 @@ public class BurnoutController : MonoBehaviour
     [Header("Events")]
     [SerializeField] private UnityEvent<Vector3[][]> _onLaserPositionsChanged;
 
+    [Header("Attack")]
+    [SerializeField] private EnemyAttack _attackStats;
+
     private Vector2 _orientation;
 
     private const int MAX_LINES = 2;
@@ -89,6 +92,13 @@ public class BurnoutController : MonoBehaviour
                         lineOrigin = exit.origin;
                         lineOrientation = exit.direction;
                         break;
+                    }
+
+                    // Check if we hit a player
+                    IAttackable attackable = hit.collider.GetComponent<IAttackable>();
+                    if (attackable != null)
+                    {
+                        attackable.Attack(_attackStats);
                     }
 
                     // TODO: Check for surface reflections
