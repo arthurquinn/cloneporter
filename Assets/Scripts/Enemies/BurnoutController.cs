@@ -37,6 +37,11 @@ public class BurnoutController : MonoBehaviour
     {
         // Set our orientation based on our rotation
         _orientation = transform.rotation * Vector2.right;
+        
+        // Handle flaoting point precision errors
+        _orientation.x = Mathf.Round(_orientation.x);
+        _orientation.y = Mathf.Round(_orientation.y);
+        _orientation = _orientation.normalized;
     }
 
     // TODO: Lots of room to optimize here
@@ -98,7 +103,8 @@ public class BurnoutController : MonoBehaviour
                     IAttackable attackable = hit.collider.GetComponent<IAttackable>();
                     if (attackable != null)
                     {
-                        attackable.Attack(_attackStats, transform.position);
+                        Ray2D laserRay = new Ray2D(lineOrigin, lineOrientation);
+                        attackable.LaserAttack(_attackStats, laserRay);
                     }
 
                     // TODO: Check for surface reflections

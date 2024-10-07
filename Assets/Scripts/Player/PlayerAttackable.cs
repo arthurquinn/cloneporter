@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IAttackable
 {
-    void Attack(EnemyAttack attack, Vector2 origin);
+    void LaserAttack(EnemyAttack attack, Ray2D laserRay);
 }
 
 public class PlayerAttackable : MonoBehaviour, IAttackable
@@ -21,24 +21,39 @@ public class PlayerAttackable : MonoBehaviour, IAttackable
         _rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Attack(EnemyAttack attack, Vector2 origin)
+    public void LaserAttack(EnemyAttack attack, Ray2D laserRay)
     {
         // Calculate the knockback direction
-        Vector2 knockbackDirection = GetKnockbackDirection(origin);
+        Vector2 knockbackDirection = GetKnockbackDirection(laserRay);
 
         // Apply the knockback to our movement component
         _movement.Knockback(new KnockbackAttack(knockbackDirection, attack.KnockbackForce));
     }
 
-    private Vector2 GetKnockbackDirection(Vector2 origin)
+    private Vector2 GetKnockbackDirection(Ray2D laserRay)
     {
-        if (_rb.position.x > origin.x)
+        bool isVertical = laserRay.direction.y != 0;
+        if (isVertical)
         {
-            return Vector2.right;
+            if (transform.position.x > laserRay.origin.x)
+            {
+                return Vector2.right;
+            }
+            else
+            {
+                return Vector2.left;
+            }
         }
         else
         {
-            return Vector2.left;
+            if (transform.position.y > laserRay.origin.y)
+            {
+                return Vector2.up;
+            }
+            else
+            {
+                return Vector2.down;
+            }
         }
     }
 }

@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public enum PortalColor
 {
@@ -19,6 +15,8 @@ public interface IPortal
 
 public class PortalController : MonoBehaviour, IPortal
 {
+    private const float ROUNDING_THRESHOLD = 0.001f;
+
     [SerializeField] private PortalColor _portalColor;
 
     [Header("Exit Velocity Adjustments")]
@@ -59,11 +57,29 @@ public class PortalController : MonoBehaviour, IPortal
         Quaternion rotationDiff = Quaternion.Euler(0, 0, angleDiff);
         outDirection = rotationDiff * outDirection;
 
+        // Round off insignificantly small numbers to cardinal directions
+        // This is useful in the case of lasers not looking crooked when exiting portals
+        outDirection.x = RoundInsignificantValues(outDirection.x);
+        outDirection.y = RoundInsignificantValues(outDirection.y);
+
         // Calculate out position
         Vector2 offset = entry.origin - (Vector2)transform.position;
         offset = rotationDiff * offset;
 
         return new Ray2D(offset, outDirection);
+    }
+
+    private float RoundInsignificantValues(float value)
+    {
+        if (Mathf.Abs(value) < ROUNDING_THRESHOLD)
+        {
+            return 0;
+        }
+        if (1 - Mathf.Abs(value) < ROUNDING_THRESHOLD)
+        {
+            return Mathf.Sign(value);
+        }
+        return value;
     }
 
     public Ray2D SimulatePort(Ray2D entry)
