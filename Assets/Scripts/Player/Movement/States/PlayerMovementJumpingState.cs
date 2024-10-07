@@ -38,7 +38,7 @@ public class PlayerMovementJumpingState : IPlayerMovementState
     public void EnterState()
     {
         _controller.SetDefaultGravity();
-
+        _controller.ConsumeJumpInput();
         Jump();
     }
 

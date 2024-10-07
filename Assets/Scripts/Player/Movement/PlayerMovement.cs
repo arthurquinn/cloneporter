@@ -40,6 +40,7 @@ public interface IPlayerMovementController
     void SetDefaultGravity();
     void SetMovement();
     void SetMovement(float accelAmount, float decelAmount);
+    void ConsumeJumpInput();
 }
 
 public interface IPlayerMovementState
@@ -194,6 +195,9 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
 
         // Update the state
         _currentState.FixedUpdate();
+
+        // Fall speed is hard capped in all states
+        StartCoroutine(HardCapFallSpeed());
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -249,6 +253,11 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
         _rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }
 
+    public void ConsumeJumpInput()
+    {
+        _lastJumpInput = 0;
+    }
+
     private void SetFacingDirection()
     {
         // If we are inputting movement
@@ -264,6 +273,17 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
                 // Update is facing right tracker
                 _isFacingRight = !_isFacingRight;
             }
+        }
+    }
+
+    private IEnumerator HardCapFallSpeed()
+    {
+        // Wait for end of all fixed updates to hard cap fall speed
+        yield return new WaitForFixedUpdate();
+        if (IsFalling)
+        {
+            float limitY = Mathf.Max(_rb.velocity.y, -_stats.maxFallSpeed);
+            _rb.velocity = new Vector2(_rb.velocity.x, limitY);
         }
     }
 

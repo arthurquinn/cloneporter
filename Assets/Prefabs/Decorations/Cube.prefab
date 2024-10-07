@@ -356,15 +356,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 72f9ee4045371df4e8f429427bcd61f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -45.677746
+      value: 0.8365646
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 72f9ee4045371df4e8f429427bcd61f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.384192
+      value: -3.1117475
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 72f9ee4045371df4e8f429427bcd61f3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.14565638
+      value: -0.13566807
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 72f9ee4045371df4e8f429427bcd61f3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -520,7 +520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _events: {fileID: 11400000, guid: f2351ec3b08652f43a2935c8f3760dbf, type: 2}
-  _followSpeed: 12
+  _followSpeed: 6
   _followDistance: 3
   _hintHUD: {fileID: 4056838424990748204}
 --- !u!4 &4504455053326711081 stripped
