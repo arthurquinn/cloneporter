@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CameraBoundingShape : MonoBehaviour
+public class CameraActiveZone : MonoBehaviour
 {
     public UnityAction OnZoneExit { get; set; }
     public UnityAction OnZoneEnter { get; set; }

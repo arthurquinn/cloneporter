@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class Cube : MonoBehaviour, ICarryable
 {
+    private const float CARRIED_ANG_DRAG = 2f;
     private const float NEARBY_DRAG = 20f;
     private const float DROP_THRESHOLD = 0.01f;
 
@@ -29,6 +30,7 @@ public class Cube : MonoBehaviour, ICarryable
     private bool _isCarried;
 
     private float _cachedGravityScale;
+    private float _cachedAngularDrag;
 
     private void Awake()
     {
@@ -43,16 +45,34 @@ public class Cube : MonoBehaviour, ICarryable
 
         // Cache our gravity scale so we can reapply it when dropped
         _cachedGravityScale = _rb.gravityScale;
+        _cachedAngularDrag = _rb.angularDrag;
     }
 
     private void FixedUpdate()
     {
         if (_isCarried)
         {
-            if (CheckDistanceToTarget())
+            // Drop if we are within follow distance
+            bool shouldDrop = !IsWithinFollowDistance();
+            if (shouldDrop)
+            {
+                // Raise the event so the player can drop item
+                _events.OnItemDropped.Raise(new HeldItemDroppedEvent(this));
+            }
+            else
             {
                 FollowTarget();
             }
+        }
+
+        // Set angular drag
+        if (_isCarried)
+        {
+            _rb.angularDrag = CARRIED_ANG_DRAG;
+        }
+        else
+        {
+            _rb.angularDrag = _cachedAngularDrag;
         }
 
         // Remove any linear drag if we get a vertical velocity
@@ -79,6 +99,13 @@ public class Cube : MonoBehaviour, ICarryable
         {
             _rb.drag = 0;
         }
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        _rb.isKinematic = true;
+        _rb.position = position;
+        _rb.isKinematic = false;
     }
 
     public void Pickup(Transform carryPoint)
@@ -109,22 +136,14 @@ public class Cube : MonoBehaviour, ICarryable
         _collider.enabled = true;
     }
 
-    private bool CheckDistanceToTarget()
+    private bool IsWithinFollowDistance()
     {
         // Get the squared magnitude between us and the carry point
         Vector2 carryDifference = (Vector2)_carryPoint.position - _rb.position;
         float squareMag = carryDifference.sqrMagnitude;
 
-        // Break connection if greater than max threshold
-        if (squareMag > _followDistance)
-        {
-            // Raise the event so the player can drop item
-            _events.OnItemDropped.Raise(new HeldItemDroppedEvent(this));
-            return false;
-        }
-
-        // Return true if connection can be maintained
-        return true;
+        // Return true if we are within the follow distance
+        return squareMag <= _followDistance;
     }
 
     private void FollowTarget()

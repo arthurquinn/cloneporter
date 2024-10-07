@@ -215,7 +215,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
 
     public void TransitionToState(IPlayerMovementState state)
     {
-        Debug.Log("Transition from " + _currentState + " to " + state);
+        //Debug.Log("Transition from " + _currentState + " to " + state);
 
         // Exit the previous state if any
         if (_currentState != null)

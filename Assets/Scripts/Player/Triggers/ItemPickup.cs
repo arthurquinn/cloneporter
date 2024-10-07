@@ -9,12 +9,14 @@ public interface ICarryable
     Collider2D Collider { get; }
 
     void SetNearby(bool isNearby);
+    void SetPosition(Vector2 position);
     void Pickup(Transform carryPoint);
     void Drop();
 }
 
 public class ItemPickup : MonoBehaviour
 {
+    [SerializeField] private PlayerEventChannel _playerEvents;
     [SerializeField] private InteractablesEventChannel _interactablesEvents;
     [SerializeField] private Collider2D _playerCollider;
     [SerializeField] private Transform _holdPosition;
@@ -30,6 +32,8 @@ public class ItemPickup : MonoBehaviour
 
     private void OnEnable()
     {
+        _playerEvents.OnTeleported.Subscribe(HandlePlayerTeleported);
+
         _interactablesEvents.OnItemDropped.Subscribe(HandleItemDropped);
 
         _input.Player.Interact.Enable();
@@ -38,6 +42,8 @@ public class ItemPickup : MonoBehaviour
 
     private void OnDisable()
     {
+        _playerEvents.OnTeleported.Subscribe(HandlePlayerTeleported);
+
         _interactablesEvents.OnItemDropped.Unsubscribe(HandleItemDropped);
 
         _input.Player.Interact.performed -= HandleInteract;
@@ -62,6 +68,14 @@ public class ItemPickup : MonoBehaviour
         {
             _cachedItem.SetNearby(false);
             _cachedItem = null;
+        }
+    }
+
+    private void HandlePlayerTeleported(PlayerTeleportedEvent @event)
+    {
+        if (_heldItem != null)
+        {
+            _heldItem.SetPosition(_holdPosition.position);
         }
     }
 

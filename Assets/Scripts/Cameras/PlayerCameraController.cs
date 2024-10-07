@@ -19,7 +19,7 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _playerCameraB;
 
     [Header("Bounding Shape")]
-    [SerializeField] private CameraBoundingShape _boundingShape;
+    [SerializeField] private CameraActiveZone _activeZone;
 
     private bool _isActive;
 
@@ -31,16 +31,16 @@ public class PlayerCameraController : MonoBehaviour
     {
         _playerEvents.OnTeleported.Subscribe(HandlePlayerTeleported);
 
-        _boundingShape.OnZoneEnter += HandleZoneEnter;
-        _boundingShape.OnZoneExit += HandleZoneExit;
+        _activeZone.OnZoneEnter += HandleZoneEnter;
+        _activeZone.OnZoneExit += HandleZoneExit;
     }
 
     private void OnDisable()
     {
         _playerEvents.OnTeleported.Unsubscribe(HandlePlayerTeleported);
 
-        _boundingShape.OnZoneEnter -= HandleZoneEnter;
-        _boundingShape.OnZoneExit -= HandleZoneExit;
+        _activeZone.OnZoneEnter -= HandleZoneEnter;
+        _activeZone.OnZoneExit -= HandleZoneExit;
     }
 
     private void HandlePlayerTeleported(PlayerTeleportedEvent @event)
