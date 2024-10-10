@@ -19,3 +19,5 @@ MonoBehaviour:
     EntityID: Door_02
   - SwitchID: FloorSwitch_03
     EntityID: Door_03
+  - SwitchID: FloorSwitch_04
+    EntityID: Door_04
