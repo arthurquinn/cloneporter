@@ -35,6 +35,11 @@ public class PlayerAiming : MonoBehaviour
     //   we just reflected off of when calculating the next hit
     private const float RAYCAST_REFLECTION_OFFSET = 0.05f;
 
+    // How fast the camera moves to follow the targeting beam
+    private const float CAMERA_UPDATE_SPEED = 3f;
+    // The threshold at which the camera can stop updating
+    private const float CAMERA_MIN_UPDATE_DIST = 1f;
+
     private PlayerInputActions _inputs;
 
     private bool _isAiming;
@@ -185,16 +190,30 @@ public class PlayerAiming : MonoBehaviour
                 // End the reflections here and set target variables
                 isReflecting = false;
             }
+            else
+            {
+                // Didn't collide, so end reflection
+                isReflecting = false;
+            }
         }
     }
 
     private void SetCameraPoint(Vector2 point)
     {
-        // The camera point should lie on the midpoint of our aim line
-        Vector2 midpoint = (point - (Vector2)_gunEffector.position) / 2;
+        // Get the start and end position
+        Vector2 currentPosition = _cameraPoint.position;
+        Vector2 targetPosition = point;
 
-        // Apply it to the transform used by our camera system
-        _cameraPoint.position = (Vector2)transform.position + midpoint;
+        // Do not update for insignificant distances
+        float distance = (targetPosition - currentPosition).magnitude;
+        if (distance > CAMERA_MIN_UPDATE_DIST)
+        {
+            // Lerp to end position
+            Vector2 newPosition = Vector2.Lerp(currentPosition, targetPosition, CAMERA_UPDATE_SPEED * Time.deltaTime);
+
+            // Set camera point to new position
+            _cameraPoint.position = newPosition;
+        }
     }
 
     private void SetGunTarget(Vector2 targetPosition)
