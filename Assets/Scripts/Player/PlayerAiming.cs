@@ -31,13 +31,16 @@ public class PlayerAiming : MonoBehaviour
     private const float MIN_IK_NO_CALC_DISTANCE = 0.1f;
     // This is needed to go "into" the tile a little but so we can retrieve it in the tilemap
     private const float HIT_DETECTION_MULTIPLIER = 0.01f;
+    // This will help us extend our reflection raycast slightly so we don't hit the same tile
+    //   we just reflected off of when calculating the next hit
+    private const float RAYCAST_REFLECTION_OFFSET = 0.05f;
 
     private PlayerInputActions _inputs;
 
     private bool _isAiming;
     private Vector2 _aimTarget;
     private Vector2 _aimDirection;
-
+    private RaycastHit2D _lastHit;
 
     private void Awake()
     {
@@ -61,7 +64,7 @@ public class PlayerAiming : MonoBehaviour
     }
 
     private void OnDisable()
-    {    
+    {
         // Remove left event handlers
         _inputs.Player.FireLeft.started -= AimLeftStart;
         _inputs.Player.FireLeft.canceled -= AimLeftEnd;
@@ -116,15 +119,19 @@ public class PlayerAiming : MonoBehaviour
                 SetGunTarget(ikTarget);
                 DrawTargetingBeam(targetPosition);
 
-                // Fire off the aim event
-                _playerEvents.OnAim.Raise(new PlayerAimEvent(targetPosition));
-
                 // Camera point of the player will be where they are targeting
                 SetCameraPoint(targetPosition);
 
                 // Cache aim target and direction for when player fires
                 _aimTarget = targetPosition;
                 _aimDirection = aimDirection;
+                _lastHit = hit;
+
+                // Handle reflections if we hit a reflect tile
+                if (hit.collider.CompareTag("Reflect"))
+                {
+                    HandleReflections(hit);
+                }
             }
             else
             {
@@ -138,6 +145,46 @@ public class PlayerAiming : MonoBehaviour
             // Best to knock them out of aiming if they are literally aiming directly into their chest
             // Maybe I can revisit this but for now it will fix the IK weirdness
             ResetWeapon();
+        }
+    }
+
+    private void HandleReflections(RaycastHit2D hit)
+    {
+        // Initialize loop variables
+        bool isReflecting = true;
+        Vector2 reflectStart = _aimTarget;
+        Vector2 reflectDir = Vector2.Reflect(_aimDirection, hit.normal);
+
+        // Loop for all possible reflections
+        while (isReflecting)
+        {
+            // Offset the reflect start slightly to avoid hitting the reflect tile we are bouncing off of
+            reflectStart = reflectStart + (reflectDir * RAYCAST_REFLECTION_OFFSET);
+
+            // Raycast to find next collider
+            RaycastHit2D nextHit = Physics2D.Raycast(reflectStart, reflectDir, RAYCAST_LENGTH, _targetingLayers);
+            if (nextHit.collider != null && nextHit.collider.CompareTag("Reflect"))
+            {
+                // Add the reflection point to the targeting beam
+                AddToTargetingBeam(nextHit.point);
+
+                // Set next reflection variables and continue
+                reflectStart = nextHit.point;
+                reflectDir = Vector2.Reflect(reflectDir, nextHit.normal);
+            }
+            else if (nextHit.collider != null)
+            {
+                // Add the reflection point to the targeting beam
+                AddToTargetingBeam(nextHit.point);
+
+                // Cache the new aim direction and aim target after all reflections for when player fires
+                _aimTarget = nextHit.point;
+                _aimDirection = reflectDir;
+                _lastHit = nextHit;
+
+                // End the reflections here and set target variables
+                isReflecting = false;
+            }
         }
     }
 
@@ -155,13 +202,24 @@ public class PlayerAiming : MonoBehaviour
         _gunTarget.position = targetPosition;
     }
 
+    private void AddToTargetingBeam(Vector2 targetPosition)
+    {
+        int linePos = _lineRenderer.positionCount++;
+        _lineRenderer.SetPosition(linePos, targetPosition);
+    }
+
     private void DrawTargetingBeam(Vector2 targetPosition)
     {
+        // Enable the line renderer
         _lineRenderer.enabled = true;
+        _lineRenderer.positionCount = 2;
+
+        // Set the positions
         Vector2 gunPosition = (Vector2)_gunEffector.position;
         _lineRenderer.SetPosition(0, gunPosition);
         _lineRenderer.SetPosition(1, targetPosition);
 
+        // Debug line
         Debug.DrawLine(_gunEffector.position, targetPosition);
     }
 
@@ -212,34 +270,28 @@ public class PlayerAiming : MonoBehaviour
 
     private void CheckValidCollision(PortalColor portalColor)
     {
-        Vector2 aimOrigin = _aimOrigin.position;
-
-        // Check if we are aiming at a portal tile
-        RaycastHit2D hit = Physics2D.Raycast(aimOrigin, _aimDirection, RAYCAST_LENGTH, _targetingLayers);
-        if (hit.collider != null)
+        // Check that we hit something
+        if (_lastHit.collider != null)
         {
             // Check what we hit
-            bool hitPortalTile = hit.collider.CompareTag("Panels");
-            bool hitPortal = hit.collider.CompareTag("Portal");
+            bool hitPortalTile = _lastHit.collider.CompareTag("Panels");
+            bool hitPortal = _lastHit.collider.CompareTag("Portal");
 
             // If we hit a portal or a portal tile
             if (hitPortalTile || hitPortal)
             {
-                // TODO: I really want something better than this
-                Vector2 adjustedHitPoint = hit.point + ((hit.point - aimOrigin).normalized) * HIT_DETECTION_MULTIPLIER;
-                Vector2 entryDirection = (adjustedHitPoint - aimOrigin).normalized;
+                // Get the entry point and direction
+                // TODO: Find a way to not need the hit detection multiplier
+                Vector2 entryPoint = _lastHit.point - (_lastHit.normal * HIT_DETECTION_MULTIPLIER);
+                Vector2 entryDirection = _aimDirection;
 
                 // Set up the entry ray of the fired shot
-                Ray2D entry = new Ray2D(adjustedHitPoint, entryDirection);
+                Ray2D entry = new Ray2D(entryPoint, entryDirection);
 
                 // Call unity event for portal gun fired
                 _playerEvents.OnPortalGunFired.Raise(new PlayerPortalGunFireEvent(portalColor, entry));
             }
         }
+
     }
-
-    //private void TryShootPortal(PortalColor portalColor)
-    //{
-
-    //}
 }

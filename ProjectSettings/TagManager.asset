@@ -7,6 +7,7 @@ TagManager:
   - Panels
   - Portals
   - Portal
+  - Reflect
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Decorations
   - TeleportTrigger
   - CameraBounds
-  - 
+  - Reflect
   - 
   - 
   - 
