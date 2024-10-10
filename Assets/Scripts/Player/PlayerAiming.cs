@@ -38,7 +38,7 @@ public class PlayerAiming : MonoBehaviour
     // How fast the camera moves to follow the targeting beam
     private const float CAMERA_UPDATE_SPEED = 3f;
     // The threshold at which the camera can stop updating
-    private const float CAMERA_MIN_UPDATE_DIST = 1f;
+    private const float CAMERA_MIN_UPDATE_DIST = 4f;
 
     private PlayerInputActions _inputs;
 
@@ -89,6 +89,7 @@ public class PlayerAiming : MonoBehaviour
         if (_isAiming)
         {
             Aim();
+            UpdateAimCamera();
         }
         else
         {
@@ -123,9 +124,6 @@ public class PlayerAiming : MonoBehaviour
                 // Set the target for IK and draw the targeting beam
                 SetGunTarget(ikTarget);
                 DrawTargetingBeam(targetPosition);
-
-                // Camera point of the player will be where they are targeting
-                SetCameraPoint(targetPosition);
 
                 // Cache aim target and direction for when player fires
                 _aimTarget = targetPosition;
@@ -198,6 +196,14 @@ public class PlayerAiming : MonoBehaviour
         }
     }
 
+    private void UpdateAimCamera()
+    {
+        if (_aimTarget != Vector2.zero)
+        {
+            SetCameraPoint(_aimTarget);
+        }
+    }
+
     private void SetCameraPoint(Vector2 point)
     {
         // Get the start and end position
@@ -205,8 +211,8 @@ public class PlayerAiming : MonoBehaviour
         Vector2 targetPosition = point;
 
         // Do not update for insignificant distances
-        float distance = (targetPosition - currentPosition).magnitude;
-        if (distance > CAMERA_MIN_UPDATE_DIST)
+        float sqrDistance = (targetPosition - currentPosition).sqrMagnitude;
+        if (sqrDistance > CAMERA_MIN_UPDATE_DIST)
         {
             // Lerp to end position
             Vector2 newPosition = Vector2.Lerp(currentPosition, targetPosition, CAMERA_UPDATE_SPEED * Time.deltaTime);
@@ -251,7 +257,7 @@ public class PlayerAiming : MonoBehaviour
         _gunTarget.position = _weaponRestPosition.position;
 
         // Reset the camera position
-        SetCameraPoint(transform.position);
+        _cameraPoint.position = transform.position;
     }
 
     // TODO: Would be cool to color lines differently based on aiming
