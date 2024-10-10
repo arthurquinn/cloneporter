@@ -251,7 +251,7 @@ public class PlayerAiming : MonoBehaviour
         _gunTarget.position = _weaponRestPosition.position;
 
         // Reset the camera position
-        _cameraPoint.position = transform.position;
+        SetCameraPoint(transform.position);
     }
 
     // TODO: Would be cool to color lines differently based on aiming
