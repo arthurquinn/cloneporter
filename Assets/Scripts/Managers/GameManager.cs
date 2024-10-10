@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("Event Channels")]
     [SerializeField] private PlayerEventChannel _playerEvents;
+    [SerializeField] private PauseMenuEventChannel _pauseMenuEvents;
 
     [Header("Scene Name Indexes")]
     [SerializeField] private SceneNames _sceneNames;
@@ -31,11 +30,13 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         _playerEvents.OnCompleteLevel.Subscribe(HandleLevelComplete);
+        _pauseMenuEvents.OnPaused.Subscribe(HandleGamePaused);
     }
 
     private void OnDisable()
     {
         _playerEvents.OnCompleteLevel.Unsubscribe(HandleLevelComplete);
+        _pauseMenuEvents.OnPaused.Unsubscribe(HandleGamePaused);
     }
 
     private void HandleLevelComplete(PlayerCompleteLevelEvent @event)
@@ -44,10 +45,26 @@ public class GameManager : MonoBehaviour
         ChangeScene(nextScene);
     }
 
+    private void HandleGamePaused(PauseMenuPausedEvent @event)
+    {
+        Time.timeScale = @event.IsPaused ? 0 : 1;
+    }
+
     public void ChangeScene(SceneNameIndex scene)
     {
         _currentScene = scene;
         SceneManager.LoadScene(scene.SceneIndex);
+    }
+
+    public void ReloadLevel()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex);
+    }
+
+    public void QuitToMainMenu()
+    {
+        SceneManager.LoadScene(_sceneNames.StartMenu.SceneIndex);
     }
 
     public void QuitGame()

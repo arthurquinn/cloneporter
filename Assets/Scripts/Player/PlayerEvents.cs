@@ -37,7 +37,7 @@ public class PlayerEvents : MonoBehaviour
         _spawnerEvents.OnSpawnPlayer.Subscribe(HandleSpawnPlayer);
         _elevatorEvents.OnElevatorUp.Subscribe(HandleElevatorUp);
         _elevatorEvents.OnElevatorStop.Subscribe(HandleElevatorStop);
-        _teleportTrigger.OnPortalLeave += HandlePortalLeave;
+        _teleportTrigger.OnTeleported += HandleTeleported;
     }
 
     private void OnDisable()
@@ -45,7 +45,7 @@ public class PlayerEvents : MonoBehaviour
         _spawnerEvents.OnSpawnPlayer.Unsubscribe(HandleSpawnPlayer);
         _elevatorEvents.OnElevatorUp.Unsubscribe(HandleElevatorUp);
         _elevatorEvents.OnElevatorStop.Unsubscribe(HandleElevatorStop);
-        _teleportTrigger.OnPortalLeave -= HandlePortalLeave;
+        _teleportTrigger.OnTeleported -= HandleTeleported;
     }
 
     private void HandleSpawnPlayer(SpawnPlayerEvent spawnPlayerEvent)
@@ -68,7 +68,7 @@ public class PlayerEvents : MonoBehaviour
         _playerEvents.OnCompleteLevel.Raise(new PlayerCompleteLevelEvent());
     }
 
-    private void HandlePortalLeave()
+    private void HandleTeleported()
     {
         // Fire off a player teleported event when we leave the portal
         _playerEvents.OnTeleported.Raise(new PlayerTeleportedEvent());

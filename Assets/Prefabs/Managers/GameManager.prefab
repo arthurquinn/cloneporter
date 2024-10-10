@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerEvents: {fileID: 11400000, guid: c7296f729b7437a44a70c9d9155ed28e, type: 2}
+  _pauseMenuEvents: {fileID: 11400000, guid: 2d9e23db4bed2314ab0a4696a2e3a497, type: 2}
   _sceneNames: {fileID: 11400000, guid: 12b49a5db52942949911a6fe15123e63, type: 2}

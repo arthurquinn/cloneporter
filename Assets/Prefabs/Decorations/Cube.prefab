@@ -182,6 +182,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bounds: {fileID: 3850590127201346992}
+  _portalLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &9118752108087396147
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,14 +9,16 @@ public class TeleportTrigger : MonoBehaviour
     [Tooltip("The bounds of the object that will be teleported.")]
     [SerializeField] private Collider2D _bounds;
 
-    public UnityAction OnPortalLeave { get; set; }
+    [Tooltip("The portal layer.")]
+    [SerializeField] private LayerMask _portalLayer;
+
+    public UnityAction OnTeleported { get; set; }
 
     private Rigidbody2D _rb;
 
-    private const float PORTAL_TIMEOUT = 0.1f;
-    private float _portalTimeoutTimer;
-
     private Vector2 _lastFixedPosition;
+
+    private bool _didTeleport;
 
     private void Start()
     {
@@ -25,9 +27,6 @@ public class TeleportTrigger : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Decrease timer
-        _portalTimeoutTimer -= Time.fixedDeltaTime;
-
         // Set last fixed position
         _lastFixedPosition = _rb.position;
     }
@@ -35,13 +34,9 @@ public class TeleportTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         IPortal portal = collision.GetComponent<IPortal>();
-        if (portal != null)
+        if (portal != null && !_didTeleport)
         {
-            // Do not port if we are within the portal timeout
-            if (_portalTimeoutTimer < 0)
-            {
-                HandleEnteredPortal(portal);
-            }
+            HandleEnteredPortal(portal);
         }
     }
 
@@ -55,31 +50,50 @@ public class TeleportTrigger : MonoBehaviour
         // Use portal interface to apply port to our rigidbody
         portal.ApplyPort(entryRay, _rb, _bounds.bounds);
 
-        // Set the portal timeout
-        _portalTimeoutTimer = PORTAL_TIMEOUT;
+        // Raise the portal leave portal event after fixed update
+        StartCoroutine(RaiseTeleportedEvent());
 
-        // Raise the portal leave event next frame
-        StartCoroutine(RaisePortalLeaveEvent());
+        // Start coroutine to check when we left exit portal
+        StartCoroutine(WaitForExitPortal());
     }
 
-    private IEnumerator RaisePortalLeaveEvent()
+    private IEnumerator WaitForExitPortal()
     {
-        yield return new WaitForFixedUpdate();
-        if (OnPortalLeave != null)
+        // Set our did teleport flag
+        _didTeleport = true;
+
+        // Convert our bounds into a square for better checking
+        float maxSide = Mathf.Max(_bounds.bounds.size.x, _bounds.bounds.size.y);
+        Vector2 boxSize = new Vector2(maxSide, maxSide);
+
+        while (_didTeleport)
         {
-            OnPortalLeave();
+            // Check each fixed update
+            yield return new WaitForFixedUpdate();
+
+            if (CheckDidExitPortal(boxSize))
+            {
+                // If we exited the portal set our flag to false
+                _didTeleport = false;
+            }
         }
     }
 
-    //private void SetEnteredPortal(IPortal portal)
-    //{
-    //    _didEnterPortal = true;
-    //    _enteredPortal = portal;
-    //}
+    private bool CheckDidExitPortal(Vector2 boxSize)
+    {
+        // Check overlap box for when our bounds leaves the portal
+        Collider2D overlap = Physics2D.OverlapBox(_bounds.bounds.center, boxSize, 0, _portalLayer);
 
-    //private void ClearEnteredPortal()
-    //{
-    //    _didEnterPortal = false;
-    //    _enteredPortal = null;
-    //}
+        // If we overlap nothing than we fully exited the exit portal
+        return overlap == null;
+    }
+
+    private IEnumerator RaiseTeleportedEvent()
+    {
+        yield return new WaitForFixedUpdate();
+        if (OnTeleported != null)
+        {
+            OnTeleported();
+        }
+    }
 }

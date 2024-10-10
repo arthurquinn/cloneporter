@@ -157,7 +157,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: GroundTile
+  - name: ReflectTile
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -168,7 +168,7 @@ ScriptedImporter:
       y: 4
       width: 64
       height: 64
-    spriteID: dab19b69833ebea44b8b44126fbf5246
+    spriteID: 6352deb33299cd94cb3d8d8a8303caa2
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -177,8 +177,8 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 2, y: 3}
-    spritePosition: {x: 64, y: 384}
-  - name: PanelTile
+    spritePosition: {x: 192, y: 384}
+  - name: GroundTile
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -189,7 +189,7 @@ ScriptedImporter:
       y: 76
       width: 64
       height: 64
-    spriteID: 8b4b1ba9d1acec244a61d95e9f5f1f58
+    spriteID: dab19b69833ebea44b8b44126fbf5246
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -198,6 +198,27 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 2, y: 75}
+    spritePosition: {x: 64, y: 384}
+  - name: PanelTile
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 148
+      width: 64
+      height: 64
+    spriteID: 8b4b1ba9d1acec244a61d95e9f5f1f58
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2, y: 147}
     spritePosition: {x: 128, y: 384}
   characterData:
     bones: []
@@ -271,13 +292,23 @@ ScriptedImporter:
   resliceFromLayer: 0
   mosaicPSDLayers: []
   rigPSDLayers:
+  - name: ReflectTile
+    spriteName: ReflectTile
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 6352deb33299cd94cb3d8d8a8303caa2
+    layerID: 9
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
   - name: GroundTile
     spriteName: GroundTile
     isGroup: 0
     parentIndex: -1
     spriteID: dab19b69833ebea44b8b44126fbf5246
     layerID: 3
-    mosaicPosition: {x: 4, y: 4}
+    mosaicPosition: {x: 4, y: 76}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -287,7 +318,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: 8b4b1ba9d1acec244a61d95e9f5f1f58
     layerID: 6
-    mosaicPosition: {x: 4, y: 76}
+    mosaicPosition: {x: 4, y: 148}
     flatten: 0
     isImported: 1
     isVisible: 1

@@ -156,7 +156,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
         _input.Player.Jump.Enable();
         _input.Player.Jump.performed += HandleJumpInput;
 
-        _teleportTrigger.OnPortalLeave += HandlePortalLeave;
+        _teleportTrigger.OnTeleported += HandleTeleported;
     }
 
     private void OnDisable()
@@ -166,7 +166,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
         _input.Player.Jump.performed -= HandleJumpInput;
         _input.Player.Jump.Disable();
 
-        _teleportTrigger.OnPortalLeave -= HandlePortalLeave;
+        _teleportTrigger.OnTeleported -= HandleTeleported;
     }
 
     private void Start()
@@ -304,7 +304,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
         _lastJumpInput = _stats.jumpInputBufferTime;
     }
 
-    private void HandlePortalLeave()
+    private void HandleTeleported()
     {
         TransitionToState(_leavePortalState);
     }

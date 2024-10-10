@@ -90,3 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3547f7ccc499a4794045515a13ced6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bounds: {fileID: 0}
+  _portalLayer:
+    serializedVersion: 2
+    m_Bits: 256

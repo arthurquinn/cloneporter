@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -59,11 +57,11 @@ namespace Cloneporter.UI
             Vector2 direction = _input.UI.Navigate.ReadValue<Vector2>();
             if (direction == Vector2.up)
             {
-                ChangeCurrentIndex(1);
+                ChangeCurrentIndex(-1);
             }
             else if (direction == Vector2.down)
             {
-                ChangeCurrentIndex(-1);
+                ChangeCurrentIndex(1);
             }
 
             SelectCurrentIndex();
@@ -103,8 +101,15 @@ namespace Cloneporter.UI
         private void ChangeCurrentIndex(int value)
         {
             _currentIndex += value;
-            _currentIndex %= _menuItems.Length;
-            _currentIndex = Mathf.Abs(_currentIndex);
+            if (_currentIndex == -1)
+            {
+                _currentIndex = _menuItems.Length - 1;
+            }
+            else
+            {
+                _currentIndex %= _menuItems.Length;
+                _currentIndex = Mathf.Abs(_currentIndex);
+            }
         }
 
         private void SetIndexes()
