@@ -25,7 +25,30 @@ public class PlayerMovementLeavePortalState : IPlayerMovementState
 
     public void FixedUpdate()
     {
-        _controller.SetMovement(_controller.Stats.accelAfterPortal, _controller.Stats.deccelAfterPortal);
+        if (_controller.IsMoving)
+        {
+            float targetVelocity = _controller.MoveInput.x * _controller.Stats.runMaxSpeed;
+            float accelRate = (Mathf.Abs(targetVelocity) > 0.01f) ?
+                _controller.Stats.runAccelAmount * _controller.Stats.accelAfterPortal :
+                _controller.Stats.runDeccelAmount * _controller.Stats.deccelAfterPortal;
+            float velocityDiff = targetVelocity - _controller.Rigidbody2D.velocity.x;
+
+            if (ShouldConserveMomentum(targetVelocity))
+            {
+                accelRate = 0;
+            }
+
+            float movement = velocityDiff * accelRate;
+
+            _controller.Rigidbody2D.AddForce(movement * Vector2.right, ForceMode2D.Force);
+        }
+    }
+
+    private bool ShouldConserveMomentum(float targetVelocity)
+    {
+        return _controller.Stats.doConserveMomentum && // If we should conserve momentum
+            Mathf.Abs(_controller.Rigidbody2D.velocity.x) > Mathf.Abs(targetVelocity) && // and our movement is faster than our max move speed
+            Mathf.Sign(_controller.Rigidbody2D.velocity.x) == Mathf.Sign(targetVelocity);  // and the movement is in the same direction
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
