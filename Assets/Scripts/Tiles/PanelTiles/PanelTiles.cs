@@ -168,8 +168,12 @@ public class PanelTiles : MonoBehaviour, IPortalGround
             _activeTealTiles = collisionTiles;
         }
 
-        // Disable the collision on the new tiles
-        DisableTileCollision(collisionTiles);
+        // Do not disable collision unless both portals are placed
+        if (_activePurpleTiles.Length > 0 && _activeTealTiles.Length > 0)
+        {
+            DisableTileCollision(_activePurpleTiles);
+            DisableTileCollision(_activeTealTiles);
+        }
     }
 
     private Vector3Int[] GetCollisionTilesForPlacement(PortalPlacement placement)
