@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class BurnoutReceiverController : MonoBehaviour
 {
-    [Header("References")]
+    [Header("Event Channels")]
+    [SerializeField] private BurnoutEventChannel _burnoutEvents;
 
+    [Header("References")]
     [Tooltip("The receiver effect to activate when a laser makes contact.")]
     [SerializeField] private GameObject _receiverEnergyField;
 
@@ -30,10 +32,14 @@ public class BurnoutReceiverController : MonoBehaviour
     private void HandleLaserEnter()
     {
         _receiverEnergyField.SetActive(true);
+        _burnoutEvents.OnActivationChanged.Raise(
+            new BurnoutReceiverActivationEvent(name, BurnoutReceiverActivationType.Activated));
     }
 
     private void HandleLaserExit()
     {
         _receiverEnergyField.SetActive(false);
+        _burnoutEvents.OnActivationChanged.Raise(
+            new BurnoutReceiverActivationEvent(name, BurnoutReceiverActivationType.Deactivated));
     }
 }

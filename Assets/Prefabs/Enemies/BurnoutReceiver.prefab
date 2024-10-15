@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479f8ad4a1024924db891a5ab5001e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _burnoutEvents: {fileID: 11400000, guid: 70520b7032284604f9e22e93ad31b3c8, type: 2}
   _receiverEnergyField: {fileID: 1979436089399446061}
   _laserActivator: {fileID: 8103427264483303343}
 --- !u!50 &7349820414498888600
