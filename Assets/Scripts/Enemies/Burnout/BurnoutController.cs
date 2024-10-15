@@ -77,11 +77,13 @@ public class BurnoutController : MonoBehaviour
                 LayerMask layerMask = _laserCollisionMask;
                 if (currentLine != 0)
                 {
+                    // Bitwise operation to remove portal layer from layer mask
                     layerMask &= ~_portalMask;
                 }
 
                 // Check if we hit a collider
-                RaycastHit2D hit = Physics2D.Raycast(lineOrigin, lineOrientation, _maxLaserDistance, layerMask);
+                bool initialLine = currentLine == 0;
+                RaycastHit2D hit = RaycastLaser(lineOrigin, lineOrientation, layerMask, initialLine);
                 Debug.DrawRay(lineOrigin, lineOrientation, Color.red, 5.0f);
                 if (hit.collider != null)
                 {
@@ -125,6 +127,25 @@ public class BurnoutController : MonoBehaviour
                 }
             } 
         }
+    }
+
+    private RaycastHit2D RaycastLaser(Vector2 origin, Vector2 direction, LayerMask layerMask, bool initialLaser)
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(origin, direction, _maxLaserDistance, layerMask);
+
+        // If this is our first laser, ignore the first collision (which will be with this burnout object itself
+        if (initialLaser && hits.Length > 1)
+        {
+            return hits[1];
+        }
+
+        // Otherwise return the first hit if any
+        if (hits.Length > 0)
+        {
+            return hits[0];
+        }
+
+        return new RaycastHit2D();
     }
 
     private void ClearPositions()
