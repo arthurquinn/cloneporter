@@ -8,6 +8,7 @@ public class SceneNames : ScriptableObject
     public SceneNameIndex StartMenu;
     public SceneNameIndex Level01;
     public SceneNameIndex Level02;
+    public SceneNameIndex Level03;
 
     // TODO: Quick solution- fix this up
     private SceneNameIndex[] _sceneArray;
@@ -19,7 +20,8 @@ public class SceneNames : ScriptableObject
         {
             StartMenu,
             Level01,
-            Level02
+            Level02,
+            Level03,
         };
     }
 }

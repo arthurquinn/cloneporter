@@ -23,4 +23,8 @@ MonoBehaviour:
   Level02:
     SceneIndex: 2
     SceneName: Level_02
+    NextLevelIndex: 3
+  Level03:
+    SceneIndex: 3
+    SceneName: Level_03
     NextLevelIndex: 0
