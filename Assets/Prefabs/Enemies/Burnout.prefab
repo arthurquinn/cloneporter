@@ -49,11 +49,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
       propertyPath: m_LocalPosition.z
@@ -91,6 +91,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: -1065940041992649684, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -1065940041992649684, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 846510425
+      objectReference: {fileID: 0}
     - target: {fileID: 968200168094194008, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -98,6 +106,22 @@ PrefabInstance:
     - target: {fileID: 1769465101944927738, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065051283811077274, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065051283811077274, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 846510425
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359103177601667974, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359103177601667974, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 846510425
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -136,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bba65f0ecc02b44d862ce4740b92e51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _laserOriginPosition: {fileID: 4481986032393750037}
+  _laserOrigin: {fileID: 4481986032393750037}
   _maxLaserDistance: 100
   _laserCollisionMask:
     serializedVersion: 2
@@ -186,7 +210,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &8231174414367807959
 BoxCollider2D:
   m_ObjectHideFlags: 0

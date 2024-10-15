@@ -25,23 +25,21 @@ public class PlayerMovementLeavePortalState : IPlayerMovementState
 
     public void FixedUpdate()
     {
-        if (_controller.IsMoving)
-        {
-            float targetVelocity = _controller.MoveInput.x * _controller.Stats.runMaxSpeed;
-            float accelRate = (Mathf.Abs(targetVelocity) > 0.01f) ?
-                _controller.Stats.runAccelAmount * _controller.Stats.accelAfterPortal :
-                _controller.Stats.runDeccelAmount * _controller.Stats.deccelAfterPortal;
-            float velocityDiff = targetVelocity - _controller.Rigidbody2D.velocity.x;
+        _controller.SetMovement(_controller.Stats.accelAfterPortal, _controller.Stats.deccelAfterPortal);
+        //float targetVelocity = _controller.MoveInput.x * _controller.Stats.runMaxSpeed;
+        //float accelRate = (Mathf.Abs(targetVelocity) > 0.01f) ?
+        //    _controller.Stats.runAccelAmount * _controller.Stats.accelAfterPortal :
+        //    _controller.Stats.runDeccelAmount * _controller.Stats.deccelAfterPortal;
+        //float velocityDiff = targetVelocity - _controller.Rigidbody2D.velocity.x;
 
-            if (ShouldConserveMomentum(targetVelocity))
-            {
-                accelRate = 0;
-            }
+        //if (ShouldConserveMomentum(targetVelocity))
+        //{
+        //    accelRate = 0;
+        //}
 
-            float movement = velocityDiff * accelRate;
+        //float movement = velocityDiff * accelRate;
 
-            _controller.Rigidbody2D.AddForce(movement * Vector2.right, ForceMode2D.Force);
-        }
+        //_controller.Rigidbody2D.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }
 
     private bool ShouldConserveMomentum(float targetVelocity)

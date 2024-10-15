@@ -6,8 +6,11 @@ using UnityEngine.Events;
 
 public class BurnoutController : MonoBehaviour
 {
+    [Header("References")]
+    [Tooltip("The transform that represents the origin of our laser.")]
+    [SerializeField] private Transform _laserOrigin;
+
     [Header("Laser Stats")]
-    [SerializeField] private Transform _laserOriginPosition;
     [SerializeField] private float _maxLaserDistance;
     [SerializeField] private LayerMask _laserCollisionMask;
     [SerializeField] private LayerMask _portalMask;
@@ -20,8 +23,8 @@ public class BurnoutController : MonoBehaviour
 
     private Vector2 _orientation;
 
-    private const int MAX_LINES = 2;
-    private const int MAX_POSITIONS = 8;
+    private const int MAX_LINES = 2; // Since there is only one portal pair, we can have a max of two lines
+    private const int MAX_POSITIONS = 8; // For now assume a maximum of 8 bounces once we implement reflections
     private Vector3[][] _laserLines;
 
     private void Awake()
@@ -60,7 +63,7 @@ public class BurnoutController : MonoBehaviour
     private void TracePath()
     {
         // Initialize line origin as the laser origin position
-        Vector2 lineOrigin = _laserOriginPosition.position;
+        Vector2 lineOrigin = _laserOrigin.position;
         Vector2 lineOrientation = _orientation;
 
         // Iterate over all possible lines
@@ -106,6 +109,7 @@ public class BurnoutController : MonoBehaviour
                         Ray2D laserRay = new Ray2D(lineOrigin, lineOrientation);
                         attackable.LaserAttack(_attackStats, laserRay);
                     }
+
 
                     // TODO: Check for surface reflections
 
