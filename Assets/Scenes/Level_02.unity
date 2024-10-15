@@ -955,6 +955,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1546530168}
     m_Modifications:
     - target: {fileID: 3680735388017236368, guid: c4d3daaabc9d9fd4081e6b0d6cf43bfa, type: 3}
+      propertyPath: _doorMap
+      value: 
+      objectReference: {fileID: 11400000, guid: 3fe3cd4c5f3805d48a04e22ca8fc1999, type: 2}
+    - target: {fileID: 3680735388017236368, guid: c4d3daaabc9d9fd4081e6b0d6cf43bfa, type: 3}
       propertyPath: _floorSwitchMap
       value: 
       objectReference: {fileID: 11400000, guid: d006182d8cfa4234092600ecce0dab05, type: 2}
@@ -1134,6 +1138,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1546530168}
     m_Modifications:
+    - target: {fileID: 3680735388017236368, guid: c4d3daaabc9d9fd4081e6b0d6cf43bfa, type: 3}
+      propertyPath: _doorMap
+      value: 
+      objectReference: {fileID: 11400000, guid: 3fe3cd4c5f3805d48a04e22ca8fc1999, type: 2}
     - target: {fileID: 3680735388017236368, guid: c4d3daaabc9d9fd4081e6b0d6cf43bfa, type: 3}
       propertyPath: _floorSwitchMap
       value: 
@@ -2221,6 +2229,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1546530168}
     m_Modifications:
     - target: {fileID: 3680735388017236368, guid: c4d3daaabc9d9fd4081e6b0d6cf43bfa, type: 3}
+      propertyPath: _doorMap
+      value: 
+      objectReference: {fileID: 11400000, guid: 3fe3cd4c5f3805d48a04e22ca8fc1999, type: 2}
+    - target: {fileID: 3680735388017236368, guid: c4d3daaabc9d9fd4081e6b0d6cf43bfa, type: 3}
       propertyPath: _floorSwitchMap
       value: 
       objectReference: {fileID: 11400000, guid: d006182d8cfa4234092600ecce0dab05, type: 2}
@@ -2922,6 +2934,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1546530168}
     m_Modifications:
+    - target: {fileID: 3680735388017236368, guid: c4d3daaabc9d9fd4081e6b0d6cf43bfa, type: 3}
+      propertyPath: _doorMap
+      value: 
+      objectReference: {fileID: 11400000, guid: 3fe3cd4c5f3805d48a04e22ca8fc1999, type: 2}
     - target: {fileID: 3680735388017236368, guid: c4d3daaabc9d9fd4081e6b0d6cf43bfa, type: 3}
       propertyPath: _floorSwitchMap
       value: 
