@@ -53,7 +53,7 @@ Material:
     - _Distortion: 10
     - _LaserSmoothness: 12
     - _LaserThickness: 80
-    - _Speed: 4
+    - _Speed: 6
     m_Colors:
     - _Color: {r: 2.270603, g: 0.21398354, b: 0.287025, a: 0}
     - _LaserSpeed: {r: -1, g: 0, b: 0, a: 0}

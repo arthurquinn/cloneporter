@@ -16,6 +16,6 @@ MonoBehaviour:
   - DoorID: Door_01
     ActivatorKeys:
     - FloorSwitch_01
-    - BurnoutReceiver_01
   - DoorID: Door_02
-    ActivatorKeys: []
+    ActivatorKeys:
+    - BurnoutReceiver_01
