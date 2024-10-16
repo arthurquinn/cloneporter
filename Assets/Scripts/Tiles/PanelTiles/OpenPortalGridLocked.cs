@@ -22,8 +22,11 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
             placementTiles = GetVerticalPlacementTiles(cellPosition, entry);
             if (placementTiles != null)
             {
+                // Get the center cell of the placement tiles
+                Vector3Int centerCell = placementTiles[placementTiles.Length / 2];
+
                 // Get the cell centered target location for the portal
-                Vector2 cellCenterWorld = _portalGround.Tilemap.GetCellCenterWorld(cellPosition);
+                Vector2 cellCenterWorld = _portalGround.Tilemap.GetCellCenterWorld(centerCell);
 
                 // Return the portal placement for this portal
                 return new PortalPlacement(cellCenterWorld, GetVerticalOrientation(entry.direction), placementTiles);
@@ -33,8 +36,11 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
             placementTiles = GetHorizontalPlacementTiles(cellPosition, entry);
             if (placementTiles != null)
             {
+                // Get the center cell of the placement tiles
+                Vector3Int centerCell = placementTiles[placementTiles.Length / 2];
+
                 // Get the cell centered target location for the portal
-                Vector2 cellCenterWorld = _portalGround.Tilemap.GetCellCenterWorld(cellPosition);
+                Vector2 cellCenterWorld = _portalGround.Tilemap.GetCellCenterWorld(centerCell);
 
                 // Return the portal placement for this portal
                 return new PortalPlacement(cellCenterWorld, GetHorizontalOrientation(entry.direction), placementTiles);
@@ -52,16 +58,56 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         int portalTileHeight = Mathf.CeilToInt(_portalGround.PortalLength / _portalGround.Tilemap.cellSize.y);
         Debug.AssertFormat(portalTileHeight % 2 == 1, "Portal of length {0} cannot be centered on tiles", _portalGround.PortalLength);
 
-        // Create array to store the tiles that would be affected
-        Vector3Int[] affectedTiles = new Vector3Int[portalTileHeight];
-
         // Calculate how many tiles up and down we will need to check
         int tileExtents = (portalTileHeight - 1) / 2;
         int startTileOffset = -tileExtents;
 
         // Get the empty direction to check
         Vector3Int emptyDirection = GetVerticalEmptyDirection(entry.direction);
-        
+
+        // Iterate the tiles for potential vertical placement
+        Vector3Int[] affectedTiles = IterateVerticalPlacementTiles(startTileOffset, tileExtents, cellPosition, emptyDirection, portalTileHeight);
+
+        // If we couldn't find a valid spot in the center, try the extents
+        // This will let us "nudge" the portal a few spaces over if there is a valid position near the edge of a panel/ground border
+        if (affectedTiles == null)
+        {
+            for (int i = 0; i < tileExtents; i++)
+            {
+                // The extent offset to check
+                int extentOffset = i + 1;
+
+                // Check the up extent
+                Vector3Int upExtentCell = cellPosition + (extentOffset * Vector3Int.up);
+                affectedTiles = IterateVerticalPlacementTiles(startTileOffset, tileExtents, upExtentCell, emptyDirection, portalTileHeight);
+
+                // If valid we can break here
+                if (affectedTiles != null)
+                {
+                    break;
+                }
+
+                // Check the down extent
+                Vector3Int downExtentCell = cellPosition + (extentOffset * Vector3Int.down);
+                affectedTiles = IterateVerticalPlacementTiles(startTileOffset, tileExtents, downExtentCell, emptyDirection, portalTileHeight);
+
+                // If valid we can break here
+                if (affectedTiles != null)
+                {
+                    break;
+                }
+            }
+        }
+
+        // Return the affected tiles if any (can be null)
+        return affectedTiles;
+    }
+
+    private Vector3Int[] IterateVerticalPlacementTiles(int startTileOffset, int tileExtents, Vector3Int cellPosition, Vector3Int emptyDirection, int portalTileHeight)
+    {
+        // Create array to store the tiles that would be affected
+        Vector3Int[] affectedTiles = new Vector3Int[portalTileHeight];
+
         // Check all tiles needed to hold the portal above and below the center point (where they shot)
         // For example if our tile height is 9, then start tile offset is -4 (i.e. we check 4 below, the middle, then 4 above)
         for (int tileOffset = startTileOffset; tileOffset <= tileExtents; tileOffset++)
@@ -85,7 +131,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
             }
         }
 
-        // We checked all positions and all were valid, return placement tiles
+        // Return affected tiles
         return affectedTiles;
     }
 
@@ -126,11 +172,51 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         int tileExtents = (portalTileHeight - 1) / 2;
         int startTileOffset = -tileExtents;
 
-        // Create array to store the tiles that would be affected
-        Vector3Int[] affectedTiles = new Vector3Int[portalTileHeight];
-
         // Get the empty direction to check
         Vector3Int emptyDirection = GetHorizontalEmptyDirection(entry.direction);
+
+        // Iterate through and check the placement tiles
+        Vector3Int[] affectedTiles = IterateHorizontalPlacementTiles(startTileOffset, tileExtents, cellPosition, emptyDirection, portalTileHeight);
+
+        // If we couldn't find a valid spot in the center, try the extents
+        // This will let us "nudge" the portal a few spaces over if there is a valid position near the edge of a panel/ground border
+        if (affectedTiles == null)
+        {
+            for (int i = 0; i < tileExtents; i++)
+            {
+                // The extent offset to check
+                int extentOffset = i + 1;
+
+                // Check the right extent
+                Vector3Int rightExtentCell = cellPosition + (extentOffset * Vector3Int.right);
+                affectedTiles = IterateHorizontalPlacementTiles(startTileOffset, tileExtents, rightExtentCell, emptyDirection, portalTileHeight);
+
+                // If valid we can break here
+                if (affectedTiles != null)
+                {
+                    break;
+                }
+
+                // Check the left extent
+                Vector3Int leftExtentCell = cellPosition + (extentOffset * Vector3Int.left);
+                affectedTiles = IterateHorizontalPlacementTiles(startTileOffset, tileExtents, leftExtentCell, emptyDirection, portalTileHeight);
+
+                // If valid we can break here
+                if (affectedTiles != null)
+                {
+                    break;
+                }
+            }
+        }
+
+        // Return the affected tiles if any (can be null)
+        return affectedTiles;
+    }
+
+    private Vector3Int[] IterateHorizontalPlacementTiles(int startTileOffset, int tileExtents, Vector3Int cellPosition, Vector3Int emptyDirection, int portalTileHeight)
+    {
+        // Create array to store the tiles that would be affected
+        Vector3Int[] affectedTiles = new Vector3Int[portalTileHeight];
 
         // Check all tiles needed to hold the portal to the left and right of the center point (where they shot)
         // For example if our tile height is 9, then start tile offset is -4 (i.e. we check 4 left, the middle, then 4 right)
@@ -155,7 +241,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
             }
         }
 
-        // We checked all positions and all were valid, return the tiles affected
+        // Return the affected tiles
         return affectedTiles;
     }
 
