@@ -20,7 +20,7 @@ public struct PortalPlacement
 
 public interface IOpenPortalAlgorithm
 {
-    PortalPlacement OpenPortal(Ray2D entry);
+    PortalPlacement OpenPortal(Ray2D entry, PortalColor color);
 }
 
 public interface IPortalGround
@@ -28,6 +28,7 @@ public interface IPortalGround
     public Tilemap Tilemap { get; }
     public Tilemap Ground { get; }
     public float PortalLength { get; }
+    public LayerMask PortalLayer { get; }
 }
 
 public enum OpenPortalAlgorithmType
@@ -63,6 +64,7 @@ public class PanelTiles : MonoBehaviour, IPortalGround
     public Tilemap Tilemap { get { return _tilemap; } }
     public Tilemap Ground { get { return _groundTilemap; } }
     public float PortalLength { get { return _portalLength; } }
+    public LayerMask PortalLayer { get { return _portalLayer; } }
 
     private void Awake()
     {
@@ -104,27 +106,21 @@ public class PanelTiles : MonoBehaviour, IPortalGround
     private void HandlePortalGunFired(PlayerPortalGunFireEvent portalGunFiredEvent)
     {
         // If we returned a valid portal placement position, then open the portal
-        PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(portalGunFiredEvent.AimRay);
+        PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(portalGunFiredEvent.AimRay, portalGunFiredEvent.PortalColor);
         if (!portalPlacement.Position.Equals(Vector2.negativeInfinity))
         {
-            if (!IsOverlapPortal(portalPlacement, portalGunFiredEvent.PortalColor))
-            {
-                OpenPortalForColor(portalGunFiredEvent.PortalColor, portalPlacement);
-                UpdateTileCollision(portalGunFiredEvent.PortalColor, portalPlacement);
-            }
+            OpenPortalForColor(portalGunFiredEvent.PortalColor, portalPlacement);
+            UpdateTileCollision(portalGunFiredEvent.PortalColor, portalPlacement);
         }
     }
 
     public void OpenPortalManual(PortalColor color, Ray2D manualRay)
     {
-        PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(manualRay);
+        PortalPlacement portalPlacement = _openPortalAlgorithm.OpenPortal(manualRay, color);
         if (!portalPlacement.Position.Equals(Vector2.negativeInfinity))
         {
-            if (!IsOverlapPortal(portalPlacement, color))
-            {
-                OpenPortalForColor(color, portalPlacement);
-                UpdateTileCollision(color, portalPlacement);
-            }
+            OpenPortalForColor(color, portalPlacement);
+            UpdateTileCollision(color, portalPlacement);
         }
     }
 
@@ -238,94 +234,5 @@ public class PanelTiles : MonoBehaviour, IPortalGround
                 _groundTilemap.SetColliderType(tiles[i], Tile.ColliderType.Grid);
             }
         }
-    }
-
-    private bool IsOverlapPortal(PortalPlacement placement, PortalColor color)
-    {
-        if (placement.Orientation.x != 0)
-        {
-            return IsOverlapPortalVertical(placement, color);
-        }
-        else
-        {
-            return IsOverlapPortalHorizontal(placement, color);
-        }
-    }
-
-    private bool IsOverlapPortalHorizontal(PortalPlacement placement, PortalColor color)
-    {
-        // Get the middle tile
-        int middleIndex = placement.AffectedTiles.Length / 2;
-        Vector3Int middleTile = placement.AffectedTiles[middleIndex];
-        Vector2 middleTileWorld = _tilemap.GetCellCenterWorld(middleTile);
-
-        // Calculate raycast distance
-        float distance = _portalLength / 2 + _tilemap.cellSize.x / 2;
-
-        // Check raycasts
-        RaycastHit2D[] rightHit = Physics2D.RaycastAll(middleTileWorld, Vector2.right, distance, _portalLayer);
-        Debug.DrawLine(middleTileWorld, middleTileWorld + distance * Vector2.right, Color.yellow, 5.0f);
-        if (CheckRayPortalCollision(rightHit, color))
-        {
-            return true;
-        }
-
-        // Check raycasts
-        RaycastHit2D[] leftHit = Physics2D.RaycastAll(middleTileWorld, Vector2.left, distance, _portalLayer);
-        Debug.DrawLine(middleTileWorld, middleTileWorld + distance * Vector2.left, Color.yellow, 5.0f);
-        if (CheckRayPortalCollision(leftHit, color))
-        {
-            return true;
-        }
-
-        // No portal found, return false
-        return false;
-    }
-
-    private bool IsOverlapPortalVertical(PortalPlacement placement, PortalColor color)
-    {
-        // Get the middle tile
-        int middleIndex = placement.AffectedTiles.Length / 2;
-        Vector3Int middleTile = placement.AffectedTiles[middleIndex];
-        Vector2 middleTileWorld = _tilemap.GetCellCenterWorld(middleTile);
-
-        // Calculate raycast distance
-        float distance = _portalLength / 2 + _tilemap.cellSize.y / 2;
-
-        // Check raycasts
-        RaycastHit2D[] upHit = Physics2D.RaycastAll(middleTileWorld, Vector2.up, distance, _portalLayer);
-        Debug.DrawLine(middleTileWorld, middleTileWorld + distance * Vector2.up, Color.yellow, 5.0f);
-        if (CheckRayPortalCollision(upHit, color))
-        {
-            return true;
-        }
-
-
-        RaycastHit2D[] downHit = Physics2D.RaycastAll(middleTileWorld, Vector2.down, distance, _portalLayer);
-        Debug.DrawLine(middleTileWorld, middleTileWorld + distance * Vector2.down, Color.yellow, 5.0f);
-        if (CheckRayPortalCollision(downHit, color))
-        {
-            return true;
-        }
-
-        // No portal found, return false
-        return false;
-    }
-
-    private bool CheckRayPortalCollision(RaycastHit2D[] hits, PortalColor sameColor)
-    {
-        for (int i = 0; i < hits.Length; i++)
-        {
-            if (hits[i].collider != null)
-            {
-                // Check if it's the same color, if so we are fine
-                IPortal portal = hits[i].collider.GetComponent<IPortal>();
-                if (portal != null && portal.Color != sameColor)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

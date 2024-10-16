@@ -11,7 +11,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         _portalGround = portalGround;
     }
 
-    public PortalPlacement OpenPortal(Ray2D entry)
+    public PortalPlacement OpenPortal(Ray2D entry, PortalColor color)
     {
         Vector3Int[] placementTiles;
 
@@ -19,7 +19,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         if (_portalGround.Tilemap.HasTile(cellPosition))
         {
             // Check if we can place a portal vertically
-            placementTiles = GetVerticalPlacementTiles(cellPosition, entry);
+            placementTiles = GetVerticalPlacementTiles(cellPosition, entry, color);
             if (placementTiles != null)
             {
                 // Get the center cell of the placement tiles
@@ -33,7 +33,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
             }
 
             // Check if we can place a portal horizontally
-            placementTiles = GetHorizontalPlacementTiles(cellPosition, entry);
+            placementTiles = GetHorizontalPlacementTiles(cellPosition, entry, color);
             if (placementTiles != null)
             {
                 // Get the center cell of the placement tiles
@@ -49,7 +49,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         return new PortalPlacement(Vector2.negativeInfinity, Vector2.negativeInfinity, null);
     }
 
-    private Vector3Int[] GetVerticalPlacementTiles(Vector3Int cellPosition, Ray2D entry)
+    private Vector3Int[] GetVerticalPlacementTiles(Vector3Int cellPosition, Ray2D entry, PortalColor color)
     {
         // Get the cell centered target location for the portal
         Vector2 cellCenterWorld = _portalGround.Tilemap.GetCellCenterWorld(cellPosition);
@@ -66,7 +66,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         Vector3Int emptyDirection = GetVerticalEmptyDirection(entry.direction);
 
         // Iterate the tiles for potential vertical placement
-        Vector3Int[] affectedTiles = IterateVerticalPlacementTiles(startTileOffset, tileExtents, cellPosition, emptyDirection, portalTileHeight);
+        Vector3Int[] affectedTiles = IterateVerticalPlacementTiles(startTileOffset, tileExtents, cellPosition, emptyDirection, portalTileHeight, color);
 
         // If we couldn't find a valid spot in the center, try the extents
         // This will let us "nudge" the portal a few spaces over if there is a valid position near the edge of a panel/ground border
@@ -79,7 +79,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
 
                 // Check the up extent
                 Vector3Int upExtentCell = cellPosition + (extentOffset * Vector3Int.up);
-                affectedTiles = IterateVerticalPlacementTiles(startTileOffset, tileExtents, upExtentCell, emptyDirection, portalTileHeight);
+                affectedTiles = IterateVerticalPlacementTiles(startTileOffset, tileExtents, upExtentCell, emptyDirection, portalTileHeight, color);
 
                 // If valid we can break here
                 if (affectedTiles != null)
@@ -89,7 +89,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
 
                 // Check the down extent
                 Vector3Int downExtentCell = cellPosition + (extentOffset * Vector3Int.down);
-                affectedTiles = IterateVerticalPlacementTiles(startTileOffset, tileExtents, downExtentCell, emptyDirection, portalTileHeight);
+                affectedTiles = IterateVerticalPlacementTiles(startTileOffset, tileExtents, downExtentCell, emptyDirection, portalTileHeight, color);
 
                 // If valid we can break here
                 if (affectedTiles != null)
@@ -103,7 +103,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         return affectedTiles;
     }
 
-    private Vector3Int[] IterateVerticalPlacementTiles(int startTileOffset, int tileExtents, Vector3Int cellPosition, Vector3Int emptyDirection, int portalTileHeight)
+    private Vector3Int[] IterateVerticalPlacementTiles(int startTileOffset, int tileExtents, Vector3Int cellPosition, Vector3Int emptyDirection, int portalTileHeight, PortalColor color)
     {
         // Create array to store the tiles that would be affected
         Vector3Int[] affectedTiles = new Vector3Int[portalTileHeight];
@@ -117,7 +117,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
 
             // Check if the tile at the current offset is a valid position to hold a portal
             Vector2 checkTileWorldPosition = _portalGround.Tilemap.GetCellCenterWorld(checkTile);
-            if (IsValidPosition(checkTile, emptyDirection))
+            if (IsValidPosition(checkTile, emptyDirection, color))
             {
                 // Store the checked tile in our affected tiles array
                 affectedTiles[tileOffset + tileExtents] = checkTile;
@@ -159,7 +159,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         }
     }
 
-    private Vector3Int[] GetHorizontalPlacementTiles(Vector3Int cellPosition, Ray2D entry)
+    private Vector3Int[] GetHorizontalPlacementTiles(Vector3Int cellPosition, Ray2D entry, PortalColor color)
     {
         // Get the cell centered target location for the portal
         Vector2 cellCenterWorld = _portalGround.Tilemap.GetCellCenterWorld(cellPosition);
@@ -176,7 +176,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         Vector3Int emptyDirection = GetHorizontalEmptyDirection(entry.direction);
 
         // Iterate through and check the placement tiles
-        Vector3Int[] affectedTiles = IterateHorizontalPlacementTiles(startTileOffset, tileExtents, cellPosition, emptyDirection, portalTileHeight);
+        Vector3Int[] affectedTiles = IterateHorizontalPlacementTiles(startTileOffset, tileExtents, cellPosition, emptyDirection, portalTileHeight, color);
 
         // If we couldn't find a valid spot in the center, try the extents
         // This will let us "nudge" the portal a few spaces over if there is a valid position near the edge of a panel/ground border
@@ -189,7 +189,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
 
                 // Check the right extent
                 Vector3Int rightExtentCell = cellPosition + (extentOffset * Vector3Int.right);
-                affectedTiles = IterateHorizontalPlacementTiles(startTileOffset, tileExtents, rightExtentCell, emptyDirection, portalTileHeight);
+                affectedTiles = IterateHorizontalPlacementTiles(startTileOffset, tileExtents, rightExtentCell, emptyDirection, portalTileHeight, color);
 
                 // If valid we can break here
                 if (affectedTiles != null)
@@ -199,7 +199,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
 
                 // Check the left extent
                 Vector3Int leftExtentCell = cellPosition + (extentOffset * Vector3Int.left);
-                affectedTiles = IterateHorizontalPlacementTiles(startTileOffset, tileExtents, leftExtentCell, emptyDirection, portalTileHeight);
+                affectedTiles = IterateHorizontalPlacementTiles(startTileOffset, tileExtents, leftExtentCell, emptyDirection, portalTileHeight, color);
 
                 // If valid we can break here
                 if (affectedTiles != null)
@@ -213,7 +213,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         return affectedTiles;
     }
 
-    private Vector3Int[] IterateHorizontalPlacementTiles(int startTileOffset, int tileExtents, Vector3Int cellPosition, Vector3Int emptyDirection, int portalTileHeight)
+    private Vector3Int[] IterateHorizontalPlacementTiles(int startTileOffset, int tileExtents, Vector3Int cellPosition, Vector3Int emptyDirection, int portalTileHeight, PortalColor color)
     {
         // Create array to store the tiles that would be affected
         Vector3Int[] affectedTiles = new Vector3Int[portalTileHeight];
@@ -227,7 +227,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
 
             // Check if the tile at the current offset is a valid position to hold a portal
             Vector2 checkTileWorldPosition = _portalGround.Tilemap.GetCellCenterWorld(checkTile);
-            if (IsValidPosition(checkTile, emptyDirection))
+            if (IsValidPosition(checkTile, emptyDirection, color))
             {
                 // Store the checked tile in our affected tiles array
                 affectedTiles[tileOffset + tileExtents] = checkTile;
@@ -269,13 +269,40 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
         }
     }
 
-    private bool IsValidPosition(Vector3Int checkTile, Vector3Int emptyDirection)
+    private bool IsValidPosition(Vector3Int checkTile, Vector3Int emptyDirection, PortalColor color)
     {
         bool hasTile = _portalGround.Tilemap.HasTile(checkTile);
         bool hasNeighbor = HasNeighbor(checkTile, emptyDirection);
+        bool hasPortal = HasPortal(checkTile, color);
 
-        // It is a valid position if we have a tile and do not have a neighbor in the empty direction
-        return hasTile && !hasNeighbor;
+        // It is a valid position if we:
+        //   - have a tile and
+        //   - do not have a neighbor in the empty direction and
+        //   - are not overlapping a portal (of a different color)
+        return hasTile && !hasNeighbor && !hasPortal;
+    }
+
+    private bool HasPortal(Vector3Int checkTile, PortalColor openingColor)
+    {
+        // Get the center of the cell
+        Vector2 cellCenter = _portalGround.Tilemap.GetCellCenterWorld(checkTile);
+
+        // Check if it is overlapping a portal
+        Collider2D overlap = Physics2D.OverlapPoint(cellCenter, _portalGround.PortalLayer);
+        if (overlap != null)
+        {
+            // Ignore if the overlapping portal is the color we are trying to place
+            IPortal overlapPortal = overlap.GetComponent<IPortal>();
+            if (overlapPortal != null)
+            {
+                // Return true if we are overlapping a portal of a different color
+                // We can ignore portals of the same color since we are effectively overwriting its placement
+                return overlapPortal.Color != openingColor;
+            }
+        }
+
+        // Return false if we are not overlapping anything
+        return false;
     }
 
     private bool HasNeighbor(Vector3Int cellPosition, Vector3Int neighbor)

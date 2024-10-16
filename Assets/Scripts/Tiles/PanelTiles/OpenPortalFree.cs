@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// WARNING: This code is deprecated. If we want to use this again it will need to be updated.
+
 public class OpenPortalFree : IOpenPortalAlgorithm
 {
     private IPortalGround _portalGround;
@@ -11,7 +13,7 @@ public class OpenPortalFree : IOpenPortalAlgorithm
         _portalGround = portalGround;
     }
 
-    public PortalPlacement OpenPortal(Ray2D entry)
+    public PortalPlacement OpenPortal(Ray2D entry, PortalColor color)
     {
         // TODO: Implement this if needed (not using this algorithm currently)
         Vector3Int[] affectedTiles = new Vector3Int[3];
