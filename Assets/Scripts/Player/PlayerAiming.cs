@@ -17,8 +17,10 @@ public class PlayerAiming : MonoBehaviour
     [SerializeField] private Transform _weaponRestPosition;
     [SerializeField] private LayerMask _targetingLayers;
 
-    [Space(20)]
-
+    [Header("Weapon")]
+    [Tooltip("Used to control targeting beam color.")]
+    [SerializeField] private PlayerWeapon _weapon;
+    [Tooltip("The line renderer of the targeting beam weapon.")]
     [SerializeField] private LineRenderer _lineRenderer;
 
     [Header("Camera Follow Point")]
@@ -260,10 +262,10 @@ public class PlayerAiming : MonoBehaviour
         _cameraPoint.position = transform.position;
     }
 
-    // TODO: Would be cool to color lines differently based on aiming
     private void AimLeftStart(InputAction.CallbackContext context)
     {
         _isAiming = true;
+        _weapon.SetPurpleTargetingBeam();
     }
 
     private void AimLeftEnd(InputAction.CallbackContext context)
@@ -274,6 +276,7 @@ public class PlayerAiming : MonoBehaviour
     private void AimRightStart(InputAction.CallbackContext context)
     {
         _isAiming = true;
+        _weapon.SetTealTargetingBeam();
     }
 
     private void AimRightEnd(InputAction.CallbackContext context)

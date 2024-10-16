@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TargetingBeam
+  m_Name: PurpleTargetingBeam
   m_Shader: {fileID: -6465566751694194690, guid: af421c8937c97d348abd4a16cc36ecc1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -53,5 +53,5 @@ Material:
     - _Distortion: 0.1
     - _Speed: 0.1
     m_Colors:
-    - _Color: {r: 0.43055677, g: 0.76844144, b: 0.33709928, a: 0}
+    - _Color: {r: 0.98833734, g: 0.5485014, b: 0.8175775, a: 0}
   m_BuildTextureStacks: []
