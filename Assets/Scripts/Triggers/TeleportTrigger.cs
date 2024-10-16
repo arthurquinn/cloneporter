@@ -54,10 +54,10 @@ public class TeleportTrigger : MonoBehaviour
         StartCoroutine(RaiseTeleportedEvent());
 
         // Start coroutine to check when we left exit portal
-        StartCoroutine(WaitForExitPortal());
+        StartCoroutine(WaitForExitPortal(portal.Color));
     }
 
-    private IEnumerator WaitForExitPortal()
+    private IEnumerator WaitForExitPortal(PortalColor enterColor)
     {
         // Set our did teleport flag
         _didTeleport = true;
@@ -71,7 +71,7 @@ public class TeleportTrigger : MonoBehaviour
             // Check each fixed update
             yield return new WaitForFixedUpdate();
 
-            if (CheckDidExitPortal(boxSize))
+            if (CheckDidExitPortal(boxSize, enterColor))
             {
                 // If we exited the portal set our flag to false
                 _didTeleport = false;
@@ -79,13 +79,27 @@ public class TeleportTrigger : MonoBehaviour
         }
     }
 
-    private bool CheckDidExitPortal(Vector2 boxSize)
+    private bool CheckDidExitPortal(Vector2 boxSize, PortalColor enterColor)
     {
-        // Check overlap box for when our bounds leaves the portal
-        Collider2D overlap = Physics2D.OverlapBox(_bounds.bounds.center, boxSize, 0, _portalLayer);
+        // Check all portal overlaps
+        // This is important for when portals are placed very close together
+        // We want to consider touching a portal of an opposite color (but not the same color) as fully exited
+        // Any instance of overlapping a portal of the entry color we will consider ourselves not exited
+        Collider2D[] allOverlaps = Physics2D.OverlapBoxAll(_bounds.bounds.center, boxSize, 0, _portalLayer);
+        for (int i = 0; i < allOverlaps.Length; i++)
+        {
+            // If the portal we are overlapping is the same as the enter color
+            // Then we are not fully exited
+            Collider2D overlap = allOverlaps[i];
+            IPortal portal = overlap.GetComponent<IPortal>();
+            if (portal.Color == enterColor)
+            {
+                return false;
+            }
+        }
 
-        // If we overlap nothing than we fully exited the exit portal
-        return overlap == null;
+        // We are not overlapping a portal of the enter color
+        return true;
     }
 
     private IEnumerator RaiseTeleportedEvent()

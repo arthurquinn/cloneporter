@@ -56,7 +56,7 @@ public class OpenPortalGridLocked : IOpenPortalAlgorithm
 
         // Calculate portal height in tiles
         int portalTileHeight = Mathf.CeilToInt(_portalGround.PortalLength / _portalGround.Tilemap.cellSize.y);
-        Debug.AssertFormat(portalTileHeight % 2 == 1, "Portal of length {0} cannot be centered on tiles", _portalGround.PortalLength);
+        Debug.AssertFormat(portalTileHeight % 2 == 1, "Portal of length {0} cannot be centered on tiles", _portalGround.PortalLength); // Portal must be odd length (we want a defined center)
 
         // Calculate how many tiles up and down we will need to check
         int tileExtents = (portalTileHeight - 1) / 2;
