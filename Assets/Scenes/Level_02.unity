@@ -3306,27 +3306,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 342434000302764392, guid: 7a41704a041b03e4a8b655ef08964631, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9140357
+      value: 0.9140353
       objectReference: {fileID: 0}
     - target: {fileID: 342434000302764392, guid: 7a41704a041b03e4a8b655ef08964631, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.4056339
+      value: 0.40563458
       objectReference: {fileID: 0}
     - target: {fileID: 4579600551362710965, guid: 7a41704a041b03e4a8b655ef08964631, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8980807
+      value: 0.8980933
       objectReference: {fileID: 0}
     - target: {fileID: 4579600551362710965, guid: 7a41704a041b03e4a8b655ef08964631, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.4398307
+      value: 0.43980503
       objectReference: {fileID: 0}
     - target: {fileID: 7028440458044176267, guid: 7a41704a041b03e4a8b655ef08964631, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.09
+      value: -10.778519
       objectReference: {fileID: 0}
     - target: {fileID: 7028440458044176267, guid: 7a41704a041b03e4a8b655ef08964631, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.21
+      value: -3.9435935
       objectReference: {fileID: 0}
     - target: {fileID: 7028440458044176267, guid: 7a41704a041b03e4a8b655ef08964631, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3362,11 +3362,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8076351747167801943, guid: 7a41704a041b03e4a8b655ef08964631, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.2833429
+      value: 0.28331628
       objectReference: {fileID: 0}
     - target: {fileID: 8076351747167801943, guid: 7a41704a041b03e4a8b655ef08964631, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.95901865
+      value: 0.9590266
       objectReference: {fileID: 0}
     - target: {fileID: 8161103682964795368, guid: 7a41704a041b03e4a8b655ef08964631, type: 3}
       propertyPath: m_Name
