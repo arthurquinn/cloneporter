@@ -49,13 +49,16 @@ public class PortalController : MonoBehaviour, IPortal
 
     private Ray2D GetExitRay(Ray2D entry)
     {
-        // Calculate out direction
+        // Calculate the out direction
+        Debug.DrawRay(entry.origin, entry.direction, UnityEngine.Color.yellow, 10.0f);
         Vector2 outDirection = Vector2.Reflect(entry.direction, Orientation);
+        Debug.DrawRay(entry.origin, outDirection, UnityEngine.Color.blue, 10.0f);
+
 
         // Calculate and adjust for different rotations between portals
         float angleDiff = Vector2.SignedAngle(Orientation, _linkedPortal.Orientation);
         Quaternion rotationDiff = Quaternion.Euler(0, 0, angleDiff);
-        outDirection = rotationDiff * outDirection;
+        outDirection = rotationDiff* outDirection;
 
         // Round off insignificantly small numbers to cardinal directions
         // This is useful in the case of lasers not looking crooked when exiting portals
@@ -99,20 +102,27 @@ public class PortalController : MonoBehaviour, IPortal
         // Get the exit ray
         Ray2D exitRay = GetExitRay(entry);
 
+        //Debug.DrawRay(entry.origin, entry.direction, UnityEngine.Color.yellow, 10.0f);
+
         // Break the rules for opposite orientations for more fun gameplay
         Vector2 offset = ApplyOffsetAdjustments(exitRay.origin, bounds);
 
+        // Adjust exit ray for smoother movement between portals
+        Ray2D adjustedExitRay = ApplyDirectionAdjustments(exitRay);
+
         // Get the out position
         Vector2 outPosition = (Vector2)_linkedPortal.transform.position + offset;
+
+        Debug.DrawRay(outPosition, adjustedExitRay.direction, UnityEngine.Color.red, 10.0f);
 
         // Apply the port position to our rigibody
         rigidbody.position = outPosition;
 
         // Calculate the exit velocity and apply it to our rigidbody
-        Vector2 exitVelocity = rigidbody.velocity.magnitude * exitRay.direction;
+        Vector2 exitVelocity = rigidbody.velocity.magnitude * adjustedExitRay.direction;
 
         // Handle minor adjustments for player experience (e.g. min velocity out of portal)
-        Vector2 adjustedExitVelocity = ApplyExitForceAdjustments(exitRay, exitVelocity);
+        Vector2 adjustedExitVelocity = ApplyExitForceAdjustments(adjustedExitRay, exitVelocity);
 
         // Apply the force
         Vector2 appliedForce = adjustedExitVelocity - rigidbody.velocity;
@@ -142,6 +152,22 @@ public class PortalController : MonoBehaviour, IPortal
     }
 
     #endregion
+
+    private Ray2D ApplyDirectionAdjustments(Ray2D exitRay)
+    {
+        // Special case of opposite horizontal portals for better movement
+        bool bothHorizontal = Orientation.y != 0 && _linkedPortal.Orientation.y != 0;
+        bool opposite = Orientation.y != _linkedPortal.Orientation.y;
+        if (bothHorizontal && opposite)
+        {
+            // In this case reflect again for better movement
+            Vector2 newDirection = Vector2.Reflect(exitRay.direction, Vector2.right);
+            return new Ray2D(exitRay.origin, newDirection);
+        }
+
+        // Otherwise do nothing
+        return exitRay;
+    }
 
     private Vector2 ApplyOffsetAdjustments(Vector2 offset, Bounds bounds)
     {
