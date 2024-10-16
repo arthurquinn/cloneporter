@@ -75,8 +75,14 @@ public class ItemPickup : MonoBehaviour
     {
         if (_heldItem != null)
         {
-            _heldItem.SetPosition(_holdPosition.position);
+            StartCoroutine(TeleportHeldItem());
         }
+    }
+
+    private IEnumerator TeleportHeldItem()
+    {
+        yield return new WaitForFixedUpdate();
+        _heldItem.SetPosition(_holdPosition.position);
     }
 
     private void HandleItemDropped(HeldItemDroppedEvent @event)
