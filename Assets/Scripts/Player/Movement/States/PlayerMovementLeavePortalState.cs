@@ -40,6 +40,16 @@ public class PlayerMovementLeavePortalState : IPlayerMovementState
         //float movement = velocityDiff * accelRate;
 
         //_controller.Rigidbody2D.AddForce(movement * Vector2.right, ForceMode2D.Force);
+
+        // If we immediately exited to ground
+        if (_controller.IsGrounded && _controller.IsMoving)
+        {
+            _controller.TransitionToState(_controller.RunningState);
+        }
+        else if (_controller.IsGrounded)
+        {
+            _controller.TransitionToState(_controller.IdleState);
+        }
     }
 
     private bool ShouldConserveMomentum(float targetVelocity)
