@@ -13,7 +13,6 @@ public class BurnoutController : MonoBehaviour
     [Header("Laser Stats")]
     [SerializeField] private float _maxLaserDistance;
     [SerializeField] private LayerMask _laserCollisionMask;
-    [SerializeField] private LayerMask _portalMask;
 
     [Header("Events")]
     [SerializeField] private UnityEvent<Vector3[][]> _onLaserPositionsChanged;
@@ -76,17 +75,9 @@ public class BurnoutController : MonoBehaviour
             _laserLines[currentLine][0] = lineOrigin;
             for (int currentPosition = 1; currentPosition < MAX_POSITIONS;)
             {
-                // Remove portal from collision mask if this isn't our first line
-                LayerMask layerMask = _laserCollisionMask;
-                if (currentLine != 0)
-                {
-                    // Bitwise operation to remove portal layer from layer mask
-                    layerMask &= ~_portalMask;
-                }
-
-                // Check if we hit a collider
+                // Check if we hit a collid
                 bool initialLine = currentLine == 0;
-                RaycastHit2D hit = RaycastLaser(lineOrigin, lineOrientation, layerMask, initialLine);
+                RaycastHit2D hit = RaycastLaser(lineOrigin, lineOrientation, _laserCollisionMask, initialLine);
                 Debug.DrawRay(lineOrigin, lineOrientation, Color.red, 5.0f);
                 if (hit.collider != null)
                 {
@@ -138,6 +129,12 @@ public class BurnoutController : MonoBehaviour
 
         // If this is our first laser, ignore the first collision (which will be with this burnout object itself
         if (initialLaser && hits.Length > 1)
+        {
+            return hits[1];
+        }
+
+        // If this is our second laser then ignore the first portal collision (laser will be slightly inside portal)
+        if (!initialLaser && hits.Length > 1)
         {
             return hits[1];
         }
