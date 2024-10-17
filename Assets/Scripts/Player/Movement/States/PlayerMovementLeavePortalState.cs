@@ -26,29 +26,18 @@ public class PlayerMovementLeavePortalState : IPlayerMovementState
     public void FixedUpdate()
     {
         _controller.SetMovement(_controller.Stats.accelAfterPortal, _controller.Stats.deccelAfterPortal);
-        //float targetVelocity = _controller.MoveInput.x * _controller.Stats.runMaxSpeed;
-        //float accelRate = (Mathf.Abs(targetVelocity) > 0.01f) ?
-        //    _controller.Stats.runAccelAmount * _controller.Stats.accelAfterPortal :
-        //    _controller.Stats.runDeccelAmount * _controller.Stats.deccelAfterPortal;
-        //float velocityDiff = targetVelocity - _controller.Rigidbody2D.velocity.x;
 
-        //if (ShouldConserveMomentum(targetVelocity))
-        //{
-        //    accelRate = 0;
-        //}
-
-        //float movement = velocityDiff * accelRate;
-
-        //_controller.Rigidbody2D.AddForce(movement * Vector2.right, ForceMode2D.Force);
-
-        // If we immediately exited to ground
-        if (_controller.IsGrounded && _controller.IsMoving)
+        // If we immediately exited to ground and are not overlapping a portal
+        if (_controller.IsGrounded && !IsOverlappingPortal())
         {
-            _controller.TransitionToState(_controller.RunningState);
-        }
-        else if (_controller.IsGrounded)
-        {
-            _controller.TransitionToState(_controller.IdleState);
+            if (_controller.IsMoving)
+            {
+                _controller.TransitionToState(_controller.RunningState);
+            }
+            else
+            {
+                _controller.TransitionToState(_controller.IdleState);
+            }
         }
     }
 
@@ -61,16 +50,21 @@ public class PlayerMovementLeavePortalState : IPlayerMovementState
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!IsOverlappingPortal())
+        {
+            TransitionToNextState();
+        }
+    }
+
+    private bool IsOverlappingPortal()
+    {
         // Turn player collider into square and use it to check for overlapping portals
         float maxSide = Mathf.Max(_controller.Collider2D.bounds.size.x, _controller.Collider2D.bounds.size.y);
         Vector2 checkSize = new Vector2(maxSide, maxSide);
         Collider2D portalCollider = Physics2D.OverlapBox(_controller.Collider2D.bounds.center, checkSize * .98f, 0.0f, _controller.PortalLayer);
 
-        // We left the portal and collided with anything else
-        if (portalCollider == null)
-        {
-            TransitionToNextState();
-        }
+        // Return true if we are colliding, false otherwise
+        return portalCollider != null;
     }
 
     public void EnterState()

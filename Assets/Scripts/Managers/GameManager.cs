@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene(SceneNameIndex scene)
     {
+        Debug.Log("Changing scenes from " + _currentScene.SceneName + " to " + scene.SceneName);
+
         _currentScene = scene;
         SceneManager.LoadScene(scene.SceneIndex);
     }
