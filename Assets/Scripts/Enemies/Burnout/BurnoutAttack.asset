@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81cfa048ca995444eba5f34db3cb7b99, type: 3}
   m_Name: BurnoutAttack
   m_EditorClassIdentifier: 
-  Damage: 1
+  Damage: 0
+  DamagePerSecond: 20
   KnockbackForce: 40

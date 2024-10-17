@@ -6,5 +6,6 @@ using UnityEngine;
 public class EnemyAttack : ScriptableObject
 {
     public float Damage;
+    public float DamagePerSecond;
     public float KnockbackForce;
 }

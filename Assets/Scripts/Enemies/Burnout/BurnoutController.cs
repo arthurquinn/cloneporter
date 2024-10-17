@@ -50,6 +50,9 @@ public class BurnoutController : MonoBehaviour
     // TODO: Lots of room to optimize here
     private void FixedUpdate()
     {
+        // Update our orientation
+        _orientation = transform.rotation * Vector2.right;
+
         // Clear out old laser positions
         ClearPositions();
 
@@ -157,5 +160,10 @@ public class BurnoutController : MonoBehaviour
                 _laserLines[i][j] = Vector2.zero;
             }
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawRay(_laserOrigin.position, transform.rotation * Vector2.right);
     }
 }
