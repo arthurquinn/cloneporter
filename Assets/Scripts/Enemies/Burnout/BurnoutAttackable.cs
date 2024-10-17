@@ -12,10 +12,16 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
     [Tooltip("The amount of HP regained per second.")]
     [SerializeField] private float _recoveryAmount;
 
+    [Header("Effects")]
+    [Tooltip("The shader material used when damaged.")]
+    [SerializeField] private Material _damagedMaterial;
+
     private SpriteRenderer[] _renderers;
+    private MaterialPropertyBlock[] _propertyBlocks;
 
     private float _recoverTimeout;
     private float _currentHP;
+    private float _currentHPRatio;
 
     private void Awake()
     {
@@ -23,10 +29,30 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
         _currentHP = _maxHP;
     }
 
+    private void Start()
+    {
+        SetupRenderers();
+    }
+
     private void Update()
     {
         RecoverHP();
         SetHPColor();
+    }
+
+    private void SetupRenderers()
+    {
+        // Create material property block array
+        _propertyBlocks = new MaterialPropertyBlock[_renderers.Length];
+
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            // Set the damaged material to all sprite renderers
+            _renderers[i].material = _damagedMaterial;
+
+            // Create a material property block for each renderer
+            _propertyBlocks[i] = new MaterialPropertyBlock();
+        }
     }
 
     private void RecoverHP()
@@ -44,14 +70,26 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
 
     private void SetHPColor()
     {
-        // Calculate the color we should be based on current HP
-        float hpRatio = _currentHP / _maxHP;
-        Color color = Color.Lerp(Color.red, Color.white, hpRatio);
+        // Calc current hp ratio
+        float hpRatio = 1 - (_currentHP / _maxHP);
 
-        // Set the color to our sprite renderers
-        for (int i = 0; i < _renderers.Length; i++)
+        // Only update properties if our ratio changed by a significant amount
+        float ratioDiff = Mathf.Abs(_currentHPRatio - hpRatio);
+        if (ratioDiff > 0.01f)
         {
-            _renderers[i].color = color;
+            Debug.Log("Changing for ratio: " + hpRatio);
+
+            // Set proprties on each renderer based on current hp ratio
+            for (int i = 0; i < _renderers.Length; i++)
+            {
+                _renderers[i].GetPropertyBlock(_propertyBlocks[i]);
+                _propertyBlocks[i].SetFloat("_ColorAmount", hpRatio);
+                _propertyBlocks[i].SetFloat("_EffectAmount", hpRatio);
+                _renderers[i].SetPropertyBlock(_propertyBlocks[i]);
+            }
+
+            // Set the current ratio to avoid uneccesary updates
+            _currentHPRatio = hpRatio;
         }
     }
 
