@@ -23,8 +23,24 @@ public class BurnoutReceiverActivationEventChannel : AbstractEventChannel<Burnou
 
 }
 
+public struct BurnoutDeathEvent
+{
+    public string Name;
+
+    public BurnoutDeathEvent(string name)
+    {
+        Name = name;
+    }
+}
+
+public class BurnoutDeathEventChannel : AbstractEventChannel<BurnoutDeathEvent>
+{
+
+}
+
 [CreateAssetMenu(fileName = "BurnoutEventChannel", menuName = "EventChannels/BurnoutEventChannel")]
 public class BurnoutEventChannel : ScriptableObject
 {
     public BurnoutReceiverActivationEventChannel OnActivationChanged { get; private set; } = new BurnoutReceiverActivationEventChannel();
+    public BurnoutDeathEventChannel OnDeath { get; private set; } = new BurnoutDeathEventChannel();
 }

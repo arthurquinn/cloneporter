@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DoorController : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class DoorController : MonoBehaviour
     [Header("Event Channels")]
     [SerializeField] private FloorSwitchEventChannel _floorSwitchChannel;
     [SerializeField] private BurnoutEventChannel _burnoutEventChannel;
+    [SerializeField] private DoorEventChannel _doorChannel;
+
+    public UnityAction OnOpen { get; set; }
+    public UnityAction OnClose { get; set; }
 
     private BoxCollider2D[] _colliders;
     private Animator _animator;
@@ -40,6 +45,7 @@ public class DoorController : MonoBehaviour
         _floorSwitchChannel.OnFloorSwitchDeactivated.Subscribe(HandleFloorSwitchDeactivated);
 
         _burnoutEventChannel.OnActivationChanged.Subscribe(HandleBurnoutActivationChanged);
+        _burnoutEventChannel.OnDeath.Subscribe(HandleBurnoutDeath);
     }
 
     private void OnDisable()
@@ -48,6 +54,7 @@ public class DoorController : MonoBehaviour
         _floorSwitchChannel.OnFloorSwitchDeactivated.Unsubscribe(HandleFloorSwitchDeactivated);
 
         _burnoutEventChannel.OnActivationChanged.Unsubscribe(HandleBurnoutActivationChanged);
+        _burnoutEventChannel.OnDeath.Unsubscribe(HandleBurnoutDeath);
     }
 
     private void SetOpenedBy()
@@ -59,6 +66,14 @@ public class DoorController : MonoBehaviour
             {
                 _openedBy = pair.ActivatorKeys;
             }
+        }
+    }
+
+    private void HandleBurnoutDeath(BurnoutDeathEvent @event)
+    {
+        if (IsOpenedBy(@event.Name))
+        {
+            ChangeActivationCount(1);
         }
     }
 
@@ -124,13 +139,34 @@ public class DoorController : MonoBehaviour
     private void OpenDoor()
     {
         _animator.SetBool(_isOpenID, true);
-        SetCollidersEnabled(false);
+        RaiseOpenEvents();
     }
 
     private void CloseDoor()
     {
         _animator.SetBool(_isOpenID, false);
         SetCollidersEnabled(true);
+        RaiseClosedEvents();
+    }
+
+    private void RaiseOpenEvents()
+    {
+        if (OnOpen != null)
+        {
+            OnOpen();
+        }
+
+        _doorChannel.OnOpen.Raise(new DoorOpenEvent(gameObject.name));
+    }
+
+    private void RaiseClosedEvents()
+    {
+        if (OnClose != null)
+        {
+            OnClose();
+        }
+
+        _doorChannel.OnClosed.Raise(new DoorClosedEvent(gameObject.name));
     }
 
     private void SetCollidersEnabled(bool enabled)
@@ -140,4 +176,13 @@ public class DoorController : MonoBehaviour
             _colliders[i].enabled = enabled;
         }
     }
+
+    #region Animator Callback Events
+
+    public void OnDoorOpenAnimationComplete()
+    {
+        SetCollidersEnabled(false);
+    }
+
+    #endregion
 }

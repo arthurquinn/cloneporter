@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class BurnoutAttackable : MonoBehaviour, IAttackable
 {
+    [Header("Event Channels")]
+    [SerializeField] private BurnoutEventChannel _events;
+
     [Header("Stats")]
     [Tooltip("The max HP for the Burnout unit.")]
     [SerializeField] private float _maxHP;
@@ -77,8 +81,6 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
         float ratioDiff = Mathf.Abs(_currentHPRatio - hpRatio);
         if (ratioDiff > 0.01f)
         {
-            Debug.Log("Changing for ratio: " + hpRatio);
-
             // Set proprties on each renderer based on current hp ratio
             for (int i = 0; i < _renderers.Length; i++)
             {
@@ -105,11 +107,20 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
         if (_currentHP <= 0)
         {
             _currentHP = 0;
-            Debug.Log("I am dead.");
+            Die();
         }
 
         // Disable HP recovery
         DisableRecovery();
+    }
+
+    private void Die()
+    {
+        // Raise the death event
+        _events.OnDeath.Raise(new BurnoutDeathEvent(gameObject.name));
+
+        // Destroy this game object
+        Destroy(gameObject);
     }
 
     #region Interface Methods

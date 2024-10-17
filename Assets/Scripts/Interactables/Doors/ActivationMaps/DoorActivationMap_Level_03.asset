@@ -19,3 +19,6 @@ MonoBehaviour:
   - DoorID: Door_02
     ActivatorKeys:
     - BurnoutReceiver_01
+  - DoorID: LockedDoor_01
+    ActivatorKeys:
+    - Burnout_01

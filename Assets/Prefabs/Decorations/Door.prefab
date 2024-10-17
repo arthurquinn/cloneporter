@@ -18,15 +18,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 9b0a13068dd5964448c1ecf4c1a6ea35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.496094
+      value: 3.3162813
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 9b0a13068dd5964448c1ecf4c1a6ea35, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.5
+      value: 2.3983698
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 9b0a13068dd5964448c1ecf4c1a6ea35, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.021405136
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 9b0a13068dd5964448c1ecf4c1a6ea35, type: 3}
       propertyPath: m_LocalRotation.w
@@ -34,15 +34,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 9b0a13068dd5964448c1ecf4c1a6ea35, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 9b0a13068dd5964448c1ecf4c1a6ea35, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 9b0a13068dd5964448c1ecf4c1a6ea35, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 9b0a13068dd5964448c1ecf4c1a6ea35, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -176,6 +176,7 @@ MonoBehaviour:
   _doorMap: {fileID: 11400000, guid: fdf9f8e68986d954ebd53478993499ce, type: 2}
   _floorSwitchChannel: {fileID: 11400000, guid: 61f4b7ed6d9ad1640842fb9c257a4384, type: 2}
   _burnoutEventChannel: {fileID: 11400000, guid: 70520b7032284604f9e22e93ad31b3c8, type: 2}
+  _doorChannel: {fileID: 11400000, guid: 7d5427d8010be9447b498fa2a7c9152e, type: 2}
 --- !u!1 &6687766269745328945 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 532572317657245620, guid: 9b0a13068dd5964448c1ecf4c1a6ea35, type: 3}
