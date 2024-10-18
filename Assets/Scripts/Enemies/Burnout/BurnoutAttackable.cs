@@ -53,8 +53,6 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
 
     private void Update()
     {
-        Debug.Log(_recoverTimeout);
-
         RecoverHP();
         SetHPColor();
     }
