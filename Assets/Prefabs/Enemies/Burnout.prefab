@@ -232,7 +232,7 @@ MonoBehaviour:
   _maxLaserDistance: 100
   _laserCollisionMask:
     serializedVersion: 2
-    m_Bits: 15304
+    m_Bits: 80840
   _onLaserPositionsChanged:
     m_PersistentCalls:
       m_Calls:
