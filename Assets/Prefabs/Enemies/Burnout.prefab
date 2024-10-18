@@ -138,7 +138,7 @@ PrefabInstance:
       addedObject: {fileID: 6398668693801570434}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8231174414367807959}
+      addedObject: {fileID: 4817755375297845841}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8488895257341771943}
@@ -181,8 +181,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &8231174414367807959
-BoxCollider2D:
+--- !u!70 &4817755375297845841
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -213,19 +213,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.1126834, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.77463317, y: 1}
-  m_EdgeRadius: 0
+  m_Offset: {x: -0.008885622, y: 0}
+  m_Size: {x: 0.98489237, y: 1}
+  m_Direction: 0
 --- !u!114 &8488895257341771943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,9 +233,6 @@ MonoBehaviour:
   _laserCollisionMask:
     serializedVersion: 2
     m_Bits: 15304
-  _portalMask:
-    serializedVersion: 2
-    m_Bits: 256
   _onLaserPositionsChanged:
     m_PersistentCalls:
       m_Calls:
@@ -277,8 +264,8 @@ MonoBehaviour:
   _rotationTime: 2
   _holdTime: 6
   _holdRotations:
-  - {x: 0, y: 0, z: 0.70710677, w: -0.70710677}
-  - {x: 0, y: 0, z: 0, w: 1}
+  - 270
+  - 0
 --- !u!114 &4012837228871205271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +282,9 @@ MonoBehaviour:
   _maxHP: 100
   _recoveryTime: 2
   _recoveryAmount: 20
+  _deathAngularVelocity: 180
   _damagedMaterial: {fileID: 2100000, guid: 685a5922472256345b73b67e5a5bac23, type: 2}
+  _explosion: {fileID: 4186821461566206650, guid: 0ba92caea303294419590b8ff834f29a, type: 3}
 --- !u!4 &3686198574795180462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: ce40ab455e1eeab43972c7138b199ada, type: 3}

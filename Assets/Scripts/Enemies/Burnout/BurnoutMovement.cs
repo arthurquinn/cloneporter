@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class BurnoutMovement : MonoBehaviour
@@ -12,24 +11,36 @@ public class BurnoutMovement : MonoBehaviour
     [Tooltip("The amount of time to hold the current rotation.")]
     [SerializeField] private float _holdTime;
     [Tooltip("The rotations to cycle between.")]
-    [SerializeField] private Quaternion[] _holdRotations;
+    [SerializeField] private float[] _holdRotations;
 
     private float _currentHoldTime;
     private int _currentRotationIndex;
 
+    private BurnoutAttackable _attackable;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _attackable = GetComponent<BurnoutAttackable>();
 
         // Init the hold timer
-        _currentHoldTime = _holdTime;
+        ResetHoldTimer();
+    }
+
+    private void OnEnable()
+    {
+        _attackable.OnDeath += HandleDeath;
+    }
+
+    private void OnDisable()
+    {
+        _attackable.OnDeath -= HandleDeath;
     }
 
     private void Start()
     {
         // Initialize  the rotation
-        Quaternion initRotation = GetCurrentRotation();
-        _rb.rotation = initRotation.eulerAngles.z;
+        _rb.rotation = GetCurrentRotation();
     }
 
     private void FixedUpdate()
@@ -37,44 +48,33 @@ public class BurnoutMovement : MonoBehaviour
         // Decrement hold rotation timer
         _currentHoldTime -= Time.fixedDeltaTime;
 
-        // If our timer expired then start the coroutine to rotate to our next value
+        // Handle rotations
+        RotateOnTimer();
+    }
+
+    private void RotateOnTimer()
+    {
+        // If our timer expired then start the tween to rotate to our next value
         if (_currentHoldTime < 0)
         {
-            // Kick off coroutine
-            StartCoroutine(RotateToNext());
-
-            // Disable the hold timer until the coroutine completes
+            // Disable the hold timer until the tween completes
             _currentHoldTime = float.MaxValue;
+
+            // Calculate the delta angle and apply it to rigidbody
+            float targetRotation = IncrementToNextRotation();
+            float deltaAngle = Mathf.DeltaAngle(_rb.rotation, targetRotation);
+            _rb.DORotate(_rb.rotation + deltaAngle, _rotationTime)
+                .SetEase(Ease.InOutQuad)
+                .OnComplete(ResetHoldTimer);
         }
     }
 
-    private IEnumerator RotateToNext()
+    private void ResetHoldTimer()
     {
-        // Initialize values
-        Quaternion startRotation = GetCurrentRotation();
-        Quaternion endRotation = IncrementToNextRotation();
-        float timer = 0;
-
-        // Perform the rotation over rotation time
-        while (timer < _rotationTime)
-        {
-            // Increment the timer
-            timer += Time.fixedDeltaTime;
-
-            // Calculate and apply the rotation to the rigidbody based on time step
-            float timeStep = timer / _rotationTime;
-            Quaternion currentRotation = Quaternion.Lerp(startRotation, endRotation, timeStep);
-            _rb.rotation = currentRotation.eulerAngles.z;
-
-            // Run the loop again next fixed update
-            yield return new WaitForFixedUpdate();
-        }
-
-        // Reset the hold timer and exit
         _currentHoldTime = _holdTime;
     }
 
-    private Quaternion IncrementToNextRotation()
+    private float IncrementToNextRotation()
     {
         // Increment and cycle to the first index if we reached the max
         _currentRotationIndex = (_currentRotationIndex + 1) % _holdRotations.Length;
@@ -85,11 +85,11 @@ public class BurnoutMovement : MonoBehaviour
             return _holdRotations[_currentRotationIndex];
         }
 
-        // Otherwise return the identity;
-        return Quaternion.identity;
+        // Otherwise return 0
+        return 0f;
     }
 
-    private Quaternion GetCurrentRotation()
+    private float GetCurrentRotation()
     {
         // Make sure we have any rotations available
         if (_holdRotations.Length > 0)
@@ -97,7 +97,13 @@ public class BurnoutMovement : MonoBehaviour
             return _holdRotations[_currentRotationIndex];
         }
 
-        // Otherwise return the identity
-        return Quaternion.identity;
+        // Otherwise return 0
+        return 0f;
+    }
+
+    private void HandleDeath()
+    {
+        // Disable this script
+        enabled = false;
     }
 }

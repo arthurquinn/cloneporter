@@ -1,7 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BurnoutAttackable : MonoBehaviour, IAttackable
 {
@@ -16,10 +15,17 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
     [Tooltip("The amount of HP regained per second.")]
     [SerializeField] private float _recoveryAmount;
 
+    [Header("Death Stats")]
+    [Tooltip("The angular velocity applied when the unit dies. The provided value will randomly be either positive or negative when applied in the script.")]
+    [SerializeField] private float _deathAngularVelocity;
+
     [Header("Effects")]
     [Tooltip("The shader material used when damaged.")]
     [SerializeField] private Material _damagedMaterial;
+    [Tooltip("The explosion effect prefab.")]
+    [SerializeField] private GameObject _explosion;
 
+    private Rigidbody2D _rb;
     private SpriteRenderer[] _renderers;
     private MaterialPropertyBlock[] _propertyBlocks;
 
@@ -27,8 +33,15 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
     private float _currentHP;
     private float _currentHPRatio;
 
+    // This is the max time all particle systems may live
+    private const float EXPLOSION_TIME = 5f;
+
+    // Used by other burnout components
+    public UnityAction OnDeath { get; set; }
+
     private void Awake()
     {
+        _rb = GetComponent<Rigidbody2D>();
         _renderers = GetComponentsInChildren<SpriteRenderer>();
         _currentHP = _maxHP;
     }
@@ -40,6 +53,8 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
 
     private void Update()
     {
+        Debug.Log(_recoverTimeout);
+
         RecoverHP();
         SetHPColor();
     }
@@ -95,9 +110,14 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
         }
     }
 
-    private void DisableRecovery()
+    private void ResetHPRecoveryTime()
     {
         _recoverTimeout = _recoveryTime;
+    }
+
+    private void DisableHPRecovery()
+    {
+        _recoverTimeout = float.MaxValue;
     }
 
     private void TakeDamagePerSecond(float damage)
@@ -106,21 +126,54 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
         _currentHP -= damage * Time.fixedDeltaTime;
         if (_currentHP <= 0)
         {
+            // Unit dies
             _currentHP = 0;
             Die();
         }
-
-        // Disable HP recovery
-        DisableRecovery();
+        else
+        {
+            // Reset HP recovery time
+            ResetHPRecoveryTime();
+        }
     }
 
     private void Die()
     {
-        // Raise the death event
-        _events.OnDeath.Raise(new BurnoutDeathEvent(gameObject.name));
+        // Invoke any actions taken by other burnout components
+        if (OnDeath != null)
+        {
+            OnDeath();
+        }
 
-        // Destroy this game object
-        Destroy(gameObject);
+        // Disable HP recovery
+        DisableHPRecovery();
+
+        // Change the rigidbody type
+        _rb.bodyType = RigidbodyType2D.Dynamic;
+        _rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+
+        // Apply a small force and some angular velocity
+        _rb.angularVelocity = Mathf.RoundToInt(Random.value) == 0 ? -_deathAngularVelocity : _deathAngularVelocity;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (_currentHP <= 0)
+        {
+            // Instantiate an explosion effect at our position
+            CreateExplosion();
+
+            // Fire off burnout death event
+            _events.OnDeath.Raise(new BurnoutDeathEvent(name));
+
+            // Destroy the game object
+            Destroy(gameObject);
+        }
+    }
+
+    private void CreateExplosion()
+    {
+        Instantiate(_explosion, transform.position, Quaternion.identity);
     }
 
     #region Interface Methods

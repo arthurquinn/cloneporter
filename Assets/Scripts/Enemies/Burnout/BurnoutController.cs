@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,6 +23,8 @@ public class BurnoutController : MonoBehaviour
     private const int MAX_POSITIONS = 8; // For now assume a maximum of 8 bounces once we implement reflections
     private Vector3[][] _laserLines;
 
+    private BurnoutAttackable _attackable;
+
     private void Awake()
     {
         _laserLines = new Vector3[][]
@@ -33,6 +32,8 @@ public class BurnoutController : MonoBehaviour
             new Vector3[MAX_POSITIONS],
             new Vector3[MAX_POSITIONS],
         };
+
+        _attackable = GetComponent<BurnoutAttackable>();
     }
 
     private void Start()
@@ -44,6 +45,18 @@ public class BurnoutController : MonoBehaviour
         _orientation.x = Mathf.Round(_orientation.x);
         _orientation.y = Mathf.Round(_orientation.y);
         _orientation = _orientation.normalized;
+    }
+
+    private void OnEnable()
+    {
+        // Listen for death event
+        _attackable.OnDeath += HandleDeath;
+    }
+
+    private void OnDisable()
+    {
+        // Unhook deathevent
+        _attackable.OnDeath -= HandleDeath;
     }
 
     // TODO: Lots of room to optimize here
@@ -157,6 +170,18 @@ public class BurnoutController : MonoBehaviour
                 _laserLines[i][j] = Vector2.zero;
             }
         }
+    }
+
+    private void HandleDeath()
+    {
+        // Clear out laser lines
+        ClearPositions();
+
+        // Update the line renderers
+        _onLaserPositionsChanged.Invoke(_laserLines);
+
+        // Disable this script
+        enabled = false;
     }
 
     private void OnDrawGizmosSelected()
