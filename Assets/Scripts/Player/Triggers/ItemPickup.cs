@@ -118,6 +118,9 @@ public class ItemPickup : MonoBehaviour
 
         // Disable collisions between us and the carried item
         Physics2D.IgnoreCollision(_playerCollider, _heldItem.Collider, true);
+
+        // Raise the event
+        _playerEvents.OnPickupItem.Raise(new PlayerPickupItemEvent(_heldItem));
     }
 
     private void DropItem()
@@ -127,6 +130,11 @@ public class ItemPickup : MonoBehaviour
 
         // Drop the item
         _heldItem.Drop();
+
+        // Raise the event
+        _playerEvents.OnDropItem.Raise(new PlayerDropItemEvent(_heldItem));
+
+        // Set item to null
         _heldItem = null;
     }
 }

@@ -181,7 +181,13 @@ public class DoorController : MonoBehaviour
 
     public void OnDoorOpenAnimationComplete()
     {
-        SetCollidersEnabled(false);
+        // Animation may complete after door closed was started if they enter and exit
+        //   the switch quickly.
+        // Only deactivate colliders if there is still an activation remaining
+        if (_activationCount > 0)
+        {
+            SetCollidersEnabled(false);
+        }
     }
 
     #endregion

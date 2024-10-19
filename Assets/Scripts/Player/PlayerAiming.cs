@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -49,9 +46,15 @@ public class PlayerAiming : MonoBehaviour
     private Vector2 _aimDirection;
     private RaycastHit2D _lastHit;
 
+    private bool _isPurpleEnabled;
+    private bool _isTealEnabled;
+
     private void Awake()
     {
         _inputs = new PlayerInputActions();
+
+        _isTealEnabled = true;
+        _isPurpleEnabled = true;
     }
 
     private void OnEnable()
@@ -264,24 +267,36 @@ public class PlayerAiming : MonoBehaviour
 
     private void AimLeftStart(InputAction.CallbackContext context)
     {
-        _isAiming = true;
-        _weapon.SetPurpleTargetingBeam();
+        if (_isPurpleEnabled)
+        {
+            _isAiming = true;
+            _weapon.SetPurpleTargetingBeam();
+        }
     }
 
     private void AimLeftEnd(InputAction.CallbackContext context)
     {
-        FirePortalGun(PortalColor.Purple);
+        if (_isPurpleEnabled)
+        {
+            FirePortalGun(PortalColor.Purple);
+        }
     }
 
     private void AimRightStart(InputAction.CallbackContext context)
     {
-        _isAiming = true;
-        _weapon.SetTealTargetingBeam();
+        if (_isTealEnabled)
+        {
+            _isAiming = true;
+            _weapon.SetTealTargetingBeam();
+        }
     }
 
     private void AimRightEnd(InputAction.CallbackContext context)
     {
-        FirePortalGun(PortalColor.Teal);
+        if (_isTealEnabled)
+        {
+            FirePortalGun(PortalColor.Teal);
+        }
     }
 
     private void FirePortalGun(PortalColor portalColor)
@@ -320,6 +335,21 @@ public class PlayerAiming : MonoBehaviour
                 _playerEvents.OnPortalGunFired.Raise(new PlayerPortalGunFireEvent(portalColor, entry));
             }
         }
+    }
 
+    public void DisableAiming()
+    {
+        _isPurpleEnabled = false;
+        _isTealEnabled = false;
+    }
+
+    public void EnablePurpleAiming()
+    {
+        _isPurpleEnabled = true;
+    }
+
+    public void EnableTealAiming()
+    {
+        _isTealEnabled = true;
     }
 }

@@ -20,5 +20,5 @@ public class HeldItemDroppedEventChannel : AbstractEventChannel<HeldItemDroppedE
 [CreateAssetMenu(fileName = "InteractablesEventChannel", menuName = "EventChannels/InteractablesEventChannel")]
 public class InteractablesEventChannel : ScriptableObject
 {
-    public HeldItemDroppedEventChannel OnItemDropped {  get; private set; } = new HeldItemDroppedEventChannel();
+    public HeldItemDroppedEventChannel OnItemDropped { get; private set; } = new HeldItemDroppedEventChannel();
 }
