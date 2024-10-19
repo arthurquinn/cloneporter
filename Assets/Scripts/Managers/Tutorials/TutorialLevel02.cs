@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TutorialLevel02 : MonoBehaviour
@@ -23,6 +24,13 @@ public class TutorialLevel02 : MonoBehaviour
 
     private bool _didPickup;
     private bool _didDrop;
+
+    private Canvas _canvas;
+
+    private void Awake()
+    {
+        AssignCamera();
+    }
 
     private void OnEnable()
     {
@@ -76,5 +84,16 @@ public class TutorialLevel02 : MonoBehaviour
     private void HandleVelocityHintTriggerExit()
     {
         _velocityHintText.SetActive(false);
+    }
+
+    private void AssignCamera()
+    {
+        _canvas = GetComponentInChildren<Canvas>();
+        if (_canvas != null)
+        {
+            _canvas.renderMode = RenderMode.ScreenSpaceCamera;
+            _canvas.worldCamera = Camera.main;
+            _canvas.sortingLayerName = "HUD";
+        }
     }
 }

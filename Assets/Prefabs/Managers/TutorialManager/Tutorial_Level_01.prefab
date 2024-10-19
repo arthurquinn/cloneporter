@@ -146,7 +146,7 @@ Canvas:
   m_GameObject: {fileID: 7419118475839723267}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -157,7 +157,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1111536677
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &4730259103889292852
@@ -172,10 +172,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 128
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 2560, y: 1440}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -216,6 +216,15 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3542684199896816301, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
+      propertyPath: m_text
+      value: 'Aim and Shoot a Teal portal onto the panel.
+
+
+
+        Aim and Shoot
+        (Teal Portal): [Right Click]'
+      objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -242,11 +251,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -1164.7632
+      value: -1359.8
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -1306.9858
+      value: -1120.7468
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -278,11 +287,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -594.75
+      value: -506.03003
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 391
+      value: 379.25
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -336,6 +345,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3542684199896816301, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
+      propertyPath: m_text
+      value: 'You can shoot portals onto panels (white tiles). Click and Hold to
+        aim. Then release to shoot.
+
+
+
+        Aim and shoot (Purple Portal): [Left
+        Click]'
+      objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -362,11 +381,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -1164.7632
+      value: -1371.3722
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -1306.9858
+      value: -1100.3768
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -398,11 +417,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -594.75
+      value: -500.25
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 391
+      value: 407
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -539,6 +558,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3542684199896816301, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
+      propertyPath: m_text
+      value: "Move Left:\t\t[A]\nMove Right:\t[D]"
+      objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -565,11 +588,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -1164.7632
+      value: -2017.2866
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -1306.9858
+      value: -1253.76
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -601,11 +624,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -627.5
+      value: -701.5
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 398
+      value: 403.49997
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -654,6 +677,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3542684199896816301, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
+      propertyPath: m_text
+      value: When both portals are placed you can move freely between them.
+      objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -684,7 +711,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -1306.9858
+      value: -1234.2362
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -716,11 +743,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -581.13
+      value: -479.25
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 487.5
+      value: 451.12524
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -935,6 +962,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3542684199896816301, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
+      propertyPath: m_text
+      value: 'Jump: [Space]'
+      objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -961,7 +992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -1164.7632
+      value: -2113.4182
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.y
@@ -997,7 +1028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -653.5
+      value: -694.25
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1050,6 +1081,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3542684199896816301, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
+      propertyPath: m_text
+      value: Enter the elevator to complete the level.
+      objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1080,7 +1115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -1306.9858
+      value: -1295.346
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1112,11 +1147,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -581.13
+      value: -464.75
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 487.5
+      value: 481.68005
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

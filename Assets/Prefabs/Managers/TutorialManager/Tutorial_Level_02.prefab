@@ -135,7 +135,7 @@ Canvas:
   m_GameObject: {fileID: 8309113765129080079}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -146,7 +146,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1111536677
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &7575261023429986345
@@ -161,10 +161,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 128
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 2560, y: 1440}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -286,6 +286,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3542684199896816301, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
+      propertyPath: m_text
+      value: 'When moving between portals your velocity is maintained. Use this to
+        reach otherwise unreachable platforms.
+
+
+
+        You go in fast, you go
+        out fast.'
+      objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -316,7 +326,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -1306.9858
+      value: -1015.9873
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -348,11 +358,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -281
+      value: -269.5
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.75
+      value: 459.4751
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -406,6 +416,15 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3542684199896816301, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
+      propertyPath: m_text
+      value: 'Press the interact key again to drop the item.
+
+
+
+        Interact:
+        [E]'
+      objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -432,11 +451,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -1576.1477
+      value: -1509.3
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -1306.9858
+      value: -1091.6469
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -468,11 +487,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -300.75
+      value: -284.75
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 15.25
+      value: 99.75
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -607,6 +626,15 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3542684199896816301, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
+      propertyPath: m_text
+      value: 'You can interact with certain items to pick them up.
+
+
+
+        Interact:
+        [E]'
+      objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -633,11 +661,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -1576.1477
+      value: -1471.3882
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -1306.9858
+      value: -1112.0168
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -669,11 +697,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -300.75
+      value: -286.25
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 15.25
+      value: 113
       objectReference: {fileID: 0}
     - target: {fileID: 5333412254579954502, guid: 00d1b33070fccef4f8edc5d77443b54d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

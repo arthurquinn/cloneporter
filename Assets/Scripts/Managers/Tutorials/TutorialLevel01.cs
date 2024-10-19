@@ -35,6 +35,13 @@ public class TutorialLevel01 : MonoBehaviour
     private bool _didShowPurple;
     private bool _didShowTeal;
 
+    private Canvas _canvas;
+
+    private void Awake()
+    {
+        AssignCamera();
+    }
+
     private void OnEnable()
     {
         _movementInfoTrigger.OnTriggerEnter += HandleMovementInfoTriggerEnter;
@@ -91,7 +98,7 @@ public class TutorialLevel01 : MonoBehaviour
 
             _tutorialEvents.OnStateChanged.Raise(new TutorialStateChangedEvent(TutorialState.TealActivate));
         }
-        else if (_didShowPurple && !_didShowTeal)
+        else if (@event.Color == PortalColor.Teal && _didShowPurple && !_didShowTeal)
         {
             _tealPortalInfoText.SetActive(false);
             _portalInfoText.SetActive(true);
@@ -103,5 +110,16 @@ public class TutorialLevel01 : MonoBehaviour
     {
         _portalInfoText.SetActive(false);
         _elevatorInfoText.SetActive(true);
+    }
+
+    private void AssignCamera()
+    {
+        _canvas = GetComponentInChildren<Canvas>();
+        if (_canvas != null)
+        {
+            _canvas.renderMode = RenderMode.ScreenSpaceCamera;
+            _canvas.worldCamera = Camera.main;
+            _canvas.sortingLayerName = "HUD";
+        }
     }
 }
