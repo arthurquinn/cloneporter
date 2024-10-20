@@ -13,6 +13,8 @@ public class TutorialLevel02 : MonoBehaviour
     [SerializeField] private GenericTrigger _pickupItemTrigger;
     [Tooltip("The trigger area for the velocity hint text.")]
     [SerializeField] private GenericTrigger _velocityHintTrigger;
+    [Tooltip("The trigger area to hide the velocity hint text.")]
+    [SerializeField] private GenericTrigger _velocityHintHide;
 
     [Header("Info Texts")]
     [Tooltip("The pickup item text game object.")]
@@ -36,7 +38,8 @@ public class TutorialLevel02 : MonoBehaviour
     {
         _pickupItemTrigger.OnTriggerEnter += HandlePickupItemTriggerEnter;
         _velocityHintTrigger.OnTriggerEnter += HandleVelocityHintTriggerEnter;
-        _velocityHintTrigger.OnTriggerExit += HandleVelocityHintTriggerExit;
+        _velocityHintHide.OnTriggerEnter += HandleVelocityHintTriggerExit;
+
 
         _playerEvents.OnPickupItem.Subscribe(HandleItemPickup);
         _playerEvents.OnDropItem.Subscribe(HandleItemDrop);
@@ -46,7 +49,7 @@ public class TutorialLevel02 : MonoBehaviour
     {
         _pickupItemTrigger.OnTriggerEnter -= HandlePickupItemTriggerEnter;
         _velocityHintTrigger.OnTriggerEnter -= HandleVelocityHintTriggerEnter;
-        _velocityHintTrigger.OnTriggerExit -= HandleVelocityHintTriggerExit;
+        _velocityHintHide.OnTriggerEnter -= HandleVelocityHintTriggerExit;
 
         _playerEvents.OnPickupItem.Unsubscribe(HandleItemPickup);
         _playerEvents.OnDropItem.Unsubscribe(HandleItemDrop);

@@ -1244,6 +1244,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 367259880623448546, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 344.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 367259880623448546, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 403
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311228494253718427, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1575006036304637824, guid: 55c9271536956e14da383f68b49278a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1284,9 +1296,53 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2201326359238945942, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2362740369550246107, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2528935101915907798, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 652.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2528935101915907798, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -56.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207294586107907126, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 453.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207294586107907126, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 314.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6876619919451625039, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7076135956191157024, guid: 55c9271536956e14da383f68b49278a3, type: 3}
       propertyPath: m_Name
       value: Tutorial_Level_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8750204474643771771, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8844029879677532022, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -370.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8844029879677532022, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -199.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970374416005846409, guid: 55c9271536956e14da383f68b49278a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
