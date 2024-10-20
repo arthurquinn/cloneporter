@@ -21,6 +21,7 @@ public class PortalController : MonoBehaviour, IPortal
 
     [Header("Exit Velocity Adjustments")]
     [SerializeField] private float _exitUpVelocityThreshold;
+    [SerializeField] private float _exitHoirzontalVelocityThreshold;
 
     private PortalController _linkedPortal;
 
@@ -228,6 +229,15 @@ public class PortalController : MonoBehaviour, IPortal
         if (_linkedPortal.Orientation == Vector2.up)
         {
             adjustedForce.y = Mathf.Max(_exitUpVelocityThreshold, adjustedForce.y);
+        }
+
+        // Give the player a horizontal boost if they are exiting a vertically standing portal and they are below a certain speed
+        // This helps them to get "pushed" out of the portal if they entered really slowly
+        if (_linkedPortal.Orientation.x != 0)
+        {
+            float speed = Mathf.Abs(adjustedForce.x);
+            float direction = Mathf.Sign(adjustedForce.x);
+            adjustedForce.x = direction * Mathf.Max(_exitHoirzontalVelocityThreshold, speed);
         }
 
         return adjustedForce;
