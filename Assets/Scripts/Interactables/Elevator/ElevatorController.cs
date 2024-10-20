@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class ElevatorController : MonoBehaviour
 
     [Header("Elevator Stats")]
     [SerializeField] private float _elevatorLiftTime;
+    [SerializeField] private float _delayAfterStop;
 
     private Rigidbody2D _rb;
     private Animator _animator;
@@ -69,36 +71,24 @@ public class ElevatorController : MonoBehaviour
         // Raise the elevator up event
         _elevatorEvents.OnElevatorUp.Raise(new ElevatorUpStartEvent());
 
-        // Start the elevator up coroutine
-        StartCoroutine(DoElevatorUp());
+        // Start the animation
+        _rb.DOMove(_elevatorTarget.position, _elevatorLiftTime)
+            .SetEase(Ease.InCubic)
+            .OnComplete(RaiseStopEvent);
     }
 
-    private IEnumerator DoElevatorUp()
+    private void RaiseStopEvent()
     {
-        // Initialze the start and end positions, and the lift timer
-        Vector2 startPosition = transform.position;
-        Vector2 endPosition = _elevatorTarget.position;
-        float liftTime = 0;
-        float timeStep = 0;
+        // Start coroutine to wait for delay
+        StartCoroutine(RaiseStopEventDelay());
+    }
 
-        // Lerp to target position each fixed update
-        while (timeStep < 1)
-        {
-            // Calculate the current time step
-            liftTime += Time.fixedDeltaTime;
-            timeStep = Mathf.Clamp01(liftTime / _elevatorLiftTime);
+    private IEnumerator RaiseStopEventDelay()
+    {
+        // Wait the delay amount
+        yield return new WaitForSeconds(_delayAfterStop);
 
-            // Lerp to target
-            Vector2 currentTarget = Vector2.Lerp(startPosition, endPosition, timeStep);
-
-            // Move rigidbody to target
-            _rb.MovePosition(currentTarget);
-
-            // Wait for next fixed update frame
-            yield return new WaitForFixedUpdate();
-        }
-
-        // Raise the elevator stop event
+        // Raise the event
         _elevatorEvents.OnElevatorStop.Raise(new ElevatorUpStopEvent());
     }
 

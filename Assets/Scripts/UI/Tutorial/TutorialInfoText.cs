@@ -8,7 +8,7 @@ public class TutorialInfoText : MonoBehaviour
 
     private void Awake()
     {
-        _text = GetComponent<TextMeshProUGUI>();
+        _text = GetComponentInChildren<TextMeshProUGUI>();
         _text.color = new Color(_text.color.r, _text.color.g, _text.color.b, _text.color.a);
     }
 
