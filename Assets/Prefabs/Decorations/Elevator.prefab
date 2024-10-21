@@ -266,7 +266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: ce771a07dcef73947948ae459342aa0b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: ce771a07dcef73947948ae459342aa0b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -573,7 +573,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!66 &265812343279788361
 CompositeCollider2D:

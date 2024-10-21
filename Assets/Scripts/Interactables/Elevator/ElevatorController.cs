@@ -74,6 +74,7 @@ public class ElevatorController : MonoBehaviour
         // Start the animation
         _rb.DOMove(_elevatorTarget.position, _elevatorLiftTime)
             .SetEase(Ease.InCubic)
+            .SetUpdate(UpdateType.Fixed)
             .OnComplete(RaiseStopEvent);
     }
 
