@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Intensity: 0.2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000c70a8bba37d671e2039a65c759b97432f9f7e78d83a5c368
+  m_ApplyToSortingLayers: 00000000c70a8bba37d671e2039a65c759b97432f9f7e78d83a5c36849c93391
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1250,7 +1250,7 @@ MonoBehaviour:
   _teleportTrigger: {fileID: 4406902719079127697}
   _elevatorIgnoreLayer:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 448
   _cameraPoint: {fileID: 7480566440739631389}
 --- !u!114 &7661179903401265581
 MonoBehaviour:

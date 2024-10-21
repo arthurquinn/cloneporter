@@ -57,11 +57,19 @@ public class PlayerEvents : MonoBehaviour
 
     private void HandleElevatorUp(ElevatorUpStartEvent elevatorUpEvent)
     {
+        // Disable teleport trigger
+        _teleportTrigger.gameObject.SetActive(false);
+
+        // Update collision matrix
         RemoveFromCollisionMatrix(_elevatorIgnoreLayer);
     }
 
     private void HandleElevatorStop(ElevatorUpStopEvent elevatorStopEvent)
     {
+        // Enable teleport trigger
+        _teleportTrigger.gameObject.SetActive(true);
+
+        // Update collision matrix
         AddToCollisionMatrix(_elevatorIgnoreLayer);
 
         // Fire off the level complete event
