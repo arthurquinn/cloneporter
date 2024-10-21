@@ -29,6 +29,8 @@ public class PlayerMovementFallingState : IPlayerMovementState
         _controller.SetMovement();
 
         FixedUpdateStateTransitions();
+
+        Debug.Log(_controller.Rigidbody2D.velocity);
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
