@@ -73,16 +73,12 @@ public class ItemPickup : MonoBehaviour
 
     private void HandlePlayerTeleported(PlayerTeleportedEvent @event)
     {
+        // Drop the item when we teleport
+        // Not ideal but easiest to get it looking nice for now
         if (_heldItem != null)
         {
-            StartCoroutine(TeleportHeldItem());
+            DropItem();
         }
-    }
-
-    private IEnumerator TeleportHeldItem()
-    {
-        yield return new WaitForFixedUpdate();
-        _heldItem.SetPosition(_holdPosition.position);
     }
 
     private void HandleItemDropped(HeldItemDroppedEvent @event)

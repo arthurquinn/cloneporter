@@ -18,13 +18,17 @@ MonoBehaviour:
     NextLevelIndex: 0
   Level01:
     SceneIndex: 1
-    SceneName: Fixed_Level_01
+    SceneName: Level_01
     NextLevelIndex: 2
   Level02:
     SceneIndex: 2
-    SceneName: Fixed_Level_02
+    SceneName: Level_02
     NextLevelIndex: 3
   Level03:
     SceneIndex: 3
-    SceneName: Fixed_Level_03
+    SceneName: Level_03
+    NextLevelIndex: 4
+  Level04:
+    SceneIndex: 4
+    SceneName: Level_04
     NextLevelIndex: 0

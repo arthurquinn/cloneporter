@@ -10,7 +10,7 @@ public interface IPortal
 {
     public PortalColor Color { get; }
     Ray2D SimulatePort(Ray2D entry);
-    void ApplyPort(Ray2D entry, Rigidbody2D rigidbody, Bounds bounds);
+    void ApplyPort(Ray2D entry, IPortalable target);
 }
 
 public class PortalController : MonoBehaviour, IPortal
@@ -18,10 +18,6 @@ public class PortalController : MonoBehaviour, IPortal
     private const float ROUNDING_THRESHOLD = 0.001f;
 
     [SerializeField] private PortalColor _portalColor;
-
-    [Header("Exit Velocity Adjustments")]
-    [SerializeField] private float _exitUpVelocityThreshold;
-    [SerializeField] private float _exitHoirzontalVelocityThreshold;
 
     private PortalController _linkedPortal;
 
@@ -98,7 +94,7 @@ public class PortalController : MonoBehaviour, IPortal
         return new Ray2D(outPosition, exitRay.direction);
     }
 
-    public void ApplyPort(Ray2D entry, Rigidbody2D rigidbody, Bounds bounds)
+    public void ApplyPort(Ray2D entry, IPortalable target)
     {
         // Get the exit ray
         Ray2D exitRay = GetExitRay(entry);
@@ -106,7 +102,7 @@ public class PortalController : MonoBehaviour, IPortal
         //Debug.DrawRay(entry.origin, entry.direction, UnityEngine.Color.yellow, 10.0f);
 
         // Break the rules for opposite orientations for more fun gameplay
-        Vector2 offset = ApplyOffsetAdjustments(exitRay.origin, bounds);
+        Vector2 offset = ApplyOffsetAdjustments(exitRay.origin, target.Collider.bounds);
 
         // Adjust exit ray for smoother movement between portals
         Ray2D adjustedExitRay = ApplyDirectionAdjustments(exitRay);
@@ -117,17 +113,17 @@ public class PortalController : MonoBehaviour, IPortal
         Debug.DrawRay(outPosition, adjustedExitRay.direction, UnityEngine.Color.red, 10.0f);
 
         // Apply the port position to our rigibody
-        rigidbody.position = outPosition;
+        target.Rigidbody.position = outPosition;
 
         // Calculate the exit velocity and apply it to our rigidbody
-        Vector2 exitVelocity = rigidbody.velocity.magnitude * adjustedExitRay.direction;
+        Vector2 exitVelocity = target.Rigidbody.velocity.magnitude * adjustedExitRay.direction;
 
         // Handle minor adjustments for player experience (e.g. min velocity out of portal)
-        Vector2 adjustedExitVelocity = ApplyExitForceAdjustments(adjustedExitRay, exitVelocity);
+        Vector2 adjustedExitVelocity = ApplyExitForceAdjustments(adjustedExitRay, exitVelocity, target.Stats);
 
         // Apply the force
-        Vector2 appliedForce = adjustedExitVelocity - rigidbody.velocity;
-        rigidbody.AddForce(appliedForce, ForceMode2D.Impulse);
+        Vector2 appliedForce = adjustedExitVelocity - target.Rigidbody.velocity;
+        target.Rigidbody.AddForce(appliedForce, ForceMode2D.Impulse);
     }
 
     public void SetPortal(Vector2 position, Vector2 orientation)
@@ -143,8 +139,6 @@ public class PortalController : MonoBehaviour, IPortal
     {
         _spriteRenderer.enabled = false;
         _boxCollider.enabled = false;
-
-
     }
 
     public float GetLength()
@@ -220,7 +214,7 @@ public class PortalController : MonoBehaviour, IPortal
         return offset;
     }
 
-    private Vector2 ApplyExitForceAdjustments(Ray2D exitRay, Vector2 currentForce)
+    private Vector2 ApplyExitForceAdjustments(Ray2D exitRay, Vector2 currentForce, TeleportStats stats)
     {
         Vector2 adjustedForce = currentForce;
 
@@ -228,7 +222,7 @@ public class PortalController : MonoBehaviour, IPortal
         // This helps them to jump out of a portal if they entered at a slow speed
         if (_linkedPortal.Orientation == Vector2.up)
         {
-            adjustedForce.y = Mathf.Max(_exitUpVelocityThreshold, adjustedForce.y);
+            adjustedForce.y = Mathf.Max(stats.MinExitVelocityUp, adjustedForce.y);
         }
 
         // Give the player a horizontal boost if they are exiting a vertically standing portal and they are below a certain speed
@@ -237,7 +231,7 @@ public class PortalController : MonoBehaviour, IPortal
         {
             float speed = Mathf.Abs(adjustedForce.x);
             float direction = Mathf.Sign(adjustedForce.x);
-            adjustedForce.x = direction * Mathf.Max(_exitHoirzontalVelocityThreshold, speed);
+            adjustedForce.x = direction * Mathf.Max(stats.MinExitVelocitySide, speed);
         }
 
         return adjustedForce;

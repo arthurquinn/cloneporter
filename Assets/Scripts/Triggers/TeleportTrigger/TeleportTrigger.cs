@@ -3,9 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Collider2D))]
-public class TeleportTrigger : MonoBehaviour
+public interface IPortalable
 {
+    public TeleportStats Stats { get; }
+    public Rigidbody2D Rigidbody { get; }
+    public Collider2D Collider { get; }
+}
+
+[RequireComponent(typeof(Collider2D))]
+public class TeleportTrigger : MonoBehaviour, IPortalable
+{
+    #region Interface Methods
+    public TeleportStats Stats { get { return _teleportStats; } }
+    public Rigidbody2D Rigidbody { get { return _rb; } }
+    public Collider2D Collider { get { return _bounds; } }
+    #endregion
+
+    [Header("Teleport Stats")]
+    [Tooltip("Stats specific to this teleporting object.")]
+    [SerializeField] private TeleportStats _teleportStats;
+
+    [Space(20)]
+
     [Tooltip("The bounds of the object that will be teleported.")]
     [SerializeField] private Collider2D _bounds;
 
@@ -48,7 +67,7 @@ public class TeleportTrigger : MonoBehaviour
         Ray2D entryRay = new Ray2D(entryPoint, entryDirection);
 
         // Use portal interface to apply port to our rigidbody
-        portal.ApplyPort(entryRay, _rb, _bounds.bounds);
+        portal.ApplyPort(entryRay, this);
 
         // Raise the portal leave portal event after fixed update
         StartCoroutine(RaiseTeleportedEvent());
