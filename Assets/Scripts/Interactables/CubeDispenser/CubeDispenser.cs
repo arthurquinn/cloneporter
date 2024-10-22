@@ -8,18 +8,30 @@ public class CubeDispenser : MonoBehaviour, IInteractable
     [SerializeField] private DispensableCube _cube;
     [Tooltip("The spawn point of the cube.")]
     [SerializeField] private Transform _cubeSpawn;
-    [Tooltip("The idle position of the cube before it is launched by the player.")]
+    [Tooltip("The idle position of the cube when it is idle.")]
     [SerializeField] private Transform _cubeIdle;
+    [Tooltip("The launch position of the cube.")]
+    [SerializeField] private Transform _cubeLaunch;
     [Tooltip("The time it takes to load a cube.")]
     [SerializeField] private float _cubeLoadTime;
+    [Tooltip("The time it takes to launch a cube.")]
+    [SerializeField] private float _cubeLaunchTime;
 
     [Header("Interact HUD")]
     [Tooltip("The interact hud tooltip for this game object.")]
     [SerializeField] private InteractHUD _interactHUD;
 
+    private Collider2D _collider;
+
     private DispensableCube _loadedCube;
 
-    private bool _isLaunchReady;
+    private bool _canLaunch;
+    private bool _isLoaded;
+
+    private void Awake()
+    {
+        _collider = GetComponent<Collider2D>();
+    }
 
     private void Start()
     {
@@ -38,19 +50,55 @@ public class CubeDispenser : MonoBehaviour, IInteractable
 
     private void SetLoadComplete()
     {
-        _isLaunchReady = true;
+        _isLoaded = true;
+    }
+
+    private void InitiateLaunch()
+    {
+        // Animate the cube
+        _loadedCube.MoveCube(_cubeLaunch.position, _cubeLaunchTime, Ease.OutQuad, SetInitiateComplete);
+    }
+
+    private void SetInitiateComplete()
+    {
+        _interactHUD.Show();
+        _canLaunch = true;
+    }
+
+    private void DeactivateLaunch()
+    {
+        // Hide the hud
+        _interactHUD.Hide();
+
+        // Animate the cube
+        _loadedCube.MoveCube(_cubeIdle.position, _cubeLaunchTime, Ease.OutBounce, SetDeactivateComplete);
+    }
+
+    private void SetDeactivateComplete()
+    {
+
+    }
+
+    private void Launch()
+    {
+        _loadedCube.Launch(_collider);
     }
 
     #region IInteractable interface methods
 
+    public void Interact()
+    {
+        Launch();
+    }
+
     public void ShowInteractHUD()
     {
-        _interactHUD.Show();
+        InitiateLaunch();
     }
 
     public void HideInteractHUD()
     {
-        _interactHUD.Hide();
+        DeactivateLaunch();
     }
 
     #endregion

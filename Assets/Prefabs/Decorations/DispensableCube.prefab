@@ -89,3 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28accc8fc5db20146ad983f1df52dd3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _launchForce: 11
+  _launchOffsetForce: 8
+  _launchAngularVelocity: 720

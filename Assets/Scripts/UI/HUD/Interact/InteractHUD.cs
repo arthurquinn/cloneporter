@@ -13,6 +13,8 @@ public class InteractHUD : MonoBehaviour
     private Tween _fadeTween;
     private Tween _moveTween;
 
+    private Vector2 _startPosition;
+
     private void Awake()
     {
         _textBox = GetComponentInChildren<TextMeshProUGUI>();
@@ -22,6 +24,8 @@ public class InteractHUD : MonoBehaviour
     {
         SetText();
         SetTextEnabled(false);
+
+        _startPosition = transform.position;
     }
 
     private void LateUpdate()
@@ -50,6 +54,9 @@ public class InteractHUD : MonoBehaviour
         // Fade in
         _moveTween = _textBox.DOFade(1, 1)
             .SetAutoKill(false);
+
+        // Start at origin
+        _textBox.transform.position = _startPosition;
 
         // Loop movement
         _fadeTween = _textBox.transform.DOMoveY(_textBox.transform.position.y - 0.1f, 1)
