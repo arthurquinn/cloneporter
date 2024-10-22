@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9aa332112601f545b6d84c5f484c353, type: 3}
   m_Name: CubeInteractText
   m_EditorClassIdentifier: 
-  Text: 'Pickup: [E]'
-  FontSize: 6
+  Text: E
+  FontSize: 10

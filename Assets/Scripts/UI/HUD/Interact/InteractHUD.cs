@@ -13,6 +13,8 @@ public class InteractHUD : MonoBehaviour
     private Tween _fadeTween;
     private Tween _moveTween;
 
+    private Vector2 _textStartLocal;
+
     private void Awake()
     {
         _textBox = GetComponentInChildren<TextMeshProUGUI>();
@@ -22,11 +24,13 @@ public class InteractHUD : MonoBehaviour
     {
         SetText();
         SetTextEnabled(false);
+
+        _textStartLocal = _textBox.transform.localPosition;
     }
 
     private void LateUpdate()
     {
-        _textBox.transform.rotation = Quaternion.identity;
+        transform.rotation = Quaternion.identity;
     }
 
     private void SetText()
@@ -47,8 +51,15 @@ public class InteractHUD : MonoBehaviour
         _textBox.color = transparent;
 
         // Fade in
-        _moveTween = _textBox.DOFade(1, 1)
-            .SetAutoKill(false);    
+        _fadeTween = _textBox.DOFade(1, 1)
+            .SetAutoKill(false);
+
+        // Bounce
+        _textBox.transform.localPosition = _textStartLocal;
+        _moveTween = _textBox.transform.DOLocalMoveY(_textStartLocal.y - 3f, 1)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetAutoKill(false);
     }
 
     private void KillTweens()
