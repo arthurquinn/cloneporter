@@ -46,11 +46,21 @@ public class CubeDispenser : MonoBehaviour, IInteractable
 
         // Animate the cube
         _loadedCube.MoveCube(_cubeIdle.position, _cubeLoadTime, Ease.OutBounce, SetLoadComplete);
+
+        // Listen for the cube destroyed event
+        CubeDestructable destructable =  _loadedCube.GetComponent<CubeDestructable>();
+        destructable.OnCubeDestroyed += HandleCubeDestroyed;
     }
 
     private void SetLoadComplete()
     {
         _canInteract = true;
+
+        // Toggle our collider on and off
+        // If a player was waiting by the dispenser while the cube was loading
+        //   this will allow them to interact instantly
+        _collider.enabled = false;
+        _collider.enabled = true;
     }
 
     private void InitiateLaunch()
@@ -91,6 +101,12 @@ public class CubeDispenser : MonoBehaviour, IInteractable
             _canInteract = false;
             _canLaunch = false;
         }
+    }
+
+    private void HandleCubeDestroyed()
+    {
+        // Load a new cube if the one we dispensed gets destroyed
+        LoadCube();
     }
 
     #region IInteractable interface methods

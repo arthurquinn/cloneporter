@@ -8,6 +8,7 @@ TagManager:
   - Portals
   - Portal
   - Reflect
+  - PortalForceField
   layers:
   - Default
   - TransparentFX
