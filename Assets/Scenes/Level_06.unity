@@ -2749,10 +2749,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CubeDispenser
       objectReference: {fileID: 0}
-    - target: {fileID: 3537315456868318033, guid: 44b9f922be1a8214d994754f65a89dd5, type: 3}
-      propertyPath: _cubeLaunchTime
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 4432642509924366761, guid: 44b9f922be1a8214d994754f65a89dd5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.5

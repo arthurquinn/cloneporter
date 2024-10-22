@@ -24,9 +24,9 @@ public class CubeDispenser : MonoBehaviour, IInteractable
     private Collider2D _collider;
 
     private DispensableCube _loadedCube;
-
+    private bool _canInteract;
     private bool _canLaunch;
-    private bool _isLoaded;
+
 
     private void Awake()
     {
@@ -50,7 +50,7 @@ public class CubeDispenser : MonoBehaviour, IInteractable
 
     private void SetLoadComplete()
     {
-        _isLoaded = true;
+        _canInteract = true;
     }
 
     private void InitiateLaunch()
@@ -70,6 +70,9 @@ public class CubeDispenser : MonoBehaviour, IInteractable
         // Hide the hud
         _interactHUD.Hide();
 
+        // Cannot launch
+        _canLaunch = false;
+
         // Animate the cube
         _loadedCube.MoveCube(_cubeIdle.position, _cubeLaunchTime, Ease.OutBounce, SetDeactivateComplete);
     }
@@ -81,24 +84,39 @@ public class CubeDispenser : MonoBehaviour, IInteractable
 
     private void Launch()
     {
-        _loadedCube.Launch(_collider);
+        if (_canLaunch)
+        {
+            _loadedCube.Launch(_collider);
+            _interactHUD.Hide();
+            _canInteract = false;
+            _canLaunch = false;
+        }
     }
 
     #region IInteractable interface methods
 
     public void Interact()
     {
-        Launch();
+        if (_canInteract)
+        {
+            Launch();
+        }
     }
 
     public void ShowInteractHUD()
     {
-        InitiateLaunch();
+        if (_canInteract)
+        {
+            InitiateLaunch();
+        }
     }
 
     public void HideInteractHUD()
     {
-        DeactivateLaunch();
+        if (_canInteract)
+        {
+            DeactivateLaunch();
+        }
     }
 
     #endregion

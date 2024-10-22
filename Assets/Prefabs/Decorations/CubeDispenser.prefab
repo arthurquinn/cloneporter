@@ -285,7 +285,7 @@ MonoBehaviour:
   _cubeIdle: {fileID: 3004680309169446509}
   _cubeLaunch: {fileID: 793864749509858048}
   _cubeLoadTime: 1
-  _cubeLaunchTime: 0.75
+  _cubeLaunchTime: 0.5
   _interactHUD: {fileID: 1796717653222302140}
 --- !u!4 &4432642509924366761 stripped
 Transform:
