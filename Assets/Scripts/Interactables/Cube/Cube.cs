@@ -20,7 +20,7 @@ public class Cube : MonoBehaviour, ICarryable
 
     [Header("References")]
     [Tooltip("The game object containing the canvas for the interact hint.")]
-    [SerializeField] private GameObject _hintHUD;
+    [SerializeField] private InteractHUD _hintHUD;
 
     public Collider2D Collider { get { return _collider; } }
 
@@ -85,19 +85,18 @@ public class Cube : MonoBehaviour, ICarryable
 
     public void SetNearby(bool isNearby)
     {
-        // Show and hide the hint HUD depending on if we are in pickup range
-        _hintHUD.SetActive(isNearby);
-
         // Add some linear drag to the cube so it's harder for the player to
         //   push it out of pickup range
         // Without this it can be annoying to run into the cube to try and pick it up
         //   then it moves away from you when you bump into it
         if (isNearby)
         {
+            _hintHUD.Show();
             _rb.drag = NEARBY_DRAG;
         }
         else
         {
+            _hintHUD.Hide();
             _rb.drag = 0;
         }
     }
@@ -119,7 +118,7 @@ public class Cube : MonoBehaviour, ICarryable
         _isCarried = true;
 
         // Disable the hint HUD
-        _hintHUD.SetActive(false);
+        _hintHUD.Hide();
     }
 
     public void Drop()
