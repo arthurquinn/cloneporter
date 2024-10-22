@@ -33,7 +33,7 @@ public class TutorialLevel05 : MonoBehaviour
         _playerEvents.OnDropItem.Unsubscribe(HandleDropItem);
     }
 
-    private void HandlePickupEnter()
+    private void HandlePickupEnter(Collider2D collision)
     {
         _pickupText.SetActive(true);
     }

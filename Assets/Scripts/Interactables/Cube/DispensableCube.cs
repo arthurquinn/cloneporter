@@ -12,8 +12,10 @@ public class DispensableCube : MonoBehaviour
         _collider = GetComponent<Collider2D>();
     }
 
-    public void MoveCube(Vector2 target, float duration, Ease ease)
+    public void MoveCube(Vector2 target, float duration, Ease ease, TweenCallback callback)
     {
-        _rb.DOMove(target, duration).SetEase(ease);
+        _rb.DOMove(target, duration)
+            .SetEase(ease)
+            .OnComplete(callback);
     }
 }

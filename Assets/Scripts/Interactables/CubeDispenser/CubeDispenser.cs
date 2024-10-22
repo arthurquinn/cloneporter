@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class CubeDispenser : MonoBehaviour
+public class CubeDispenser : MonoBehaviour, IInteractable
 {
     [Header("Cube")]
     [Tooltip("The cube prefab for the dispenser to create new cubes.")]
@@ -13,7 +13,13 @@ public class CubeDispenser : MonoBehaviour
     [Tooltip("The time it takes to load a cube.")]
     [SerializeField] private float _cubeLoadTime;
 
+    [Header("Interact HUD")]
+    [Tooltip("The interact hud tooltip for this game object.")]
+    [SerializeField] private InteractHUD _interactHUD;
+
     private DispensableCube _loadedCube;
+
+    private bool _isLaunchReady;
 
     private void Start()
     {
@@ -24,12 +30,28 @@ public class CubeDispenser : MonoBehaviour
     private void LoadCube()
     {
         // Create the cube
-        DispensableCube cube = Instantiate(_cube, _cubeSpawn.position, Quaternion.identity);
+        _loadedCube = Instantiate(_cube, _cubeSpawn.position, Quaternion.identity);
 
         // Animate the cube
-        cube.MoveCube(_cubeIdle.position, _cubeLoadTime, Ease.OutBounce);
-
-        // Cache the cube
-        _loadedCube = cube;
+        _loadedCube.MoveCube(_cubeIdle.position, _cubeLoadTime, Ease.OutBounce, SetLoadComplete);
     }
+
+    private void SetLoadComplete()
+    {
+        _isLaunchReady = true;
+    }
+
+    #region IInteractable interface methods
+
+    public void ShowInteractHUD()
+    {
+        _interactHUD.Show();
+    }
+
+    public void HideInteractHUD()
+    {
+        _interactHUD.Hide();
+    }
+
+    #endregion
 }

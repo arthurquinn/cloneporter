@@ -10,8 +10,8 @@ public class GenericTrigger : MonoBehaviour
     [Tooltip("If checked the trigger will deactivate after the first exit.")]
     [SerializeField] private bool _disableOnExit;
 
-    public UnityAction OnTriggerEnter;
-    public UnityAction OnTriggerExit;
+    public UnityAction<Collider2D> OnTriggerEnter;
+    public UnityAction<Collider2D> OnTriggerExit;
 
     private Collider2D _collider;
 
@@ -24,7 +24,7 @@ public class GenericTrigger : MonoBehaviour
     {
         if (OnTriggerEnter != null)
         {
-            OnTriggerEnter();
+            OnTriggerEnter(collision);
         }
 
         if (_disableOnEntry)
@@ -37,7 +37,7 @@ public class GenericTrigger : MonoBehaviour
     {
         if (OnTriggerExit != null)
         {
-            OnTriggerExit();
+            OnTriggerExit(collision);
         }
 
         if (_disableOnExit)

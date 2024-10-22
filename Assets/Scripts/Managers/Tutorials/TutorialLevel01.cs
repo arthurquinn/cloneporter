@@ -41,12 +41,12 @@ public class TutorialLevel01 : MonoBehaviour
         _teleportHideTrigger.OnTriggerEnter -= HandleTeleportHide;
     }
 
-    private void HandleMovementShow()
+    private void HandleMovementShow(Collider2D collision)
     {
         _movementText.SetActive(true);
     }
 
-    private void HandlePurplePortalShow()
+    private void HandlePurplePortalShow(Collider2D collision)
     {
         _movementText.SetActive(false);
         _purplePortalText.SetActive(true);
@@ -54,7 +54,7 @@ public class TutorialLevel01 : MonoBehaviour
         _tutorialEvents.OnStateChanged.Raise(new TutorialStateChangedEvent(TutorialState.PurpleActivate));
     }
     
-    private void HandleTeleportHide()
+    private void HandleTeleportHide(Collider2D collision)
     {
         _teleportText.SetActive(false);
     }
