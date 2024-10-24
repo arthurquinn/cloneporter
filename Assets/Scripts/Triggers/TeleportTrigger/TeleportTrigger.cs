@@ -66,6 +66,9 @@ public class TeleportTrigger : MonoBehaviour, IPortalable
         Vector2 entryPoint = _lastFixedPosition;
         Ray2D entryRay = new Ray2D(entryPoint, entryDirection);
 
+        // Set our did teleport flag
+        _didTeleport = true;
+
         // Use portal interface to apply port to our rigidbody
         portal.ApplyPort(entryRay, this);
 
@@ -78,12 +81,13 @@ public class TeleportTrigger : MonoBehaviour, IPortalable
 
     private IEnumerator WaitForExitPortal(PortalColor enterColor)
     {
-        // Set our did teleport flag
-        _didTeleport = true;
-
         // Convert our bounds into a square for better checking
         float maxSide = Mathf.Max(_bounds.bounds.size.x, _bounds.bounds.size.y);
         Vector2 boxSize = new Vector2(maxSide, maxSide);
+
+        // Delay a frame
+        yield return null;
+        yield return new WaitForFixedUpdate();
 
         while (_didTeleport)
         {
