@@ -39,4 +39,8 @@ MonoBehaviour:
   Level06:
     SceneIndex: 6
     SceneName: Level_06
+    NextLevelIndex: 7
+  Level07:
+    SceneIndex: 7
+    SceneName: Level_07
     NextLevelIndex: 0
