@@ -47,4 +47,12 @@ MonoBehaviour:
   Level08:
     SceneIndex: 8
     SceneName: Level_08
+    NextLevelIndex: 9
+  Level09:
+    SceneIndex: 9
+    SceneName: Level_09
+    NextLevelIndex: 10
+  Level10:
+    SceneIndex: 10
+    SceneName: Level_10
     NextLevelIndex: 0
