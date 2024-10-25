@@ -16,12 +16,12 @@ public class BurnoutMovement : MonoBehaviour
     private float _currentHoldTime;
     private int _currentRotationIndex;
 
-    private BurnoutAttackable _attackable;
+    private HealthController _hpController;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _attackable = GetComponent<BurnoutAttackable>();
+        _hpController = GetComponent<HealthController>();
 
         // Init the hold timer
         ResetHoldTimer();
@@ -29,12 +29,12 @@ public class BurnoutMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        _attackable.OnDeath += HandleDeath;
+        _hpController.OnDeath += HandleDeath;
     }
 
     private void OnDisable()
     {
-        _attackable.OnDeath -= HandleDeath;
+        _hpController.OnDeath -= HandleDeath;
     }
 
     private void Start()

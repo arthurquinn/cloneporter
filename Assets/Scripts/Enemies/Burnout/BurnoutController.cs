@@ -23,7 +23,7 @@ public class BurnoutController : MonoBehaviour
     private const int MAX_POSITIONS = 8; // For now assume a maximum of 8 bounces once we implement reflections
     private Vector3[][] _laserLines;
 
-    private BurnoutAttackable _attackable;
+    private HealthController _hpController;
 
     private void Awake()
     {
@@ -33,7 +33,7 @@ public class BurnoutController : MonoBehaviour
             new Vector3[MAX_POSITIONS],
         };
 
-        _attackable = GetComponent<BurnoutAttackable>();
+        _hpController = GetComponent<HealthController>();
     }
 
     private void Start()
@@ -50,13 +50,13 @@ public class BurnoutController : MonoBehaviour
     private void OnEnable()
     {
         // Listen for death event
-        _attackable.OnDeath += HandleDeath;
+        _hpController.OnDeath += HandleDeath;
     }
 
     private void OnDisable()
     {
         // Unhook deathevent
-        _attackable.OnDeath -= HandleDeath;
+        _hpController.OnDeath -= HandleDeath;
     }
 
     // TODO: Lots of room to optimize here
@@ -146,11 +146,12 @@ public class BurnoutController : MonoBehaviour
             return hits[1];
         }
 
-        // If this is our second laser then ignore the first portal collision (laser will be slightly inside portal)
-        if (!initialLaser && hits.Length > 1)
-        {
-            return hits[1];
-        }
+        // TODO: Make it so that we offset a small amount outside the portal and don't need to ignore here
+        //// If this is our second laser then ignore the first portal collision (laser will be slightly inside portal)
+        //if (!initialLaser && hits.Length > 1)
+        //{
+        //    return hits[1];
+        //}
 
         // Otherwise return the first hit if any
         if (hits.Length > 0)

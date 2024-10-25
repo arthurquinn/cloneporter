@@ -7,14 +7,6 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
     [Header("Event Channels")]
     [SerializeField] private BurnoutEventChannel _events;
 
-    [Header("Stats")]
-    [Tooltip("The max HP for the Burnout unit.")]
-    [SerializeField] private float _maxHP;
-    [Tooltip("The amount of time after the most recent attack before the unit can start recovering HP.")]
-    [SerializeField] private float _recoveryTime;
-    [Tooltip("The amount of HP regained per second.")]
-    [SerializeField] private float _recoveryAmount;
-
     [Header("Death Stats")]
     [Tooltip("The angular velocity applied when the unit dies. The provided value will randomly be either positive or negative when applied in the script.")]
     [SerializeField] private float _deathAngularVelocity;
@@ -28,22 +20,29 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
     private Rigidbody2D _rb;
     private SpriteRenderer[] _renderers;
     private MaterialPropertyBlock[] _propertyBlocks;
+    private HealthController _hpController;
 
-    private float _recoverTimeout;
-    private float _currentHP;
+    // Used to determine the damaged material effect amount and color
     private float _currentHPRatio;
 
     // This is the max time all particle systems may live
     private const float EXPLOSION_TIME = 5f;
 
-    // Used by other burnout components
-    public UnityAction OnDeath { get; set; }
-
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _renderers = GetComponentsInChildren<SpriteRenderer>();
-        _currentHP = _maxHP;
+        _hpController = GetComponent<HealthController>();
+    }
+
+    private void OnEnable()
+    {
+        _hpController.OnDeath += HandleDeath;
+    }
+
+    private void OnDisable()
+    {
+        _hpController.OnDeath -= HandleDeath;
     }
 
     private void Start()
@@ -53,7 +52,6 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
 
     private void Update()
     {
-        RecoverHP();
         SetHPColor();
     }
 
@@ -72,23 +70,10 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
         }
     }
 
-    private void RecoverHP()
-    {
-        // Decrement recover timeout
-        _recoverTimeout -= Time.deltaTime;
-
-        // Attempt to re-enable HP recovery if the timeout has expired
-        if (_recoverTimeout < 0)
-        {
-            _currentHP += _recoveryAmount * Time.deltaTime;
-            _currentHP = Mathf.Min(_currentHP, _maxHP);
-        }
-    }
-
     private void SetHPColor()
     {
         // Calc current hp ratio
-        float hpRatio = 1 - (_currentHP / _maxHP);
+        float hpRatio = 1 - _hpController.CurrentHPRatio;
 
         // Only update properties if our ratio changed by a significant amount
         float ratioDiff = Mathf.Abs(_currentHPRatio - hpRatio);
@@ -108,44 +93,8 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
         }
     }
 
-    private void ResetHPRecoveryTime()
+    private void HandleDeath()
     {
-        _recoverTimeout = _recoveryTime;
-    }
-
-    private void DisableHPRecovery()
-    {
-        _recoverTimeout = float.MaxValue;
-    }
-
-    private void TakeDamagePerSecond(float damage)
-    {
-        // Use fixed delta time since the raycast will occur every fixed update
-        _currentHP -= damage * Time.fixedDeltaTime;
-        if (_currentHP <= 0)
-        {
-            // Unit dies
-            _currentHP = 0;
-            Die();
-        }
-        else
-        {
-            // Reset HP recovery time
-            ResetHPRecoveryTime();
-        }
-    }
-
-    private void Die()
-    {
-        // Invoke any actions taken by other burnout components
-        if (OnDeath != null)
-        {
-            OnDeath();
-        }
-
-        // Disable HP recovery
-        DisableHPRecovery();
-
         // Change the rigidbody type
         _rb.bodyType = RigidbodyType2D.Dynamic;
         _rb.interpolation = RigidbodyInterpolation2D.Interpolate;
@@ -156,7 +105,7 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (_currentHP <= 0)
+        if (_hpController.CurrentHP <= 0)
         {
             // Instantiate an explosion effect at our position
             CreateExplosion();
@@ -178,7 +127,7 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
 
     public void LaserAttack(EnemyAttack attack, Ray2D laserRay)
     {
-        TakeDamagePerSecond(attack.DamagePerSecond);
+        _hpController.TakeDamagePerSecondFixed(attack.DamagePerSecond);
     }
 
     #endregion
