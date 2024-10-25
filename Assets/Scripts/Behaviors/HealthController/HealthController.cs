@@ -49,11 +49,10 @@ public class HealthController : MonoBehaviour
         _recoverTime = float.MaxValue;
     }
 
-    // Useful for attacks that occur on the fixed update loop
-    public void TakeDamagePerSecondFixed(float damage)
+    private void TakeDamage(float damage)
     {
-        // Update damage taken based on fixed delta time
-        _currentHP -= damage * Time.fixedDeltaTime;
+        // Update current hp
+        _currentHP -= damage;
         if (_currentHP <= 0)
         {
             // Unit dies
@@ -84,5 +83,32 @@ public class HealthController : MonoBehaviour
         {
             Debug.LogWarning("No OnDeath listeners for health controller on game object: " + gameObject.name);
         }
+
+        // Disable this script
+        enabled = false;
     }
+
+    #region Public Methods
+
+    // Take flat damage
+    public void TakeFlatDamage(float damage)
+    {
+        // Don't take damage if we are dead
+        if (_currentHP > 0)
+        {
+            TakeDamage(damage);
+        }
+    }
+
+    // Take damage over time (fixed)
+    public void TakeDamagePerSecondFixed(float damage)
+    {
+        // Don't take damage if we are dead
+        if (_currentHP > 0)
+        {
+            TakeDamage(damage * Time.fixedDeltaTime);
+        }
+    }
+
+    #endregion
 }

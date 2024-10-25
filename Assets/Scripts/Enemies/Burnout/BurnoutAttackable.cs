@@ -25,9 +25,6 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
     // Used to determine the damaged material effect amount and color
     private float _currentHPRatio;
 
-    // This is the max time all particle systems may live
-    private const float EXPLOSION_TIME = 5f;
-
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();

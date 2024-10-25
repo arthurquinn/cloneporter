@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81cfa048ca995444eba5f34db3cb7b99, type: 3}
-  m_Name: BurnoutAttack
+  m_Script: {fileID: 11500000, guid: af68cf34bb992b245a2617f309c17a06, type: 3}
+  m_Name: PlayerHealthStats
   m_EditorClassIdentifier: 
-  Damage: 8
-  DamagePerSecond: 20
-  KnockbackForce: 40
+  MaxHP: 20
+  RecoveryTimeout: 4
+  RecoveryHPS: 4
