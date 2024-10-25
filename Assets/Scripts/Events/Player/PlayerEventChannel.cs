@@ -101,6 +101,42 @@ public class PlayerAimEventChannel : AbstractEventChannel<PlayerAimEvent>
 
 }
 
+public struct PlayerHPChangeEvent
+{
+    public IHealthAccessor PlayerHP { get; private set; }
+
+    public PlayerHPChangeEvent(IHealthAccessor playerHP)
+    {
+        PlayerHP = playerHP;
+    }
+}
+
+public class PlayerHPChangeEventChannel : AbstractEventChannel<PlayerHPChangeEvent>
+{
+
+}
+
+public enum PlayerDeathState
+{
+    Started,
+    Completed
+}
+
+public struct PlayerDeathEvent
+{
+    public PlayerDeathState State { get; private set; }
+
+    public PlayerDeathEvent(PlayerDeathState state)
+    {
+        State = state;
+    }
+}
+
+public class PlayerDeathEventChannel : AbstractEventChannel<PlayerDeathEvent>
+{
+
+}
+
 [CreateAssetMenu(fileName = "PlayerEventChannel", menuName = "EventChannels/PlayerEventChannel")]
 public class PlayerEventChannel : ScriptableObject
 {
@@ -111,4 +147,6 @@ public class PlayerEventChannel : ScriptableObject
     public PlayerDropItemEventChannel OnDropItem { get; private set; } = new PlayerDropItemEventChannel();
     public PlayerCompleteLevelEventChannel OnCompleteLevel { get; private set; } = new PlayerCompleteLevelEventChannel();
     public PlayerAimEventChannel OnAim { get; private set; } = new PlayerAimEventChannel();
+    public PlayerHPChangeEventChannel OnHPChanged { get; private set; } = new PlayerHPChangeEventChannel();
+    public PlayerDeathEventChannel OnDeath { get; private set; } = new PlayerDeathEventChannel();
 }

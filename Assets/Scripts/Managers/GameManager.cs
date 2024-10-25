@@ -30,12 +30,14 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         _playerEvents.OnCompleteLevel.Subscribe(HandleLevelComplete);
+        _playerEvents.OnDeath.Subscribe(HandlePlayerDeath);
         _pauseMenuEvents.OnPaused.Subscribe(HandleGamePaused);
     }
 
     private void OnDisable()
     {
         _playerEvents.OnCompleteLevel.Unsubscribe(HandleLevelComplete);
+        _playerEvents.OnDeath.Unsubscribe(HandlePlayerDeath);
         _pauseMenuEvents.OnPaused.Unsubscribe(HandleGamePaused);
     }
 
@@ -43,6 +45,14 @@ public class GameManager : MonoBehaviour
     {
         SceneNameIndex nextScene = _sceneNames.SceneArray[_currentScene.NextLevelIndex];
         ChangeScene(nextScene);
+    }
+
+    private void HandlePlayerDeath(PlayerDeathEvent @event)
+    {
+        if (@event.State == PlayerDeathState.Completed)
+        {
+            ReloadLevel();
+        }
     }
 
     private void HandleGamePaused(PauseMenuPausedEvent @event)

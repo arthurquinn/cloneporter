@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class BurnoutMovement : MonoBehaviour
 {
-    private Rigidbody2D _rb;
+    [Header("Event Channel")]
+    [SerializeField] private PlayerEventChannel _playerEvents;
 
     [Header("Rotations")]
     [Tooltip("The amount of time to rotate from one rotation to another.")]
@@ -15,8 +16,10 @@ public class BurnoutMovement : MonoBehaviour
 
     private float _currentHoldTime;
     private int _currentRotationIndex;
+    private Tween _currentTween;
 
     private HealthController _hpController;
+    private Rigidbody2D _rb;
 
     private void Awake()
     {
@@ -30,11 +33,13 @@ public class BurnoutMovement : MonoBehaviour
     private void OnEnable()
     {
         _hpController.OnDeath += HandleDeath;
+        _playerEvents.OnDeath.Subscribe(HandlePlayerDeath);
     }
 
     private void OnDisable()
     {
         _hpController.OnDeath -= HandleDeath;
+        _playerEvents.OnDeath.Unsubscribe(HandlePlayerDeath);
     }
 
     private void Start()
@@ -52,6 +57,21 @@ public class BurnoutMovement : MonoBehaviour
         RotateOnTimer();
     }
 
+    private void HandlePlayerDeath(PlayerDeathEvent @event)
+    {
+        if (@event.State == PlayerDeathState.Started)
+        {
+            // Cancel any animations
+            if (_currentTween != null)
+            {
+                _currentTween.Kill();
+            }
+
+            // Disable this script on player death
+            enabled = false;
+        }
+    }
+
     private void RotateOnTimer()
     {
         // If our timer expired then start the tween to rotate to our next value
@@ -63,7 +83,7 @@ public class BurnoutMovement : MonoBehaviour
             // Calculate the delta angle and apply it to rigidbody
             float targetRotation = IncrementToNextRotation();
             float deltaAngle = Mathf.DeltaAngle(_rb.rotation, targetRotation);
-            _rb.DORotate(_rb.rotation + deltaAngle, _rotationTime)
+            _currentTween = _rb.DORotate(_rb.rotation + deltaAngle, _rotationTime)
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(ResetHoldTimer);
         }
@@ -71,6 +91,7 @@ public class BurnoutMovement : MonoBehaviour
 
     private void ResetHoldTimer()
     {
+        _currentTween = null;
         _currentHoldTime = _holdTime;
     }
 

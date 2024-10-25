@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHP: 20
   RecoveryTimeout: 4
-  RecoveryHPS: 4
+  RecoveryHPS: 2

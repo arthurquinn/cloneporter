@@ -21,10 +21,12 @@ public class PlayerEvents : MonoBehaviour
     [SerializeField] private Transform _cameraPoint;
 
     private Rigidbody2D _rb;
+    private HealthController _hpController;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _hpController = GetComponent<HealthController>();
     }
 
     private void Start()
@@ -38,6 +40,8 @@ public class PlayerEvents : MonoBehaviour
         _elevatorEvents.OnElevatorUp.Subscribe(HandleElevatorUp);
         _elevatorEvents.OnElevatorStop.Subscribe(HandleElevatorStop);
         _teleportTrigger.OnTeleported += HandleTeleported;
+        _hpController.OnHealthChanged += HandleHPChanged;
+        _hpController.OnDeath += HandleDeath;
     }
 
     private void OnDisable()
@@ -46,6 +50,8 @@ public class PlayerEvents : MonoBehaviour
         _elevatorEvents.OnElevatorUp.Unsubscribe(HandleElevatorUp);
         _elevatorEvents.OnElevatorStop.Unsubscribe(HandleElevatorStop);
         _teleportTrigger.OnTeleported -= HandleTeleported;
+        _hpController.OnHealthChanged -= HandleHPChanged;
+        _hpController.OnDeath -= HandleDeath;
     }
 
     private void HandleSpawnPlayer(SpawnPlayerEvent spawnPlayerEvent)
@@ -80,6 +86,18 @@ public class PlayerEvents : MonoBehaviour
     {
         // Fire off a player teleported event when we leave the portal
         _playerEvents.OnTeleported.Raise(new PlayerTeleportedEvent());
+    }
+
+    private void HandleHPChanged()
+    {
+        // Fire off a player hp changed event
+        _playerEvents.OnHPChanged.Raise(new PlayerHPChangeEvent(_hpController));
+    }
+
+    private void HandleDeath()
+    {
+        // Fire off death event
+        _playerEvents.OnDeath.Raise(new PlayerDeathEvent(PlayerDeathState.Started));
     }
 
     private void RemoveFromCollisionMatrix(LayerMask mask)

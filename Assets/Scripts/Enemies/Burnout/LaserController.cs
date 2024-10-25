@@ -23,6 +23,13 @@ public class LaserController : MonoBehaviour
     {
         for (int currentLine = 0; currentLine < _laserLines.Length; currentLine++)
         {
+            // TODO: Figure out why
+            // For some reason this is true when player dies
+            if (_positions == null)
+            {
+                return;
+            }
+
             // If there exists a line to be drawn
             if (_positions[currentLine][0] != Vector3.zero)
             {

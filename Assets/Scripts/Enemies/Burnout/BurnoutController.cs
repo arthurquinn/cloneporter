@@ -1,8 +1,12 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class BurnoutController : MonoBehaviour
 {
+    [Header("Event Channels")]
+    [SerializeField] private PlayerEventChannel _playerEvents;
+
     [Header("References")]
     [Tooltip("The transform that represents the origin of our laser.")]
     [SerializeField] private Transform _laserOrigin;
@@ -51,12 +55,14 @@ public class BurnoutController : MonoBehaviour
     {
         // Listen for death event
         _hpController.OnDeath += HandleDeath;
+        _playerEvents.OnDeath.Subscribe(HandlePlayerDeath);
     }
 
     private void OnDisable()
     {
         // Unhook deathevent
         _hpController.OnDeath -= HandleDeath;
+        _playerEvents.OnDeath.Unsubscribe(HandlePlayerDeath);
     }
 
     // TODO: Lots of room to optimize here
@@ -182,6 +188,25 @@ public class BurnoutController : MonoBehaviour
         _onLaserPositionsChanged.Invoke(_laserLines);
 
         // Disable this script
+        enabled = false;
+    }
+
+    private void HandlePlayerDeath(PlayerDeathEvent @event)
+    {
+        if (@event.State == PlayerDeathState.Started)
+        {
+            // Disable this script next fixed update
+            // We want to draw a line through the player instead of stopping at the player
+            //   for a cooler effect
+            StartCoroutine(DisableNextFixedUpdate());
+        }
+    }
+
+    private IEnumerator DisableNextFixedUpdate()
+    {
+        yield return null;
+        yield return new WaitForFixedUpdate();
+
         enabled = false;
     }
 

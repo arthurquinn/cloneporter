@@ -21,6 +21,7 @@ public interface IPlayerMovementController
     bool IsMoving { get; }
     bool IsFalling { get; }
     bool IsGrounded { get; }
+    bool IsFacingRight { get; }
 
     // Layer Masks
     LayerMask PortalLayer { get; }
@@ -92,6 +93,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
     public bool IsMoving { get { return _moveInput.x != 0; } }
     public bool IsFalling { get { return _rb.velocity.y < FALLING_THRESHOLD; } }
     public bool IsGrounded { get { return _lastGroundedTime == _stats.coyoteTime; } }
+    public bool IsFacingRight { get { return _isFacingRight; } }
 
     public LayerMask PortalLayer { get { return _portalLayer; } }
 
@@ -105,6 +107,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
     private Rigidbody2D _rb;
     private PlayerInputActions _input;
     private BoxCollider2D _collider;
+    private HealthController _hpController;
 
     private Vector2 _moveInput;
     private float _lastGroundedTime;
@@ -117,6 +120,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
     private PlayerMovementFallingState _fallingState;
     private PlayerMovementLeavePortalState _leavePortalState;
     private PlayerMovementKnockbackState _knockbackState;
+    private PlayerMovementDeathState _deathState;
 
     private IPlayerMovementState _currentState;
     private IPlayerMovementState[] _allStates;
@@ -126,6 +130,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
         _rb = GetComponent<Rigidbody2D>();
         _input = new PlayerInputActions();
         _collider = GetComponent<BoxCollider2D>();
+        _hpController = GetComponent<HealthController>();
 
         _isFacingRight = true;
 
@@ -135,6 +140,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
         _fallingState = new PlayerMovementFallingState();
         _leavePortalState = new PlayerMovementLeavePortalState();
         _knockbackState = new PlayerMovementKnockbackState();
+        _deathState = new PlayerMovementDeathState();
 
         _allStates = new IPlayerMovementState[]
         {
@@ -144,6 +150,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
             _fallingState,
             _leavePortalState,
             _knockbackState,
+            _deathState,
         };
 
         RunForAllStates(state => state.Awake(this));
@@ -157,6 +164,8 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
         _input.Player.Jump.performed += HandleJumpInput;
 
         _teleportTrigger.OnTeleported += HandleTeleported;
+
+        _hpController.OnDeath += HandleDeath;
     }
 
     private void OnDisable()
@@ -167,6 +176,8 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
         _input.Player.Jump.Disable();
 
         _teleportTrigger.OnTeleported -= HandleTeleported;
+
+        _hpController.OnDeath -= HandleDeath;
     }
 
     private void Start()
@@ -307,6 +318,11 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
     private void HandleTeleported()
     {
         TransitionToState(_leavePortalState);
+    }
+
+    private void HandleDeath()
+    {
+        TransitionToState(_deathState);
     }
 
     public void Knockback(KnockbackAttack attack)
