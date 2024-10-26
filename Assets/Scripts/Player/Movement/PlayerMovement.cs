@@ -33,6 +33,7 @@ public interface IPlayerMovementController
     PlayerMovementFallingState FallingState { get; }
     PlayerMovementLeavePortalState LeavePortalState { get; }
     PlayerMovementKnockbackState KnockbackState { get; }
+    PlayerMovementDeathState DeathState { get; }
 
     // Methods
     void TransitionToState(IPlayerMovementState state);
@@ -103,6 +104,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
     public PlayerMovementFallingState FallingState { get { return _fallingState; } }
     public PlayerMovementLeavePortalState LeavePortalState {  get { return _leavePortalState; } }
     public PlayerMovementKnockbackState KnockbackState { get { return _knockbackState; } }
+    public PlayerMovementDeathState DeathState { get { return _deathState; } }
 
     private Rigidbody2D _rb;
     private PlayerInputActions _input;
@@ -322,6 +324,10 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
 
     private void HandleDeath()
     {
+        // Disable movement input to prevent player from turning while death animation is playing
+        _input.Player.Movement.Disable();
+
+        // Transition to the death state
         TransitionToState(_deathState);
     }
 
