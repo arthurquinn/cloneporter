@@ -6,6 +6,7 @@ public class BurnoutController : MonoBehaviour
 {
     [Header("Event Channels")]
     [SerializeField] private PlayerEventChannel _playerEvents;
+    [SerializeField] private BurnoutEventChannel _burnoutEvents;
 
     [Header("References")]
     [Tooltip("The transform that represents the origin of our laser.")]
@@ -14,6 +15,7 @@ public class BurnoutController : MonoBehaviour
     [Header("Laser Stats")]
     [SerializeField] private float _maxLaserDistance;
     [SerializeField] private LayerMask _laserCollisionMask;
+    [SerializeField] private LayerMask _portalLayer;
 
     [Header("Events")]
     [SerializeField] private UnityEvent<Vector3[][]> _onLaserPositionsChanged;
@@ -28,6 +30,8 @@ public class BurnoutController : MonoBehaviour
     private Vector3[][] _laserLines;
 
     private HealthController _hpController;
+
+    private bool _isOverlappingPortal;
 
     private void Awake()
     {
@@ -68,6 +72,10 @@ public class BurnoutController : MonoBehaviour
     // TODO: Lots of room to optimize here
     private void FixedUpdate()
     {
+        // Reset overlapping portal flag
+        bool overlapPrevious = _isOverlappingPortal;
+        _isOverlappingPortal = false;
+
         // Update our orientation
         _orientation = transform.rotation * Vector2.right;
 
@@ -79,6 +87,20 @@ public class BurnoutController : MonoBehaviour
 
         // TODO: Make it so that this event is only called if our positions or segments are different
         _onLaserPositionsChanged.Invoke(_laserLines);
+
+        // TODO: This whole class really needs a revisit...
+        // Raise event if we are or are not overlapping a portal
+        if (_isOverlappingPortal != overlapPrevious)
+        {
+            if (_isOverlappingPortal)
+            {
+                _burnoutEvents.OnPortalEvent.Raise(new BurnoutLaserPortalEvent(BurnoutLaserPortalEventType.Enter));
+            }
+            else
+            {
+                _burnoutEvents.OnPortalEvent.Raise(new BurnoutLaserPortalEvent(BurnoutLaserPortalEventType.Exit));
+            }
+        }
     }
 
     private void TracePath()
@@ -97,11 +119,14 @@ public class BurnoutController : MonoBehaviour
                 // Check if we hit a collid
                 bool initialLine = currentLine == 0;
                 RaycastHit2D hit = RaycastLaser(lineOrigin, lineOrientation, _laserCollisionMask, initialLine);
-                Debug.DrawRay(lineOrigin, lineOrientation, Color.red, 5.0f);
+                
                 if (hit.collider != null)
                 {
                     // Add the hit point to the current line
                     _laserLines[currentLine][currentPosition++] = hit.point;
+
+                    // Check any overlaps at our hit point
+                    CheckForOverlaps(hit.point);
 
                     // Check if the surface we hit is a portal we can teleport through
                     IPortal portal = hit.collider.GetComponent<IPortal>();
@@ -125,7 +150,6 @@ public class BurnoutController : MonoBehaviour
                         attackable.LaserAttack(_attackStats, laserRay);
                     }
 
-
                     // TODO: Check for surface reflections
 
                     // The laser has reached its terminus
@@ -145,6 +169,7 @@ public class BurnoutController : MonoBehaviour
     private RaycastHit2D RaycastLaser(Vector2 origin, Vector2 direction, LayerMask layerMask, bool initialLaser)
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(origin, direction, _maxLaserDistance, layerMask);
+        Debug.DrawRay(origin, direction, Color.red, 5.0f);
 
         // If this is our first laser, ignore the first collision (which will be with this burnout object itself
         if (initialLaser && hits.Length > 1)
@@ -166,6 +191,15 @@ public class BurnoutController : MonoBehaviour
         }
 
         return new RaycastHit2D();
+    }
+
+    private void CheckForOverlaps(Vector2 point)
+    {
+        Collider2D collision = Physics2D.OverlapBox(point, new Vector2(0.01f, 0.01f), 0, _portalLayer);
+        if (collision != null)
+        {
+            _isOverlappingPortal = true;
+        }
     }
 
     private void ClearPositions()

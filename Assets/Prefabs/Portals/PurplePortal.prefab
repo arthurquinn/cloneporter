@@ -13,9 +13,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 543462055505153846, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: _portalMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: a9fa942002643fd44b466a343d195f55, type: 2}
+    - target: {fileID: 543462055505153846, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: _portalEventChannel
       value: 
       objectReference: {fileID: 11400000, guid: af3bed9d3daf5464bb6ca6b114c521ba, type: 2}
+    - target: {fileID: 543462055505153846, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: _laserPortalMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 8382568c40ca2744b9b83c5316d4a022, type: 2}
     - target: {fileID: 6017843662625651584, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5

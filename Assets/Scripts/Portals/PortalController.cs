@@ -17,16 +17,25 @@ public class PortalController : MonoBehaviour, IPortal
 {
     private const float ROUNDING_THRESHOLD = 0.001f;
 
+    [Header("Event Channels")]
+    [SerializeField] private BurnoutEventChannel _burnoutEvents;
+
+    [Header("Materials")]
+    [Tooltip("The base portal material for this portal.")]
+    [SerializeField] private Material _portalMaterial;
+    [Tooltip("The material applied to the portal when it is obstructed by a laser.")]
+    [SerializeField] private Material _laserPortalMaterial;
+
+    [Space(20)]
     [SerializeField] private PortalColor _portalColor;
+    [SerializeField] private LayerMask _teleportTriggerLayer;
 
     private PortalController _linkedPortal;
-
     private SpriteRenderer _spriteRenderer;
     private BoxCollider2D _boxCollider;
 
     private Vector2 _orientation;
     public Vector2 Orientation { get { return _orientation; } }
-
     public PortalColor Color { get {  return _portalColor; } }
 
     private float _portalLength;
@@ -35,6 +44,28 @@ public class PortalController : MonoBehaviour, IPortal
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _boxCollider = GetComponent<BoxCollider2D>();
+    }
+
+    private void OnEnable()
+    {
+        _burnoutEvents.OnPortalEvent.Subscribe(HandlePortalEvent);
+    }
+
+    private void OnDisable()
+    {
+        _burnoutEvents.OnPortalEvent.Unsubscribe(HandlePortalEvent);
+    }
+
+    private void HandlePortalEvent(BurnoutLaserPortalEvent @event)
+    {
+        if (@event.Type == BurnoutLaserPortalEventType.Enter)
+        {
+            SetTeleportActive(false);
+        }
+        else
+        {
+            SetTeleportActive(true);
+        }
     }
 
     public void SetLinkedPortal(PortalController linkedPortal)
@@ -247,6 +278,15 @@ public class PortalController : MonoBehaviour, IPortal
         {
             transform.rotation = Quaternion.identity;
         }
+    }
+
+    private void SetTeleportActive(bool active)
+    {
+        // Change the material
+        _spriteRenderer.material = active ? _portalMaterial : _laserPortalMaterial;
+
+        // If we are active, set the portal to a trigger
+        _boxCollider.isTrigger = active;
     }
 
     public void CachePortalLength()

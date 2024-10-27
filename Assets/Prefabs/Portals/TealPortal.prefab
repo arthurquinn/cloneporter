@@ -17,6 +17,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 543462055505153846, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
+      propertyPath: _portalMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 8e9d4a3d89c6a22419dab2b393b12684, type: 2}
+    - target: {fileID: 543462055505153846, guid: f705de1b19b3af24994a36af8b47bd0b, type: 3}
       propertyPath: _portalEventChannel
       value: 
       objectReference: {fileID: 11400000, guid: a05e899f2b0c69b4facc97265adf54f4, type: 2}

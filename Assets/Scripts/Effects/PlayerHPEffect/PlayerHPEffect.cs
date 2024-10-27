@@ -35,8 +35,6 @@ public class PlayerHPEffect : MonoBehaviour
 
     private void HandlePlayerHPChanged(PlayerHPChangeEvent @event)
     {
-        Debug.Log("Current HP: " + @event.PlayerHP.CurrentHP);
-
         SetEffect(@event.PlayerHP.CurrentHPRatio);
     }
 

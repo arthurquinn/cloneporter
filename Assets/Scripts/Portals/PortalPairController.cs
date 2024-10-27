@@ -33,6 +33,11 @@ public class PortalPairController : MonoBehaviour
         _panelTilesEvents.OnPanelPlacePortal.Unsubscribe(HandlePanelPlacedPortal);
     }
 
+    private void HandleLaserEnter()
+    {
+
+    }
+
     private void HandleForceFieldEntered(PortalForceFieldEnteredEvent @event)
     {
         // Clear the portals
