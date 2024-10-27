@@ -177,11 +177,15 @@ public class BurnoutController : MonoBehaviour
             return hits[1];
         }
 
-        // TODO: Make it so that we offset a small amount outside the portal and don't need to ignore here
-        // If this is our second laser then ignore the first portal collision (laser will be slightly inside portal)
+        // If this is our second laser then ignore the first portal collision (laser may be slightly inside portal)
         if (!initialLaser && hits.Length > 1)
         {
-            return hits[1];
+            // If we hit a portal ignore it
+            IPortal portal = hits[0].collider.GetComponent<IPortal>();
+            if (portal != null)
+            {
+                return hits[1];
+            }
         }
 
         // Otherwise return the first hit if any
