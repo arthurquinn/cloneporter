@@ -28,10 +28,32 @@ public class PortalPairClearedEventChannel : AbstractEventChannel<PortalPairClea
 
 }
 
+public enum PortalActiveState
+{
+    Active,
+    Inactive,
+}
+
+public struct PortalActiveStateEvent
+{
+    public PortalActiveState State { get; private set; }
+
+    public PortalActiveStateEvent(PortalActiveState state)
+    {
+        State = state;
+    }
+}
+
+public class PortalActiveStateEventChannel : AbstractEventChannel<PortalActiveStateEvent>
+{
+
+}
+
 
 [CreateAssetMenu(fileName = "PortalPairEventChannel", menuName = "EventChannels/PortalPairEventChannel")]
 public class PortalPairEventChannel : ScriptableObject
 {
     public PortalPairStartedEventChannel OnPortalPairStarted { get; private set; } = new PortalPairStartedEventChannel();
     public PortalPairClearedEventChannel OnPortalPairCleared { get; private set; } = new PortalPairClearedEventChannel();
+    public PortalActiveStateEventChannel OnPortalActiveState { get; private set; } = new PortalActiveStateEventChannel();
 }

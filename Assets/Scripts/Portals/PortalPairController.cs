@@ -25,17 +25,26 @@ public class PortalPairController : MonoBehaviour
     {
         _forceFieldEvents.OnForceFieldEntered.Subscribe(HandleForceFieldEntered);
         _panelTilesEvents.OnPanelPlacePortal.Subscribe(HandlePanelPlacedPortal);
+
+        _purplePortal.OnActiveChanged += HandleActiveChanged;
+        _tealPortal.OnActiveChanged += HandleActiveChanged;
     }
 
     private void OnDisable()
     {
         _forceFieldEvents.OnForceFieldEntered.Unsubscribe(HandleForceFieldEntered);
         _panelTilesEvents.OnPanelPlacePortal.Unsubscribe(HandlePanelPlacedPortal);
+
+        _purplePortal.OnActiveChanged -= HandleActiveChanged;
+        _tealPortal.OnActiveChanged -= HandleActiveChanged;
     }
 
-    private void HandleLaserEnter()
+    private void HandleActiveChanged(bool active)
     {
-
+        _portalEvents.OnPortalActiveState.Raise(new PortalActiveStateEvent(
+            active ? 
+            PortalActiveState.Active : 
+            PortalActiveState.Inactive));
     }
 
     private void HandleForceFieldEntered(PortalForceFieldEnteredEvent @event)

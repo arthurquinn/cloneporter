@@ -83,6 +83,9 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
     [SerializeField] private TeleportTrigger _teleportTrigger;
     [SerializeField] private LayerMask _portalLayer;
 
+    [Header("Event Channels")]
+    [SerializeField] private PortalPairEventChannel _portalEvents;
+
     public Rigidbody2D Rigidbody2D { get { return _rb; } }
     public PlayerMovementStats Stats { get { return _stats; } }
     public BoxCollider2D Collider2D { get { return _collider; } }
@@ -166,8 +169,9 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
         _input.Player.Jump.performed += HandleJumpInput;
 
         _teleportTrigger.OnTeleported += HandleTeleported;
-
         _hpController.OnDeath += HandleDeath;
+
+        _portalEvents.OnPortalActiveState.Subscribe(HandlePortalActiveStateChanged);
     }
 
     private void OnDisable()
@@ -178,8 +182,9 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
         _input.Player.Jump.Disable();
 
         _teleportTrigger.OnTeleported -= HandleTeleported;
-
         _hpController.OnDeath -= HandleDeath;
+
+        _portalEvents.OnPortalActiveState.Unsubscribe(HandlePortalActiveStateChanged);
     }
 
     private void Start()
@@ -329,6 +334,20 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovementController, ISnappab
 
         // Transition to the death state
         TransitionToState(_deathState);
+    }
+
+    private void HandlePortalActiveStateChanged(PortalActiveStateEvent @event)
+    {
+        if (@event.State == PortalActiveState.Active)
+        {
+            // If portals are active, remove portal from ground layers
+            _groundLayers &= ~_portalLayer;
+        }
+        else
+        {
+            // Otherwise add portals back to ground layers
+            _groundLayers |= _portalLayer;
+        }
     }
 
     public void Knockback(KnockbackAttack attack)

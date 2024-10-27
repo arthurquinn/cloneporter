@@ -1006,11 +1006,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.2676506
+      value: -7.662101
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.37739444
+      value: 0.22161055
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: fd90e43a2f2acb447ae976c7e25532d9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1391,11 +1391,12 @@ MonoBehaviour:
   _groundCheckSize: {x: 0.26, y: 0.1}
   _groundLayers:
     serializedVersion: 2
-    m_Bits: 15040
+    m_Bits: 80576
   _teleportTrigger: {fileID: 4406902719079127697}
   _portalLayer:
     serializedVersion: 2
     m_Bits: 256
+  _portalEvents: {fileID: 11400000, guid: e5d7b9b2a53c1354e82482ba8e0ad77c, type: 2}
 --- !u!114 &2979120649839112212
 MonoBehaviour:
   m_ObjectHideFlags: 0

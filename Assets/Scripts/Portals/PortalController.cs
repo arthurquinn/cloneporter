@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum PortalColor
 {
@@ -40,6 +41,8 @@ public class PortalController : MonoBehaviour, IPortal
 
     private float _portalLength;
 
+    public UnityAction<bool> OnActiveChanged;
+
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -61,10 +64,18 @@ public class PortalController : MonoBehaviour, IPortal
         if (@event.Type == BurnoutLaserPortalEventType.Enter)
         {
             SetTeleportActive(false);
+            if (OnActiveChanged != null)
+            {
+                OnActiveChanged(false);
+            }
         }
         else
         {
             SetTeleportActive(true);
+            if (OnActiveChanged != null)
+            {
+                OnActiveChanged(true);
+            }
         }
     }
 
