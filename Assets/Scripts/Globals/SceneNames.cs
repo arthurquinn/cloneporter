@@ -18,6 +18,7 @@ public class SceneNames : ScriptableObject
     public SceneNameIndex Level10;
     public SceneNameIndex Level11;
     public SceneNameIndex Level12;
+    public SceneNameIndex Level13;
 
     // TODO: Quick solution- fix this up
     private SceneNameIndex[] _sceneArray;
@@ -40,6 +41,7 @@ public class SceneNames : ScriptableObject
             Level10,
             Level11,
             Level12,
+            Level13,
         };
     }
 }

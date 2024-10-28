@@ -63,4 +63,8 @@ MonoBehaviour:
   Level12:
     SceneIndex: 12
     SceneName: Level_12
+    NextLevelIndex: 13
+  Level13:
+    SceneIndex: 13
+    SceneName: Level_13
     NextLevelIndex: 0

@@ -1438,7 +1438,7 @@ MonoBehaviour:
   _teleportTrigger: {fileID: 4406902719079127697}
   _elevatorIgnoreLayer:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 65984
   _cameraPoint: {fileID: 7480566440739631389}
 --- !u!114 &7661179903401265581
 MonoBehaviour:
