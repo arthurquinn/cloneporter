@@ -92,6 +92,9 @@ public class BurnoutAttackable : MonoBehaviour, IAttackable
 
     private void HandleDeath()
     {
+        // Re-enable portals
+        _events.OnPortalEvent.Raise(new BurnoutLaserPortalEvent(BurnoutLaserPortalEventType.Exit));
+
         // Change the rigidbody type
         _rb.bodyType = RigidbodyType2D.Dynamic;
         _rb.interpolation = RigidbodyInterpolation2D.Interpolate;

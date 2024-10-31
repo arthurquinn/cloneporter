@@ -87,7 +87,6 @@ public class TeleportTrigger : MonoBehaviour, IPortalable
 
         // Delay a frame
         yield return null;
-        yield return new WaitForFixedUpdate();
 
         while (_didTeleport)
         {
