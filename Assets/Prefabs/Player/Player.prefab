@@ -912,6 +912,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7336340868308770699}
     - target: {fileID: 5731020787052156772, guid: ea2e85fc2fe701d4e8d9f6ebdf30fe2c, type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 7336340868308770699}
+    - target: {fileID: 5731020787052156772, guid: ea2e85fc2fe701d4e8d9f6ebdf30fe2c, type: 3}
       propertyPath: _teleportStats
       value: 
       objectReference: {fileID: 11400000, guid: 0af0c40b40ad81a4a8841c0436e90a8e, type: 2}

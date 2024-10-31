@@ -16,7 +16,7 @@ public class TeleportTrigger : MonoBehaviour, IPortalable
     #region Interface Methods
     public TeleportStats Stats { get { return _teleportStats; } }
     public Rigidbody2D Rigidbody { get { return _rb; } }
-    public Collider2D Collider { get { return _bounds; } }
+    public Collider2D Collider { get { return _collider; } }
     #endregion
 
     [Header("Teleport Stats")]
@@ -25,8 +25,8 @@ public class TeleportTrigger : MonoBehaviour, IPortalable
 
     [Space(20)]
 
-    [Tooltip("The bounds of the object that will be teleported.")]
-    [SerializeField] private Collider2D _bounds;
+    [Tooltip("The collier of the teleporting rigid body.")]
+    [SerializeField] private Collider2D _collider;
 
     [Tooltip("The portal layer.")]
     [SerializeField] private LayerMask _portalLayer;
@@ -34,6 +34,7 @@ public class TeleportTrigger : MonoBehaviour, IPortalable
     public UnityAction OnTeleported { get; set; }
 
     private Rigidbody2D _rb;
+    private BoxCollider2D _trigger;
 
     private Vector2 _lastFixedPosition;
 
@@ -42,6 +43,7 @@ public class TeleportTrigger : MonoBehaviour, IPortalable
     private void Start()
     {
         _rb = GetComponentInParent<Rigidbody2D>();
+        _trigger = GetComponent<BoxCollider2D>();
     }
 
     private void FixedUpdate()
@@ -82,7 +84,7 @@ public class TeleportTrigger : MonoBehaviour, IPortalable
     private IEnumerator WaitForExitPortal(PortalColor enterColor)
     {
         // Convert our bounds into a square for better checking
-        float maxSide = Mathf.Max(_bounds.bounds.size.x, _bounds.bounds.size.y);
+        float maxSide = Mathf.Max(_trigger.bounds.size.x, _trigger.bounds.size.y);
         Vector2 boxSize = new Vector2(maxSide, maxSide);
 
         // Delay a frame
@@ -107,7 +109,7 @@ public class TeleportTrigger : MonoBehaviour, IPortalable
         // This is important for when portals are placed very close together
         // We want to consider touching a portal of an opposite color (but not the same color) as fully exited
         // Any instance of overlapping a portal of the entry color we will consider ourselves not exited
-        Collider2D[] allOverlaps = Physics2D.OverlapBoxAll(_bounds.bounds.center, boxSize, 0, _portalLayer);
+        Collider2D[] allOverlaps = Physics2D.OverlapBoxAll(_trigger.bounds.center, boxSize, 0, _portalLayer);
         for (int i = 0; i < allOverlaps.Length; i++)
         {
             // If the portal we are overlapping is the same as the enter color
